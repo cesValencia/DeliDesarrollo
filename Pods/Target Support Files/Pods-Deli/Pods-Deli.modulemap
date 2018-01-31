@@ -1,0 +1,6 @@
+framework module Pods_Deli {
+  umbrella header "Pods-Deli-umbrella.h"
+
+  export *
+  module * { export * }
+}

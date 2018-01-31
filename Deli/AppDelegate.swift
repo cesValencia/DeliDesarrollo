@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,9 +16,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // Getting API Key
+        GMSServices.provideAPIKey("AIzaSyB64NblnsoVjdvz9xvJsDKnfbQQsHGBHsA")
+        
+        // Configuración del SDK de Facebook
+//        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        let userDefaults = UserDefaults.standard
+        let result = userDefaults.bool(forKey: kIsFirstEntry)
+        var nav: UIViewController?
+        
+        if result == false {
+            //Creamos una pantalla para iniciar la app
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let cards = storyBoard.instantiateViewController(withIdentifier: "MainCards")
+            
+            //Seteamos la key y sincronizamos para guardar la información
+            userDefaults.set(true, forKey: kIsFirstEntry)
+            userDefaults.synchronize()
+            
+            //Creamos navigationController y le pasamos la pantalla intro como rootViewController
+            nav = cards
+            
+        } else {
+            // Creamos una instancia de la primera pantalla
+            let start = Intro()
+            start.view.backgroundColor = UIColor.white
+            nav = start
+        }
+        
+        
+        // Inicializamos la instancia de tipo intro como el controlador raíz
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = nav
+        window?.makeKeyAndVisible()
+        
         return true
     }
+    
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+//    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
