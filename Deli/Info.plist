@@ -6,6 +6,7 @@
 	<string>Deli dese accesar a tu ubicación</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Roboto-Medium.ttf</string>
 		<string>Montserrat-Regular.ttf</string>
 		<string>Roboto-Regular.ttf</string>
 		<string>Roboto-Light.ttf</string>

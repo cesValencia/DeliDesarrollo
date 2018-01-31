@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05F68D35024D13E3B46E4C78 /* Pods_Deli.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243A8319085DB3971BFB8910 /* Pods_Deli.framework */; };
+		183174C620223D790038D61F /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183174C520223D790038D61F /* LoadingScreen.swift */; };
 		B80624A42007D635009CDF7B /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A12007D634009CDF7B /* FBSDKLoginKit.framework */; };
 		B80624A52007D635009CDF7B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A22007D634009CDF7B /* Bolts.framework */; };
 		B80624A62007D635009CDF7B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A32007D635009CDF7B /* FBSDKCoreKit.framework */; };
@@ -139,6 +140,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		183174C520223D790038D61F /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		243A8319085DB3971BFB8910 /* Pods_Deli.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Deli.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71246CD7EA325DC587FE9028 /* Pods-Deli.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deli.release.xcconfig"; path = "Pods/Target Support Files/Pods-Deli/Pods-Deli.release.xcconfig"; sourceTree = "<group>"; };
 		8870835342F5EA7E00382F59 /* Pods-Deli.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deli.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Deli/Pods-Deli.debug.xcconfig"; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				B84897111FFFD83000D04F99 /* NetworkManager.swift */,
 				B84897101FFFD83000D04F99 /* TipoComida.swift */,
 				B85224712017EA2D003CDFF0 /* Login.swift */,
+				183174C520223D790038D61F /* LoadingScreen.swift */,
 			);
 			path = Inicio;
 			sourceTree = "<group>";
@@ -1055,6 +1058,7 @@
 				B84897A520000E8000D04F99 /* CollectionViewEx5.swift in Sources */,
 				B848972B1FFFF9B700D04F99 /* AnimationBarButton.swift in Sources */,
 				B848979B20000DED00D04F99 /* CollectionViewEx.swift in Sources */,
+				183174C620223D790038D61F /* LoadingScreen.swift in Sources */,
 				B848979620000D9200D04F99 /* DemoTableViewController2.swift in Sources */,
 				B84897571FFFFAE600D04F99 /* PageCollectionLayout.swift in Sources */,
 				B848977B20000C4300D04F99 /* Restaurant.swift in Sources */,
