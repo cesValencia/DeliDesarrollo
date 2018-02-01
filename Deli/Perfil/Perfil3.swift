@@ -23,7 +23,7 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     override func viewDidAppear(_ animated: Bool) {
         
-        userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+        
         avatar?.image = UIImage(data: userAvatar as Data)
     }
     

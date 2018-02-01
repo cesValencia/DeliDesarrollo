@@ -84,8 +84,14 @@ extension DemoViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+//        if (UserDefaults.standard.object(forKey: "savedImage") as! NSData) != nil {
+//
+//            avatarImg?.image = UIImage(data: userAvatar as Data)
+//        } else {
+//            avatarImg?.image = #imageLiteral(resourceName: "avatar")
+//        }
         avatarImg?.image = UIImage(data: userAvatar as Data)
+        
     }
     
     func loadMenu() {
