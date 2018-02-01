@@ -23,13 +23,6 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     override func viewDidAppear(_ animated: Bool) {
         
-//        if (UserDefaults.standard.object(forKey: "savedImage") as! NSData) != nil {
-//
-//            avatar?.image = UIImage(data: userAvatar as Data)
-//        } else {
-//            avatar?.image = #imageLiteral(resourceName: "avatar")
-//        }
-        
         userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
         avatar?.image = UIImage(data: userAvatar as Data)
     }
