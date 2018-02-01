@@ -21,31 +21,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyB64NblnsoVjdvz9xvJsDKnfbQQsHGBHsA")
         
         // Configuración del SDK de Facebook
-//        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         let userDefaults = UserDefaults.standard
         let result = userDefaults.bool(forKey: kIsFirstEntry)
         var nav: UIViewController?
-        
+
         if result == false {
-            //Creamos una pantalla para iniciar la app
-            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let cards = storyBoard.instantiateViewController(withIdentifier: "MainCards")
-            
-            //Seteamos la key y sincronizamos para guardar la información
-            userDefaults.set(true, forKey: kIsFirstEntry)
-            userDefaults.synchronize()
-            
-            //Creamos navigationController y le pasamos la pantalla intro como rootViewController
-            nav = cards
-            
-        } else {
+
             // Creamos una instancia de la primera pantalla
             let start = Intro()
             start.view.backgroundColor = UIColor.white
             nav = start
+            
+            //Seteamos la key y sincronizamos para guardar la información
+            userDefaults.set(true, forKey: kIsFirstEntry)
+            userDefaults.synchronize()
+
+        } else {
+
+//            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            let cards = storyBoard.instantiateViewController(withIdentifier: "MainCards")
+            
+            //Creamos una pantalla para iniciar la app
+            let start = LoadingScreen()
+            
+            //Creamos navigationController y le pasamos la pantalla intro como rootViewController
+            nav = start
         }
-        
         
         // Inicializamos la instancia de tipo intro como el controlador raíz
         window = UIWindow(frame: UIScreen.main.bounds)

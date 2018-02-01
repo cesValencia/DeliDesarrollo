@@ -20,6 +20,12 @@ let bgTipoComida = UIColor(red: 38.00/255, green: 40.00/255, blue: 52.00/255, al
 // Llaves para userDefaults
 let kIsFirstEntry = "kIsFirstEntry"
 
+// Token de usuario
+var userToken: String = ""
+
+// Imagen de usuario
+var userAvatar: NSData = UIImagePNGRepresentation(#imageLiteral(resourceName: "avatar"))! as NSData
+
 // Variables utilizadas para customizar el header de las tarjetas
 var currentSelection = 1
 var tarjetaActiva = 0

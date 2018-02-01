@@ -362,8 +362,7 @@ class Intro: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, URL_Se
     }
     
     
-    //Funciones de protocolo para realizar el POST a la base de datos
-    // Protocolo
+    // Funciones de protocolo para realizar el POST a la base de datos
     func connectionFinishWithError(session: URL_Session, error: Error) {
         print(error.localizedDescription)
     }
@@ -391,7 +390,7 @@ class Intro: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, URL_Se
         
         
     }
-    //Funciones de protocolo para realizar el POST a la base de datos
+    // Funciones de protocolo para realizar el POST a la base de datos
     
     //Función que permite la reproducción en ciclo del video
     @objc func videoDidFinish(notification: Notification) {

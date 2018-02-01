@@ -34,6 +34,7 @@ class DemoViewController: ExpandingViewController {
     var swipeGesture: UISwipeGestureRecognizer?
     
   var statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+    var avatarImg: UIImageView?
 }
 
 // MARK: - Lifecycle 🌎
@@ -81,6 +82,16 @@ extension DemoViewController {
     configureNavBar()
   }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if (UserDefaults.standard.object(forKey: "savedImage") as! NSData) != nil {
+            
+            avatarImg?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatarImg?.image = #imageLiteral(resourceName: "avatar")
+        }
+    }
+    
     func loadMenu() {
         
         //Menu de la aplicación
@@ -109,20 +120,20 @@ extension DemoViewController {
         menuContent.addSubview(adorno)
         
         // Imagen de perfil
-        let avatarImg = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.04, width: wScreen * 0.14, height: wScreen * 0.14))
-        avatarImg.image = #imageLiteral(resourceName: "avatar")
-        avatarImg.layer.cornerRadius = avatarImg.frame.width/2
-        avatarImg.layer.masksToBounds = true
-        menuContent.addSubview(avatarImg)
+        avatarImg = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.04, width: wScreen * 0.14, height: wScreen * 0.14))
+        avatarImg?.image = UIImage(data: userAvatar as Data)
+        avatarImg?.layer.cornerRadius = avatarImg!.frame.width/2
+        avatarImg?.layer.masksToBounds = true
+        menuContent.addSubview(avatarImg!)
         
         // Username
-        let username = UILabel(frame: CGRect(x: avatarImg.frame.maxX + wScreen * 0.03, y: hScreen * 0.05, width: wScreen * 0.35, height: wScreen * 0.05))
+        let username = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: hScreen * 0.05, width: wScreen * 0.35, height: wScreen * 0.05))
         username.text = "David Valencia"
         username.textColor = .black
         username.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         menuContent.addSubview(username)
         
-        let usermail = UILabel(frame: CGRect(x: avatarImg.frame.maxX + wScreen * 0.03, y: username.frame.maxY, width: wScreen * 0.35, height: wScreen * 0.05))
+        let usermail = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: username.frame.maxY, width: wScreen * 0.35, height: wScreen * 0.05))
         usermail.text = "David Valencia"
         usermail.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
         usermail.font = UIFont(name: "HelveticaNeue", size: 11)
@@ -255,10 +266,13 @@ extension DemoViewController {
     
     @objc func verPerfilPressed() {
         
+        let perfilVC = Perfil3()
+        navigationController?.pushViewController(perfilVC, animated: true)
     }
     
     @objc func optionPressed(sender: UIButton) {
         
+
     }
     
     @objc func closeS() {

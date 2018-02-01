@@ -21,6 +21,16 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         loadInterface()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if (UserDefaults.standard.object(forKey: "savedImage") as! NSData) != nil {
+            
+            avatar?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatar?.image = #imageLiteral(resourceName: "avatar")
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -211,8 +221,12 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     // MARK: ImagePickerController Protocol
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let picture = info[UIImagePickerControllerOriginalImage] as? UIImage
-        avatar?.image = picture
+        let imgData: NSData = UIImagePNGRepresentation((info[UIImagePickerControllerOriginalImage] as? UIImage)!)! as NSData
+        UserDefaults.standard.set(imgData, forKey: "savedImage")
+        
+        // Decode
+        userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+        avatar?.image = UIImage(data: userAvatar as Data)
         
         picker.dismiss(animated: true, completion: nil)
     }

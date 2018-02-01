@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Login: UIViewController, UITextFieldDelegate {
+class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
 
     var backgroundImg: UIImageView?
     var logoLogin: UIImageView?
@@ -210,17 +210,138 @@ class Login: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    // Funciones de los selectores del login
+    // Funciones de protocolo para realizar el POST a la base de datos
+    func connectionFinishWithError(session: URL_Session, error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    func connectionFinishSuccessfull(session: URL_Session, response: NSDictionary) {
+        print(response)
+        
+        let mensaje = response["msg"] as? String ?? "El correo ya ha sido registrado, inténtelo nuevamente!"
+        let token = response["token"] as? String ?? "El token ya ha sido asignado"
+        
+        print(token)
+        print(mensaje)
+        
+        userToken = token
+        UserDefaults.standard.set(userToken, forKey: "token")
+
+        if mensaje == "Usuario logueado satisfactoriamente" || mensaje == "Usuario agregado con exito!!!" {
+            
+            let nextVc = TipoComida()
+            //            nextVc.pass = token
+            present(nextVc, animated: true, completion: nil)
+        } else {
+            
+            let alerta = UIAlertController(title: "Alerta", message: mensaje, preferredStyle: .alert)
+            alerta.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alerta, animated: true, completion: nil)
+        }
+        
+        
+    }
+    
+    //Funciones los botones de SignIn y SignUp
     @objc func inPressed() {
         
+        //Almacenando y enviando los datos ingresados para el login
+        let miMail: String? = mailTF?.text
+        let token: String? = passwordTF?.text
+        
+        let networkLogin = URL_Session()
+        networkLogin.delegate = self
+        networkLogin.logear(con: token!, con: miMail!)
+        
+        mailTF?.text = ""
+        passwordTF?.text = ""
+        
+        //Almacenando y enviando los datos ingresados para el login
     }
     
     @objc func upPressed() {
         
+        //Almacenando y enviando los datos ingresados para el registro
+        let newUser: String? = userTF?.text
+        let newMail: String? = mailTF?.text
+        let newPass: String? = passwordTF?.text
+        
+        let emailReg = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailReg)
+        
+        
+        if (newPass?.count)! < 5 {
+            
+            let mensaje = "La contraseña no debe contener menos de 5 caracteres"
+            
+            let alerta = UIAlertController(title: "Alerta", message: mensaje, preferredStyle: .alert)
+            alerta.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alerta, animated: true, completion: nil)
+        } else if newUser?.count == 0 || newMail?.count == 0 || newPass?.count == 0 {
+            
+            let mensaje = "Todos los campos son obligatorios"
+            
+            let alerta = UIAlertController(title: "Alerta", message: mensaje, preferredStyle: .alert)
+            alerta.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alerta, animated: true, completion: nil)
+        } else if emailTest.evaluate(with: newMail) == false {
+            
+            let mensaje = "El correo es inválido"
+            
+            let alerta = UIAlertController(title: "Alerta", message: mensaje, preferredStyle: .alert)
+            alerta.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alerta, animated: true, completion: nil)
+        } else {
+            
+            let networkManager = URL_Session()
+            networkManager.delegate = self
+            networkManager.registrar(para: newUser!, con: newPass!, con: newMail!)
+            
+            userTF?.text = ""
+            mailTF?.text = ""
+            passwordTF?.text = ""
+        }
+        
     }
     
+    func isValidEmail(string: String) -> Bool {
+        let emailReg = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailReg)
+        return emailTest.evaluate(with: string)
+    }
+    
+    // MARK: Funciones de Protocolo de FBSDKButtonDelegate
     @objc func fbPressed() {
         
+        let fbLoginManager: FBSDKLoginManager = FBSDKLoginManager()
+        fbLoginManager.logIn(withReadPermissions: ["email"], from: self) { (result, error) -> Void in
+            if (error == nil){
+                let fbloginresult : FBSDKLoginManagerLoginResult = result!
+                // if user cancel the login
+                if (result?.isCancelled)!{
+                    return
+                }
+                if(fbloginresult.grantedPermissions.contains("email"))
+                {
+                    self.getFBUserData()
+                }
+            }
+        }
+    }
+    
+    func getFBUserData(){
+        if((FBSDKAccessToken.current()) != nil){
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
+                if (error == nil){
+                    //everything works print the user data
+                    
+                    print(result ?? "")
+                    let newVC = TipoComida()
+                    self.present(newVC, animated: true, completion: nil)
+                }
+                
+            })
+        }
     }
     
     @objc func toIn() {
@@ -230,6 +351,8 @@ class Login: UIViewController, UITextFieldDelegate {
             self.userTF?.alpha = 0
             self.haveAccount?.alpha = 0
             self.haveNoAccount?.alpha = 1
+            self.inBtn?.alpha = 1
+            self.upBtn?.alpha = 0
         }
     }
     
@@ -240,6 +363,8 @@ class Login: UIViewController, UITextFieldDelegate {
             self.userTF?.alpha = 1
             self.haveAccount?.alpha = 1
             self.haveNoAccount?.alpha = 0
+            self.inBtn?.alpha = 0
+            self.upBtn?.alpha = 1
         }
     }
 }
