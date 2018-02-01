@@ -29,6 +29,8 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
 //        } else {
 //            avatar?.image = #imageLiteral(resourceName: "avatar")
 //        }
+        
+        userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
         avatar?.image = UIImage(data: userAvatar as Data)
     }
     
