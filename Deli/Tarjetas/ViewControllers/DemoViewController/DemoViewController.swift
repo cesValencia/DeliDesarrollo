@@ -82,17 +82,16 @@ extension DemoViewController {
     configureNavBar()
   }
     
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         
-//        if (UserDefaults.standard.object(forKey: "savedImage") as! NSData) != nil {
-//
-//            avatarImg?.image = UIImage(data: userAvatar as Data)
-//        } else {
-//            avatarImg?.image = #imageLiteral(resourceName: "avatar")
-//        }
-        avatarImg?.image = UIImage(data: userAvatar as Data)
-        
+
+
     }
+    
+
+    
     
     func loadMenu() {
         
@@ -218,6 +217,15 @@ extension DemoViewController {
         super.viewWillAppear(animated)
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if (UserDefaults.standard.object(forKey: "savedImage") as? NSData) != nil{
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            avatarImg?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatarImg?.image = #imageLiteral(resourceName: "user-foto")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -226,6 +234,15 @@ extension DemoViewController {
         navigationController?.isNavigationBarHidden = false
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if (UserDefaults.standard.object(forKey: "savedImage") as? NSData) != nil{
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            avatarImg?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatarImg?.image = #imageLiteral(resourceName: "user-foto")
+        }
     }
     
     //Selector Marker
@@ -274,7 +291,20 @@ extension DemoViewController {
     
     @objc func optionPressed(sender: UIButton) {
         
-
+        switch sender.tag {
+        case 1:
+            navigationController?.pushViewController(Noticias(), animated: true)
+        case 1:
+            navigationController?.pushViewController(Noticias(), animated: true)
+        case 1:
+            navigationController?.pushViewController(Noticias(), animated: true)
+        case 1:
+            navigationController?.pushViewController(Noticias(), animated: true)
+        case 1:
+            navigationController?.pushViewController(Noticias(), animated: true)
+        default:
+            navigationController?.pushViewController(Noticias(), animated: true)
+        }
     }
     
     @objc func closeS() {

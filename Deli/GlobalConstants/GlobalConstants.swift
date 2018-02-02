@@ -24,7 +24,7 @@ let kIsFirstEntry = "kIsFirstEntry"
 var userToken: String = ""
 
 // Imagen de usuario
-var userAvatar: NSData = UIImagePNGRepresentation(#imageLiteral(resourceName: "avatar"))! as NSData
+var userAvatar: NSData = UIImagePNGRepresentation(#imageLiteral(resourceName: "user-foto"))! as NSData
 
 // Variables utilizadas para customizar el header de las tarjetas
 var currentSelection = 1

@@ -196,7 +196,8 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
     tabBarView?.addSubview(tabBtn4!)
     
     tabAvatar = UIImageView(frame: CGRect(x: tabBtn4!.frame.maxX + (wScreen * 0.08), y: tabBarView!.frame.height * 0.15, width: wScreen * 0.12, height: wScreen * 0.12))
-    tabAvatar?.image = #imageLiteral(resourceName: "avatar")
+    tabAvatar?.layer.cornerRadius = tabAvatar!.frame.width/2
+    tabAvatar?.layer.masksToBounds = true
     tabBarView?.addSubview(tabAvatar!)
     
     configureNavBar()
@@ -207,16 +208,39 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
     
   }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            tabAvatar?.image = UIImage(data: userAvatar as Data)
+        } else {
+            tabAvatar?.image = #imageLiteral(resourceName: "user-foto")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            tabAvatar?.image = UIImage(data: userAvatar as Data)
+        } else {
+            tabAvatar?.image = #imageLiteral(resourceName: "user-foto")
+        }
     }
     
     @objc func tab1Pressed() {

@@ -14,6 +14,7 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     var pickerController: UIImagePickerController?
     var tapGesture: UITapGestureRecognizer?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,10 +22,37 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         loadInterface()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // Ocultando navigationBar del sistema
+        navigationController?.isNavigationBarHidden = true
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            avatar?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatar?.image = #imageLiteral(resourceName: "user-foto")
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // Ocultando navigationBar del sistema
+        navigationController?.isNavigationBarHidden = true
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            avatar?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatar?.image = #imageLiteral(resourceName: "user-foto")
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         
-        
-        avatar?.image = UIImage(data: userAvatar as Data)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -32,7 +60,10 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         // Dispose of any resources that can be recreated.
     }
     
+    
     func loadInterface() {
+        
+
         
         //Medidas de ancho y alto de pantalla
         let widthScreen = view.frame.width
@@ -80,7 +111,6 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         
         //Avatar de usuario
         avatar = UIImageView(frame: CGRect(x: widthScreen - 120, y: backBtn.frame.maxY + 155, width: 83, height: 83))
-        avatar?.image = UIImage(named: "avatar")
         avatar?.isUserInteractionEnabled = true
         avatar?.backgroundColor = UIColor.gray
         avatar?.layer.cornerRadius = avatar!.frame.width/2
@@ -193,6 +223,7 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     
     // Función para seleccionar nueva imagen del dispositivo
+   
     @objc func tapDetected() {
         
         let actionSheet = UIAlertController(title: "Deli", message: "¿Qué desea hacer?", preferredStyle: UIAlertControllerStyle.actionSheet)
@@ -207,9 +238,37 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             self.present(self.pickerController!, animated: true, completion: nil)
         }
         
+        let takePictureAction = UIAlertAction(title: "Tomar foto", style: UIAlertActionStyle.default) { (_) in
+            print("Tomar foto")
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                self.pickerController = UIImagePickerController()
+                self.pickerController?.delegate = self
+                self.pickerController?.sourceType = .camera
+//                self.pickerController?.cameraDevice = .front
+                self.pickerController?.cameraFlashMode = .off
+                self.pickerController?.cameraCaptureMode = .photo
+                if #available(iOS 11.0, *) {
+                    self.pickerController?.imageExportPreset = .current
+                } else {
+                    // Fallback on earlier versions
+                }
+                
+                DispatchQueue.global(qos: .userInitiated).async {
+                    
+                    self.present(self.pickerController!, animated: true, completion: nil)
+                }
+                
+                
+            } else {
+                print("No tienes cámara disponible")
+            }
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancelar", style: UIAlertActionStyle.destructive, handler: nil)
         
         actionSheet.addAction(choosePictureAction)
+        actionSheet.addAction(takePictureAction)
         actionSheet.addAction(cancelAction)
         
         present(actionSheet, animated: true, completion: nil)
@@ -226,6 +285,8 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         
         picker.dismiss(animated: true, completion: nil)
     }
+    
+
     
     @objc func backPressed() {
         

@@ -35,6 +35,8 @@ class LoadingScreen: UIViewController {
         } else {
             
             print("Error de inicio")
+            let loginScreen = Login()
+            self.present(loginScreen, animated: true, completion: nil)
         }
     }
     
@@ -43,8 +45,6 @@ class LoadingScreen: UIViewController {
         launchScreen = UIImageView(image: #imageLiteral(resourceName: "launchDeliFake"))
         launchScreen?.frame = view.frame
         view.addSubview(launchScreen!)
-
-
     }
 
 }

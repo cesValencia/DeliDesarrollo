@@ -164,7 +164,7 @@ class FullDetails: UIViewController, UIScrollViewDelegate {
 
         } else {
             //Imagen por default.... sugiero poner una imagen default por si algo sale mal
-            
+            background.image = #imageLiteral(resourceName: "sin-back")
         }
         NSLog("BAJAR IMAGEN 3")
 

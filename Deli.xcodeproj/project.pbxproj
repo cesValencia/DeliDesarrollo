@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		05F68D35024D13E3B46E4C78 /* Pods_Deli.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243A8319085DB3971BFB8910 /* Pods_Deli.framework */; };
 		183174C620223D790038D61F /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183174C520223D790038D61F /* LoadingScreen.swift */; };
+		187E8AC120240A7A00D2B32E /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E8AC020240A7A00D2B32E /* NewsModel.swift */; };
+		187E8AC320240A8700D2B32E /* Noticias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E8AC220240A8700D2B32E /* Noticias.swift */; };
 		B80624A42007D635009CDF7B /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A12007D634009CDF7B /* FBSDKLoginKit.framework */; };
 		B80624A52007D635009CDF7B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A22007D634009CDF7B /* Bolts.framework */; };
 		B80624A62007D635009CDF7B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A32007D635009CDF7B /* FBSDKCoreKit.framework */; };
@@ -141,6 +143,8 @@
 
 /* Begin PBXFileReference section */
 		183174C520223D790038D61F /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
+		187E8AC020240A7A00D2B32E /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
+		187E8AC220240A8700D2B32E /* Noticias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Noticias.swift; sourceTree = "<group>"; };
 		243A8319085DB3971BFB8910 /* Pods_Deli.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Deli.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71246CD7EA325DC587FE9028 /* Pods-Deli.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deli.release.xcconfig"; path = "Pods/Target Support Files/Pods-Deli/Pods-Deli.release.xcconfig"; sourceTree = "<group>"; };
 		8870835342F5EA7E00382F59 /* Pods-Deli.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deli.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Deli/Pods-Deli.debug.xcconfig"; sourceTree = "<group>"; };
@@ -292,6 +296,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		187E8ABF2023D98E00D2B32E /* Noticias */ = {
+			isa = PBXGroup;
+			children = (
+				187E8AC220240A8700D2B32E /* Noticias.swift */,
+			);
+			path = Noticias;
+			sourceTree = "<group>";
+		};
 		A06E04F2136DB1A02B423C26 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +343,7 @@
 		B848953C1FFFCD6600D04F99 /* Deli */ = {
 			isa = PBXGroup;
 			children = (
+				187E8ABF2023D98E00D2B32E /* Noticias */,
 				B89BB2862011135800D9E976 /* Preloader */,
 				B82F2F6E2003CFBC00620BAC /* Perfil */,
 				B84897AC20000EDD00D04F99 /* Trivias */,
@@ -767,6 +780,7 @@
 		B84897A720000EBF00D04F99 /* Modelos */ = {
 			isa = PBXGroup;
 			children = (
+				187E8AC020240A7A00D2B32E /* NewsModel.swift */,
 				B848976F20000C4000D04F99 /* Restaurant.swift */,
 				B84897A820000ECC00D04F99 /* Combo.swift */,
 				B84897A920000ECC00D04F99 /* Horarios.swift */,
@@ -1051,6 +1065,7 @@
 				B84897591FFFFAEB00D04F99 /* BasePageCollectionCell.swift in Sources */,
 				B8D12B24200D764F009A63C8 /* ControllerT7.swift in Sources */,
 				B8D12B1A200D760E009A63C8 /* ControllerT2.swift in Sources */,
+				187E8AC320240A8700D2B32E /* Noticias.swift in Sources */,
 				B84897641FFFFB5500D04F99 /* DemoCollectionViewCell.swift in Sources */,
 				B8D12B26200D765A009A63C8 /* ControllerT8.swift in Sources */,
 				B84897A420000E8000D04F99 /* CollectionViewEx3.swift in Sources */,
@@ -1065,6 +1080,7 @@
 				B848974E1FFFFAAA00D04F99 /* SubviewsForEach.swift in Sources */,
 				B84897A320000E8000D04F99 /* CollectionViewEx4.swift in Sources */,
 				B848973C1FFFFA2E00D04F99 /* TransitionDriver.swift in Sources */,
+				187E8AC120240A7A00D2B32E /* NewsModel.swift in Sources */,
 				B89BB28D201113DA00D9E976 /* MetaSpin.swift in Sources */,
 				B84897351FFFF9F200D04F99 /* Images.swift in Sources */,
 				B8D12B16200D75F2009A63C8 /* PagingT.swift in Sources */,

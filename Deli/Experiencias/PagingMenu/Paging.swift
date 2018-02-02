@@ -105,6 +105,7 @@ class Paging: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, 
     var typeTitle7 = (category: "Europea", desc: "tipos de comida")
     var typeTitle8 = (category: "Saludable", desc: "tipos de comida")
     var urlTags = "http://104.236.10.17/api/restaurantes"
+    var avatarImg: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,12 +125,30 @@ class Paging: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, 
         
         navigationController?.isNavigationBarHidden = true
         UIApplication.shared.statusBarStyle = .default
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            avatarImg?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatarImg?.image = #imageLiteral(resourceName: "user-foto")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         
         navigationController?.isNavigationBarHidden = true
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            avatarImg?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatarImg?.image = #imageLiteral(resourceName: "user-foto")
+        }
     }
     
     func loadInterface() {
@@ -452,16 +471,17 @@ class Paging: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, 
         viewTop.layer.cornerRadius = 2.0
         typeFoodView?.addSubview(viewTop)
         
-        let avatarImg = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.04, width: wScreen * 0.15, height: wScreen * 0.15))
-        avatarImg.image = #imageLiteral(resourceName: "avatar")
-        typeFoodView?.addSubview(avatarImg)
+        avatarImg = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.04, width: wScreen * 0.15, height: wScreen * 0.15))
+        avatarImg?.layer.cornerRadius = avatarImg!.frame.width/2
+        avatarImg?.layer.masksToBounds = true
+        typeFoodView?.addSubview(avatarImg!)
         
-        let visualizarText = UILabel(frame: CGRect(x: avatarImg.frame.maxX + wScreen * 0.03, y: hScreen * 0.065, width: wScreen * 0.3, height: hScreen * 0.03))
+        let visualizarText = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: hScreen * 0.065, width: wScreen * 0.3, height: hScreen * 0.03))
         visualizarText.text = "Visualizar por"
         visualizarText.font = UIFont(name: "Roboto-Bold", size: 18)
         typeFoodView?.addSubview(visualizarText)
         
-        let typeText = UILabel(frame: CGRect(x: avatarImg.frame.maxX + wScreen * 0.04, y: visualizarText.frame.maxY + 1, width: wScreen * 0.3, height: hScreen * 0.02))
+        let typeText = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.04, y: visualizarText.frame.maxY + 1, width: wScreen * 0.3, height: hScreen * 0.02))
         typeText.text = "tipo de comida"
         typeText.font = UIFont(name: "HelveticaNeue", size: 12)
         typeText.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
@@ -473,7 +493,7 @@ class Paging: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, 
         btnToMaps.addTarget(self, action: #selector(goMaps), for: .touchUpInside)
         typeFoodView?.addSubview(btnToMaps)
         
-        let separacion = UIView(frame: CGRect(x: 0, y: avatarImg.frame.maxY + hScreen * 0.025, width: wScreen, height: 1))
+        let separacion = UIView(frame: CGRect(x: 0, y: avatarImg!.frame.maxY + hScreen * 0.025, width: wScreen, height: 1))
         separacion.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
         typeFoodView?.addSubview(separacion)
         
