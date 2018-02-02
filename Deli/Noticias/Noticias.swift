@@ -168,7 +168,6 @@ class Noticias: UIViewController, UICollectionViewDelegate, UICollectionViewData
         newsBoard?.bounces = false
         newsBoard?.isScrollEnabled = true
         newsBoard?.isPagingEnabled = false
-        newsBoard?.backgroundColor = UIColor.blue
         newsBgBoard?.addSubview(newsBoard!)
         
         autorImg = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.02, width: wScreen * 0.15, height: wScreen * 0.15))
