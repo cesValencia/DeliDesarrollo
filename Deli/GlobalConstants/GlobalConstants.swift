@@ -26,6 +26,10 @@ var userToken: String = ""
 // Imagen de usuario
 var userAvatar: NSData = UIImagePNGRepresentation(#imageLiteral(resourceName: "user-foto"))! as NSData
 
+// Nombre y correo electrónico del usuario
+var nombreUsuario = ""
+var mailUsuario = ""
+
 // Variables utilizadas para customizar el header de las tarjetas
 var currentSelection = 1
 var tarjetaActiva = 0

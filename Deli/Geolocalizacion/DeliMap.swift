@@ -188,32 +188,48 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
     
     func connectionFinishSuccessfull(session: URL_SessionM, response: NSDictionary) {
         print(response)
-        let detail = FullDetails()
         
-        detail.imagen_principal = response["imagen_principal"] as? String
-        detail.tipo_comida = response["tipo_comida"] as? String
-        detail.name_restaurant = response["name_restaurant"] as? String
-        detail.incluye = response["incluye"] as? String
-        detail.img_price = response["img_price"] as? String
-        detail.precio = response["precio"] as? String
-        detail.logo = response["logo"] as? String
-        detail.introduccion = response["introduccion"] as? String
-        detail.p1 = response["p1"] as? String
-        detail.link_video = response["link_video"] as? String
-        detail.p2 = response["p2"] as? String
-        detail.imagen_2 = response["imagen_2"] as? String
-        detail.frase = response["frase"] as? String
-        detail.p3 = response["p3"] as? String
-        detail.imagen_3 = response["imagen_3"] as? String
-        detail.logo_editorial = response["logo_editorial"] as? String
-        detail.editorial = response["editorial"] as? String
-        detail.id_restaurant = response["id_restaurant"] as? String
-        detail.category = response["category"] as? String
-        detail.zona = response["zona"] as? String
-        detail.direccion = response["direccion"] as? String
+        let mensaje = response["msg"] as? String ?? "Error"
         
-//        present(detail, animated: true, completion: nil)
-        navigationController?.pushViewController(detail, animated: true)
+        if mensaje == "No hay restaurantes cerca de ti" {
+            let alerta = UIAlertController(title: "Lo sentimos!", message: "No hay restaurantes cerca de ti", preferredStyle: UIAlertControllerStyle.actionSheet)
+            
+            let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (_) in
+                self.navigationController?.popViewController(animated: true)
+            })
+            
+            alerta.addAction(action)
+            
+            present(alerta, animated: true, completion: nil)
+        } else {
+            let detail = FullDetails()
+            
+            detail.imagen_principal = response["imagen_principal"] as? String
+            detail.tipo_comida = response["tipo_comida"] as? String
+            detail.name_restaurant = response["name_restaurant"] as? String
+            detail.incluye = response["incluye"] as? String
+            detail.img_price = response["img_price"] as? String
+            detail.precio = response["precio"] as? String
+            detail.logo = response["logo"] as? String
+            detail.introduccion = response["introduccion"] as? String
+            detail.p1 = response["p1"] as? String
+            detail.link_video = response["link_video"] as? String
+            detail.p2 = response["p2"] as? String
+            detail.imagen_2 = response["imagen_2"] as? String
+            detail.frase = response["frase"] as? String
+            detail.p3 = response["p3"] as? String
+            detail.imagen_3 = response["imagen_3"] as? String
+            detail.logo_editorial = response["logo_editorial"] as? String
+            detail.editorial = response["editorial"] as? String
+            detail.id_restaurant = response["id_restaurant"] as? String
+            detail.category = response["category"] as? String
+            detail.zona = response["zona"] as? String
+            detail.direccion = response["direccion"] as? String
+            
+            navigationController?.pushViewController(detail, animated: true)
+        }
+        
+
     }
     
     func connectionFinishSuccessfullM(session: URL_SessionM, response: [NSDictionary]) {

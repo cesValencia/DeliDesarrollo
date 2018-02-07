@@ -34,7 +34,6 @@ class LoadingScreen: UIViewController {
             self.present(cards, animated: true, completion: nil)
         } else {
             
-            print("Error de inicio")
             let loginScreen = Login()
             self.present(loginScreen, animated: true, completion: nil)
         }

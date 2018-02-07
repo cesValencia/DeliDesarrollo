@@ -46,10 +46,6 @@ class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
     // MARK: - Load complete interface
     func loadInterface() {
         
-        let guia = UIImageView(frame: view.frame)
-        guia.image = #imageLiteral(resourceName: "maas")
-//        view.addSubview(guia)
-        
         backgroundImg = UIImageView(frame: view.frame)
         backgroundImg?.image = #imageLiteral(resourceName: "bgLogin")
         view.addSubview(backgroundImg!)
@@ -92,10 +88,6 @@ class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
         userTF?.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         userTF?.borderStyle = .roundedRect
         userTF?.clearsOnBeginEditing = true
-//        userTF?.layer.shadowColor = UIColor.black.cgColor
-//        userTF?.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-//        userTF?.layer.shadowRadius = 3.0
-//        userTF?.layer.shadowOpacity = 0.5
         infoBox?.addSubview(userTF!)
         
         mailTF = UITextField(frame: CGRect(x: infoBoxW! * 0.094, y: userTF!.frame.maxY + infoBoxH! * 0.04, width: infoBoxW! * 0.812, height: infoBoxH! * 0.105))
@@ -109,10 +101,6 @@ class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
         mailTF?.borderStyle = .roundedRect
         mailTF?.textColor = UIColor(red: 54/255, green: 54/255, blue: 54/255, alpha: 1)
         mailTF?.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
-//        mailTF?.layer.shadowColor = UIColor.black.cgColor
-//        mailTF?.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-//        mailTF?.layer.shadowRadius = 3.0
-//        mailTF?.layer.shadowOpacity = 0.5
         infoBox?.addSubview(mailTF!)
         
         passwordTF = UITextField(frame: CGRect(x: infoBoxW! * 0.094, y: mailTF!.frame.maxY + infoBoxH! * 0.04, width: infoBoxW! * 0.812, height: infoBoxH! * 0.105))
@@ -126,20 +114,12 @@ class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
         passwordTF?.textColor = UIColor(red: 54/255, green: 54/255, blue: 54/255, alpha: 1)
         passwordTF?.isSecureTextEntry = true
         passwordTF?.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
-//        passwordTF?.layer.shadowColor = UIColor.black.cgColor
-//        passwordTF?.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-//        passwordTF?.layer.shadowRadius = 3.0
-//        passwordTF?.layer.shadowOpacity = 0.5
         infoBox?.addSubview(passwordTF!)
         
         inBtn = UIButton(type: UIButtonType.custom)
         inBtn?.frame = CGRect(x: infoBoxW! * 0.075, y: passwordTF!.frame.maxY + infoBoxH! * 0.076, width: infoBoxW! * 0.85, height: infoBoxH! * 0.109)
         inBtn?.setImage(#imageLiteral(resourceName: "inBtnImg"), for: UIControlState.normal)
         inBtn?.addTarget(self, action: #selector(inPressed), for: UIControlEvents.touchUpInside)
-//        inBtn?.layer.shadowColor = UIColor.black.cgColor
-//        inBtn?.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-//        inBtn?.layer.shadowRadius = 3.0
-//        inBtn?.layer.shadowOpacity = 0.5
         inBtn?.alpha = 0
         infoBox?.addSubview(inBtn!)
         
@@ -147,10 +127,6 @@ class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
         upBtn?.frame = CGRect(x: infoBoxW! * 0.075, y: passwordTF!.frame.maxY + infoBoxH! * 0.076, width: infoBoxW! * 0.85, height: infoBoxH! * 0.109)
         upBtn?.setImage(#imageLiteral(resourceName: "upBtnImg"), for: UIControlState.normal)
         upBtn?.addTarget(self, action: #selector(upPressed), for: UIControlEvents.touchUpInside)
-//        upBtn?.layer.shadowColor = UIColor.black.cgColor
-//        upBtn?.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-//        upBtn?.layer.shadowRadius = 3.0
-//        upBtn?.layer.shadowOpacity = 0.5
         infoBox?.addSubview(upBtn!)
         
         fbBtn = UIButton(type: UIButtonType.custom)
@@ -227,10 +203,23 @@ class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
         userToken = token
         UserDefaults.standard.set(userToken, forKey: "token")
 
-        if mensaje == "Usuario logueado satisfactoriamente" || mensaje == "Usuario agregado con exito!!!" {
+        if mensaje == "Usuario agregado con exito!!!" {
+            
+            nombreUsuario = userTF?.text ?? ""
+            mailUsuario = mailTF?.text ?? ""
+            
+            UserDefaults.standard.set(nombreUsuario, forKey: "userName")
+            UserDefaults.standard.set(mailUsuario, forKey: "userMail")
+            
+            userTF?.text = ""
+            mailTF?.text = ""
+            passwordTF?.text = ""
             
             let nextVc = TipoComida()
-            //            nextVc.pass = token
+            present(nextVc, animated: true, completion: nil)
+        } else if mensaje == "Usuario logueado satisfactoriamente" {
+            
+            let nextVc = TipoComida()
             present(nextVc, animated: true, completion: nil)
         } else {
             
@@ -297,9 +286,7 @@ class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
             networkManager.delegate = self
             networkManager.registrar(para: newUser!, con: newPass!, con: newMail!)
             
-            userTF?.text = ""
-            mailTF?.text = ""
-            passwordTF?.text = ""
+
         }
         
     }

@@ -32,6 +32,8 @@ class DemoViewController: ExpandingViewController {
     var menuBG = UIView()
     var menuContent = UIView()
     var swipeGesture: UISwipeGestureRecognizer?
+    var username: UILabel?
+    var usermail: UILabel?
     
   var statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
     var avatarImg: UIImageView?
@@ -84,6 +86,7 @@ extension DemoViewController {
     
     
     
+    
     override func viewDidAppear(_ animated: Bool) {
         
 
@@ -128,17 +131,15 @@ extension DemoViewController {
         menuContent.addSubview(avatarImg!)
         
         // Username
-        let username = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: hScreen * 0.05, width: wScreen * 0.35, height: wScreen * 0.05))
-        username.text = "David Valencia"
-        username.textColor = .black
-        username.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
-        menuContent.addSubview(username)
+        username = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: hScreen * 0.05, width: wScreen * 0.35, height: wScreen * 0.05))
+        username?.textColor = .black
+        username?.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        menuContent.addSubview(username!)
         
-        let usermail = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: username.frame.maxY, width: wScreen * 0.35, height: wScreen * 0.05))
-        usermail.text = "David Valencia"
-        usermail.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
-        usermail.font = UIFont(name: "HelveticaNeue", size: 11)
-        menuContent.addSubview(usermail)
+        usermail = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: username!.frame.maxY, width: wScreen * 0.35, height: wScreen * 0.05))
+        usermail?.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
+        usermail?.font = UIFont(name: "HelveticaNeue", size: 11)
+        menuContent.addSubview(usermail!)
         
         let verPerfilBtn = UIButton(type: .custom)
         verPerfilBtn.frame = CGRect(x: wScreen * 0.68, y: hScreen * 0.05, width: wScreen * 0.27, height: wScreen * 0.087)
@@ -217,6 +218,18 @@ extension DemoViewController {
         super.viewWillAppear(animated)
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
+        navigationController?.isNavigationBarHidden = true
+        
+        // UserDefaults para obtener nombre y correo del usuario
+        if let nombre = UserDefaults.standard.object(forKey: "userName") {
+            
+            username?.text = nombre as? String
+        }
+        
+        if let mailU = UserDefaults.standard.object(forKey: "userMail") {
+            
+            usermail?.text = mailU as? String
+        }
         
         // Implementación de userDefaults para cargar imagen de usuario
         if (UserDefaults.standard.object(forKey: "savedImage") as? NSData) != nil{
@@ -231,9 +244,20 @@ extension DemoViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        navigationController?.isNavigationBarHidden = false
+        navigationController?.isNavigationBarHidden = true
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // UserDefaults para obtener nombre y correo del usuario
+        if let nombre = UserDefaults.standard.object(forKey: "userName") {
+            
+            username?.text = nombre as? String
+        }
+        
+        if let mailU = UserDefaults.standard.object(forKey: "userMail") {
+            
+            usermail?.text = mailU as? String
+        }
         
         // Implementación de userDefaults para cargar imagen de usuario
         if (UserDefaults.standard.object(forKey: "savedImage") as? NSData) != nil{
@@ -253,7 +277,7 @@ extension DemoViewController {
     
     @objc func searchPressed() {
         
-        self.navigationController?.pushViewController(Busqueda(), animated: true)
+        self.navigationController?.pushViewController(Search(), animated: true)
     }
     
     //Selectores Menú

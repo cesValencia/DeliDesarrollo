@@ -13,7 +13,8 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     var avatar: UIImageView?
     var pickerController: UIImagePickerController?
     var tapGesture: UITapGestureRecognizer?
-    
+    var name: UILabel?
+    var mail: UILabel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,17 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     override func viewWillAppear(_ animated: Bool) {
         // Ocultando navigationBar del sistema
         navigationController?.isNavigationBarHidden = true
+        
+        // UserDefaults para obtener nombre y correo del usuario
+        if let nombre = UserDefaults.standard.object(forKey: "userName") {
+            
+            name?.text = nombre as? String
+        }
+        
+        if let mailU = UserDefaults.standard.object(forKey: "userMail") {
+         
+            mail?.text = mailU as? String
+        }
         
         // Implementación de userDefaults para cargar imagen de usuario
         if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
@@ -39,6 +51,17 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     override func viewWillDisappear(_ animated: Bool) {
         // Ocultando navigationBar del sistema
         navigationController?.isNavigationBarHidden = true
+        
+        // UserDefaults para obtener nombre y correo del usuario
+        if let nombre = UserDefaults.standard.object(forKey: "userName") {
+            
+            name?.text = nombre as? String
+        }
+        
+        if let mailU = UserDefaults.standard.object(forKey: "userMail") {
+            
+            mail?.text = mailU as? String
+        }
         
         // Implementación de userDefaults para cargar imagen de usuario
         if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
@@ -98,14 +121,13 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         view.addSubview(userIcon)
         
         //Nombre de usuario
-        let name = UILabel(frame: CGRect(x: userIcon.frame.maxX + 16, y: backBtn.frame.maxY + 155, width: 200, height: 18))
-        name.text = "David Valencia"
-        name.textColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
-        name.font = UIFont(name: "HelveticaNeue-Light", size: 16)
-        view.addSubview(name)
+        name = UILabel(frame: CGRect(x: userIcon.frame.maxX + 16, y: backBtn.frame.maxY + 155, width: 200, height: 18))
+        name?.textColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        name?.font = UIFont(name: "HelveticaNeue-Light", size: 16)
+        view.addSubview(name!)
         
         //Línea de separación 1
-        let line1 = UIView(frame: CGRect(x: 20, y: name.frame.maxY + 15, width: 235, height: 1))
+        let line1 = UIView(frame: CGRect(x: 20, y: name!.frame.maxY + 15, width: 235, height: 1))
         line1.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.1)
         view.addSubview(line1)
         
@@ -128,14 +150,13 @@ class Perfil3: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         view.addSubview(mailIcon)
         
         //Email de usuario
-        let mail = UILabel(frame: CGRect(x: userIcon.frame.maxX + 16, y: line1.frame.maxY + 45, width: 200, height: 18))
-        mail.text = "david@gmail.com"
-        mail.textColor = UIColor.white
-        mail.font = UIFont(name: "HelveticaNeue-Light", size: 16)
-        view.addSubview(mail)
+        mail = UILabel(frame: CGRect(x: userIcon.frame.maxX + 16, y: line1.frame.maxY + 45, width: 200, height: 18))
+        mail?.textColor = UIColor.white
+        mail?.font = UIFont(name: "HelveticaNeue-Light", size: 16)
+        view.addSubview(mail!)
         
         //Línea de separación 2
-        let line2 = UIView(frame: CGRect(x: 20, y: mail.frame.maxY + 15, width: widthScreen - 40, height: 1))
+        let line2 = UIView(frame: CGRect(x: 20, y: mail!.frame.maxY + 15, width: widthScreen - 40, height: 1))
         line2.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.1)
         view.addSubview(line2)
         
