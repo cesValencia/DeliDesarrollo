@@ -55,7 +55,7 @@ class Login: UIViewController, UITextFieldDelegate, URL_SessionDelegate {
         view.addSubview(logoLogin!)
         
         overlay = UIView(frame: CGRect(x: 0, y: hScreen * 0.538, width: wScreen, height: hScreen * 0.462))
-        overlay?.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+        overlay?.backgroundColor = UIColor.black.withAlphaComponent(0)
         view.addSubview(overlay!)
         
         infoBox = UIView(frame: CGRect(x: 0, y: 0, width: wScreen * 0.92, height: hScreen * 0.62))

@@ -30,6 +30,9 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     var botPurple: UIView?
     var seleccionaL: UILabel?
     var fraseL: UILabel?
+    var nextImg1: UIImageView?
+    var nextImg2: UIImageView?
+    var nextImg3: UIImageView?
     var nextBtn1: UIButton?
     var nextBtn2: UIButton?
     var nextBtn3: UIButton?
@@ -38,6 +41,10 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     var dataSource = [Horarios]()
     var horario: Horarios?
     var blockedHrs = [String]()
+    var mesActual: String?
+    var verCodigo: UILabel?
+    var verPendiente: UILabel?
+    var goCodigos: UIButton?
     
     let Domingo = 0
     let Lunes = 1
@@ -54,10 +61,11 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     
     // Variables de pagos1
     var backBtn: UIButton?
-    var calendarImg: UIImageView?
-    var titleLabel: UILabel?
-    var hoyLabel: UILabel?
-    var fecha: UILabel?
+    var avatarPagos: UIImageView?
+    var titleLabel1: UILabel?
+    var subLabel1: UILabel?
+    var fechaBG: UIImageView?
+    var fecha1: UILabel?
     var dates: [Date] = [Date]()
     var picker: UIPickerView?
     var lastText: UILabel?
@@ -65,9 +73,10 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     
     // Variables de pagos2
     var backBtn2: UIButton?
-    var calendarImg2: UIImageView?
+    var avatarPagos2: UIImageView?
     var titleLabel2: UILabel?
-    var hoyLabel2: UILabel?
+    var subLabel2: UILabel?
+    var fechaBG2: UIImageView?
     var fecha2: UILabel?
     var horas = [String]()
     var blocked = [String]()
@@ -77,18 +86,20 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     
     // Variables de pagos3
     var backBtn3: UIButton?
-    var calendarImg3: UIImageView?
+    var avatarPagos3: UIImageView?
     var titleLabel3: UILabel?
-    var hoyLabel3: UILabel?
+    var subLabel3: UILabel?
+    var fechaBG3: UIImageView?
     var fecha3: UILabel?
     var imgCarrito: UIImageView?
     // Variables de pagos3
     
     // Variables de pagos4
     var backBtn4: UIButton?
-    var calendarImg4: UIImageView?
+    var avatarPagos4: UIImageView?
     var titleLabel4: UILabel?
-    var hoyLabel4: UILabel?
+    var subLabel4: UILabel?
+    var fechaBG4: UIImageView?
     var fecha4: UILabel?
     // Variables de pagos4
     
@@ -113,6 +124,44 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         loadInterface()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // Ocultando navigationBar del sistema
+        navigationController?.isNavigationBarHidden = true
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            avatarPagos?.image = UIImage(data: userAvatar as Data)
+            avatarPagos2?.image = UIImage(data: userAvatar as Data)
+            avatarPagos3?.image = UIImage(data: userAvatar as Data)
+            avatarPagos4?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatarPagos?.image = #imageLiteral(resourceName: "user-foto")
+            avatarPagos2?.image = #imageLiteral(resourceName: "user-foto")
+            avatarPagos3?.image = #imageLiteral(resourceName: "user-foto")
+            avatarPagos4?.image = #imageLiteral(resourceName: "user-foto")
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // Ocultando navigationBar del sistema
+        navigationController?.isNavigationBarHidden = true
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Implementación de userDefaults para cargar imagen de usuario
+        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
+            
+            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
+            avatarPagos?.image = UIImage(data: userAvatar as Data)
+            avatarPagos2?.image = UIImage(data: userAvatar as Data)
+        } else {
+            avatarPagos?.image = #imageLiteral(resourceName: "user-foto")
+            avatarPagos2?.image = #imageLiteral(resourceName: "user-foto")
+        }
+    }
+    
     func loadInterface() {
         
         // Obteniendo los componentes de la fecha actual
@@ -122,14 +171,48 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         myDay = String(calendar.component(.day, from: currentDate))
         let year = String(calendar.component(.year, from: currentDate))
         let month = calendar.component(.month, from: currentDate)
-//        let day = String(calendar.component(.day, from: currentDate))
+        let day = String(calendar.component(.day, from: currentDate))
+        
+        switch month {
+        case 1:
+            mesActual = "Enero"
+        case 2:
+            mesActual = "Febrero"
+        case 3:
+            mesActual = "Marzo"
+        case 4:
+            mesActual = "Abril"
+        case 5:
+            mesActual = "Mayo"
+        case 6:
+            mesActual = "Junio"
+        case 7:
+            mesActual = "Julio"
+        case 8:
+            mesActual = "Agosto"
+        case 9:
+            mesActual = "Septiembre"
+        case 10:
+            mesActual = "Octubre"
+        case 11:
+            mesActual = "Noviembre"
+        default:
+            mesActual = "Diciembre"
+        }
+        
+        print(year)
+        print(month)
+        print(day)
         
         // Color de fondo de la vista
         view.backgroundColor = .white
+        let backgroundScreen = UIImageView(frame: CGRect(x: 0, y: 0, width: wScreen, height: hScreen * 0.88))
+        backgroundScreen.image = #imageLiteral(resourceName: "pagos-fon")
+        view.addSubview(backgroundScreen)
         
         // Vista de pagos1
         pagos1 = UIView(frame: CGRect(x: 0, y: 0, width: wScreen, height: hScreen * 0.88))
-        pagos1?.backgroundColor = bgPagos
+        pagos1?.backgroundColor = UIColor.white.withAlphaComponent(0)
         view.addSubview(pagos1!)
         
         backBtn = UIButton(type: .custom)
@@ -139,38 +222,33 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         backBtn?.addTarget(self, action: #selector(backPressed(sender:)), for: .touchUpInside)
         pagos1?.addSubview(backBtn!)
         
-        calendarImg = UIImageView(frame: CGRect(x: wScreen * 0.06, y: backBtn!.frame.maxY + hScreen * 0.05, width: wScreen * 0.06, height: wScreen * 0.06))
-        calendarImg?.image = #imageLiteral(resourceName: "miniCalendar")
-        pagos1?.addSubview(calendarImg!)
+        avatarPagos = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.13, width: wScreen * 0.13, height: wScreen * 0.13))
+        avatarPagos?.layer.masksToBounds = true
+        avatarPagos?.layer.cornerRadius = avatarPagos!.frame.width/2
+        pagos1?.addSubview(avatarPagos!)
         
-        titleLabel = UILabel(frame: CGRect(x: calendarImg!.frame.maxX + wScreen * 0.03, y: backBtn!.frame.maxY + hScreen * 0.038, width: wScreen * 0.4, height: hScreen * 0.055))
-        titleLabel?.text = "elige día"
-        titleLabel?.font = UIFont(name: "Roboto-Bold", size: 33)
-        titleLabel?.textColor = .white
-        pagos1?.addSubview(titleLabel!)
+        titleLabel1 = UILabel(frame: CGRect(x: avatarPagos!.frame.maxX + wScreen * 0.02, y: hScreen * 0.135, width: wScreen * 0.3, height: wScreen * 0.06))
+        titleLabel1?.text = "Elige el día"
+        titleLabel1?.font = UIFont(name: "Roboto-Black", size: 17.5)
+        titleLabel1?.textColor = UIColor.white
+        pagos1?.addSubview(titleLabel1!)
         
-        let backPurple = UIView(frame: CGRect(x: wScreen * 0.06, y: calendarImg!.frame.maxY + hScreen * 0.03, width: wScreen * 0.2, height: hScreen * 0.04))
-        backPurple.backgroundColor = purpleBG
-        backPurple.layer.cornerRadius = 5.0
-        backPurple.layer.shadowColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.5).cgColor
-        backPurple.layer.shadowOpacity = 0.8
-        backPurple.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
-        backPurple.layer.shadowRadius = 3.0
-        pagos1?.addSubview(backPurple)
+        subLabel1 = UILabel(frame: CGRect(x: avatarPagos!.frame.maxX + wScreen * 0.02, y: titleLabel1!.frame.maxY, width: wScreen * 0.3, height: wScreen * 0.05))
+        subLabel1?.text = "de tu visita"
+        subLabel1?.font = UIFont(name: "HelveticaNeue", size: 12)
+        subLabel1?.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
+        pagos1?.addSubview(subLabel1!)
         
-        hoyLabel = UILabel(frame: CGRect(x: wScreen * 0.06, y: calendarImg!.frame.maxY + hScreen * 0.03, width: wScreen * 0.2, height: hScreen * 0.04))
-        hoyLabel?.text = "Hoy"
-        hoyLabel?.font = UIFont(name: "Roboto-Bold", size: 15)
-        hoyLabel?.textAlignment = .center
-        hoyLabel?.textColor = .white
-        hoyLabel?.backgroundColor = purpleBG.withAlphaComponent(0)
-        pagos1?.addSubview(hoyLabel!)
+        fechaBG = UIImageView(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.142, width: wScreen * 0.28, height: wScreen * 0.085))
+        fechaBG?.image = #imageLiteral(resourceName: "pagos-label")
+        pagos1?.addSubview(fechaBG!)
         
-        fecha = UILabel(frame: CGRect(x: hoyLabel!.frame.maxX + wScreen * 0.05, y: calendarImg!.frame.maxY + hScreen * 0.03, width: wScreen * 0.4, height: hScreen * 0.04))
-        fecha?.text = "15 de mayo"
-        fecha?.font = UIFont(name: "Roboto-Bold", size: 15)
-        fecha?.textColor = dateGray
-        pagos1?.addSubview(fecha!)
+        fecha1 = UILabel(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.142, width: wScreen * 0.28, height: wScreen * 0.085))
+        fecha1?.text = day + " de " + mesActual!
+        fecha1?.textAlignment = .center
+        fecha1?.font = UIFont(name: "Roboto-Medium", size: 11.5)
+        fecha1?.textColor = UIColor.white
+        pagos1?.addSubview(fecha1!)
         
         let cal = Calendar.current
         var date = cal.startOfDay(for: Date())
@@ -192,7 +270,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
             }
         }
         
-        picker = UIPickerView(frame: CGRect(x: 0, y: fecha!.frame.maxY + hScreen * 0.1, width: wScreen, height: hScreen * 0.3))
+        picker = UIPickerView(frame: CGRect(x: 0, y: avatarPagos!.frame.maxY + hScreen * 0.1, width: wScreen, height: hScreen * 0.3))
         picker?.tintColor = UIColor.white
         picker?.dataSource = self
         picker?.delegate = self
@@ -209,7 +287,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         
         // Vista de pagos2
         pagos2 = UIView(frame: CGRect(x: wScreen, y: 0, width: wScreen, height: hScreen * 0.88))
-        pagos2?.backgroundColor = bgPagos
+        pagos2?.backgroundColor = UIColor.white.withAlphaComponent(0)
         view.addSubview(pagos2!)
         
         backBtn2 = UIButton(type: .custom)
@@ -219,40 +297,35 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         backBtn2?.addTarget(self, action: #selector(backPressed(sender:)), for: .touchUpInside)
         pagos2?.addSubview(backBtn2!)
         
-        calendarImg2 = UIImageView(frame: CGRect(x: wScreen * 0.06, y: backBtn2!.frame.maxY + hScreen * 0.05, width: wScreen * 0.06, height: wScreen * 0.06))
-        calendarImg2?.image = #imageLiteral(resourceName: "miniCalendar")
-        pagos2?.addSubview(calendarImg2!)
+        avatarPagos2 = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.13, width: wScreen * 0.13, height: wScreen * 0.13))
+        avatarPagos2?.layer.masksToBounds = true
+        avatarPagos2?.layer.cornerRadius = avatarPagos2!.frame.width/2
+        pagos2?.addSubview(avatarPagos2!)
         
-        titleLabel2 = UILabel(frame: CGRect(x: calendarImg2!.frame.maxX + wScreen * 0.03, y: backBtn2!.frame.maxY + hScreen * 0.038, width: wScreen * 0.5, height: hScreen * 0.055))
-        titleLabel2?.text = "elige horario"
-        titleLabel2?.font = UIFont(name: "Roboto-Bold", size: 33)
-        titleLabel2?.textColor = .white
+        titleLabel2 = UILabel(frame: CGRect(x: avatarPagos2!.frame.maxX + wScreen * 0.02, y: hScreen * 0.135, width: wScreen * 0.3, height: wScreen * 0.06))
+        titleLabel2?.text = "Elige el horario"
+        titleLabel2?.font = UIFont(name: "Roboto-Black", size: 17.5)
+        titleLabel2?.textColor = UIColor.white
         pagos2?.addSubview(titleLabel2!)
         
-        let backPurple2 = UIView(frame: CGRect(x: wScreen * 0.06, y: calendarImg2!.frame.maxY + hScreen * 0.03, width: wScreen * 0.2, height: hScreen * 0.04))
-        backPurple2.backgroundColor = purpleBG
-        backPurple2.layer.cornerRadius = 5.0
-        backPurple2.layer.shadowColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.5).cgColor
-        backPurple2.layer.shadowOpacity = 0.8
-        backPurple2.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
-        backPurple2.layer.shadowRadius = 3.0
-        pagos2?.addSubview(backPurple2)
+        subLabel2 = UILabel(frame: CGRect(x: avatarPagos2!.frame.maxX + wScreen * 0.02, y: titleLabel2!.frame.maxY, width: wScreen * 0.3, height: wScreen * 0.05))
+        subLabel2?.text = "de tu visita"
+        subLabel2?.font = UIFont(name: "HelveticaNeue", size: 12)
+        subLabel2?.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
+        pagos2?.addSubview(subLabel2!)
         
-        hoyLabel2 = UILabel(frame: CGRect(x: wScreen * 0.06, y: calendarImg2!.frame.maxY + hScreen * 0.03, width: wScreen * 0.2, height: hScreen * 0.04))
-        hoyLabel2?.text = "Hoy"
-        hoyLabel2?.font = UIFont(name: "Roboto-Bold", size: 15)
-        hoyLabel2?.textAlignment = .center
-        hoyLabel2?.textColor = .white
-        hoyLabel2?.backgroundColor = purpleBG.withAlphaComponent(0)
-        pagos2?.addSubview(hoyLabel2!)
+        fechaBG2 = UIImageView(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.142, width: wScreen * 0.28, height: wScreen * 0.085))
+        fechaBG2?.image = #imageLiteral(resourceName: "pagos-label")
+        pagos2?.addSubview(fechaBG2!)
         
-        fecha2 = UILabel(frame: CGRect(x: hoyLabel2!.frame.maxX + wScreen * 0.05, y: calendarImg2!.frame.maxY + hScreen * 0.03, width: wScreen * 0.4, height: hScreen * 0.04))
-        fecha2?.text = "15 de mayo"
-        fecha2?.font = UIFont(name: "Roboto-Bold", size: 15)
-        fecha2?.textColor = dateGray
+        fecha2 = UILabel(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.142, width: wScreen * 0.28, height: wScreen * 0.085))
+        fecha2?.text = day + " de " + mesActual!
+        fecha2?.textAlignment = .center
+        fecha2?.font = UIFont(name: "Roboto-Medium", size: 11.5)
+        fecha2?.textColor = UIColor.white
         pagos2?.addSubview(fecha2!)
         
-        tablaHorarios = UICollectionView(frame: CGRect(x: wScreen * 0.05, y: fecha2!.frame.maxY + hScreen * 0.07, width: wScreen * 0.9, height: hScreen * 0.5), collectionViewLayout: UICollectionViewFlowLayout())
+        tablaHorarios = UICollectionView(frame: CGRect(x: wScreen * 0.05, y: avatarPagos2!.frame.maxY + hScreen * 0.07, width: wScreen * 0.9, height: hScreen * 0.5), collectionViewLayout: UICollectionViewFlowLayout())
         tablaHorarios?.backgroundColor = UIColor.white.withAlphaComponent(0)
         tablaHorarios?.register(ContentPagos.self, forCellWithReuseIdentifier: "hourCell")
         tablaHorarios?.dataSource = self
@@ -262,7 +335,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         
         // Vista de pagos3
         pagos3 = UIView(frame: CGRect(x: wScreen, y: 0, width: wScreen, height: hScreen * 0.88))
-        pagos3?.backgroundColor = bgPagos
+        pagos3?.backgroundColor = UIColor.white.withAlphaComponent(0)
         view.addSubview(pagos3!)
         
         backBtn3 = UIButton(type: .custom)
@@ -272,48 +345,43 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         backBtn3?.addTarget(self, action: #selector(backPressed(sender:)), for: .touchUpInside)
         pagos3?.addSubview(backBtn3!)
         
-        calendarImg3 = UIImageView(frame: CGRect(x: wScreen * 0.06, y: backBtn3!.frame.maxY + hScreen * 0.05, width: wScreen * 0.06, height: wScreen * 0.06))
-        calendarImg3?.image = #imageLiteral(resourceName: "miniCalendar")
-        pagos3?.addSubview(calendarImg3!)
+        avatarPagos3 = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.13, width: wScreen * 0.13, height: wScreen * 0.13))
+        avatarPagos3?.layer.masksToBounds = true
+        avatarPagos3?.layer.cornerRadius = avatarPagos3!.frame.width/2
+        pagos3?.addSubview(avatarPagos3!)
         
-        titleLabel3 = UILabel(frame: CGRect(x: calendarImg3!.frame.maxX + wScreen * 0.03, y: backBtn3!.frame.maxY + hScreen * 0.038, width: wScreen * 0.5, height: hScreen * 0.055))
-        titleLabel3?.text = "confirmar"
-        titleLabel3?.font = UIFont(name: "Roboto-Bold", size: 33)
-        titleLabel3?.textColor = .white
+        titleLabel3 = UILabel(frame: CGRect(x: avatarPagos3!.frame.maxX + wScreen * 0.02, y: hScreen * 0.135, width: wScreen * 0.3, height: wScreen * 0.06))
+        titleLabel3?.text = "Confirmar"
+        titleLabel3?.font = UIFont(name: "Roboto-Black", size: 17.5)
+        titleLabel3?.textColor = UIColor.white
         pagos3?.addSubview(titleLabel3!)
         
-        let backPurple3 = UIView(frame: CGRect(x: wScreen * 0.06, y: calendarImg3!.frame.maxY + hScreen * 0.03, width: wScreen * 0.2, height: hScreen * 0.04))
-        backPurple3.backgroundColor = purpleBG
-        backPurple3.layer.cornerRadius = 5.0
-        backPurple3.layer.shadowColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.5).cgColor
-        backPurple3.layer.shadowOpacity = 0.8
-        backPurple3.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
-        backPurple3.layer.shadowRadius = 3.0
-        pagos3?.addSubview(backPurple3)
+        subLabel3 = UILabel(frame: CGRect(x: avatarPagos3!.frame.maxX + wScreen * 0.02, y: titleLabel3!.frame.maxY, width: wScreen * 0.3, height: wScreen * 0.05))
+        subLabel3?.text = "día y horario"
+        subLabel3?.font = UIFont(name: "HelveticaNeue", size: 12)
+        subLabel3?.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
+        pagos3?.addSubview(subLabel3!)
         
-        hoyLabel3 = UILabel(frame: CGRect(x: wScreen * 0.06, y: calendarImg3!.frame.maxY + hScreen * 0.03, width: wScreen * 0.2, height: hScreen * 0.04))
-        hoyLabel3?.text = "Hoy"
-        hoyLabel3?.font = UIFont(name: "Roboto-Bold", size: 15)
-        hoyLabel3?.textAlignment = .center
-        hoyLabel3?.textColor = .white
-        hoyLabel3?.backgroundColor = purpleBG.withAlphaComponent(0)
-        pagos3?.addSubview(hoyLabel3!)
+        fechaBG3 = UIImageView(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.142, width: wScreen * 0.28, height: wScreen * 0.085))
+        fechaBG3?.image = #imageLiteral(resourceName: "pagos-label")
+        pagos3?.addSubview(fechaBG3!)
         
-        fecha3 = UILabel(frame: CGRect(x: hoyLabel3!.frame.maxX + wScreen * 0.05, y: calendarImg3!.frame.maxY + hScreen * 0.03, width: wScreen * 0.4, height: hScreen * 0.04))
-        fecha3?.text = "15 de mayo"
-        fecha3?.font = UIFont(name: "Roboto-Bold", size: 15)
-        fecha3?.textColor = dateGray
+        fecha3 = UILabel(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.142, width: wScreen * 0.28, height: wScreen * 0.085))
+        fecha3?.text = day + " de " + mesActual!
+        fecha3?.textAlignment = .center
+        fecha3?.font = UIFont(name: "Roboto-Medium", size: 11.5)
+        fecha3?.textColor = UIColor.white
         pagos3?.addSubview(fecha3!)
         
-        let imgPrice = UIImageView(frame: CGRect(x: wScreen * 0.125, y: fecha3!.frame.maxY + hScreen * 0.05, width: wScreen * 0.75, height: hScreen * 0.1))
+        let imgPrice = UIImageView(frame: CGRect(x: wScreen * 0.125, y: avatarPagos3!.frame.maxY + hScreen * 0.05, width: wScreen * 0.75, height: hScreen * 0.1))
         imgPrice.image = #imageLiteral(resourceName: "precioFake")
         pagos3?.addSubview(imgPrice)
         
-        let realPrice = UILabel(frame: CGRect(x: wScreen * 0.125, y: fecha3!.frame.maxY + hScreen * 0.05, width: wScreen * 0.75, height: hScreen * 0.1))
+        let realPrice = UILabel(frame: CGRect(x: wScreen * 0.125, y: avatarPagos3!.frame.maxY + hScreen * 0.05, width: wScreen * 0.75, height: hScreen * 0.1))
         realPrice.text = price! + " mxn"
         realPrice.font = UIFont(name: "Montserrat-Bold", size: 29)
         realPrice.textAlignment = .center
-        realPrice.textColor = UIColor(red: 63/255, green: 60/255, blue: 78/255, alpha: 1)
+        realPrice.textColor = UIColor.white
         pagos3?.addSubview(realPrice)
 
         let line = UIImageView(frame: CGRect(x: wScreen * 0.125, y: imgPrice.frame.maxY + hScreen * 0.035, width: wScreen * 0.75, height: hScreen * 0.048))
@@ -436,7 +504,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         
         // Vista de pagos4
         pagos4 = UIView(frame: CGRect(x: wScreen, y: 0, width: wScreen, height: hScreen * 0.88))
-        pagos4?.backgroundColor = bgPagos
+        pagos4?.backgroundColor = UIColor.white.withAlphaComponent(0)
         view.addSubview(pagos4!)
         
         backBtn4 = UIButton(type: .custom)
@@ -446,37 +514,32 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         backBtn4?.addTarget(self, action: #selector(backPressed(sender:)), for: .touchUpInside)
         pagos4?.addSubview(backBtn4!)
         
-        calendarImg4 = UIImageView(frame: CGRect(x: wScreen * 0.06, y: backBtn4!.frame.maxY + hScreen * 0.05, width: wScreen * 0.06, height: wScreen * 0.06))
-        calendarImg4?.image = #imageLiteral(resourceName: "miniCalendar")
-        pagos4?.addSubview(calendarImg4!)
+        avatarPagos4 = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.13, width: wScreen * 0.13, height: wScreen * 0.13))
+        avatarPagos4?.layer.masksToBounds = true
+        avatarPagos4?.layer.cornerRadius = avatarPagos4!.frame.width/2
+        pagos4?.addSubview(avatarPagos4!)
         
-        titleLabel4 = UILabel(frame: CGRect(x: calendarImg4!.frame.maxX + wScreen * 0.03, y: backBtn4!.frame.maxY + hScreen * 0.038, width: wScreen * 0.5, height: hScreen * 0.055))
-        titleLabel4?.text = "confirmado"
-        titleLabel4?.font = UIFont(name: "Roboto-Bold", size: 33)
-        titleLabel4?.textColor = .white
+        titleLabel4 = UILabel(frame: CGRect(x: avatarPagos4!.frame.maxX + wScreen * 0.02, y: hScreen * 0.135, width: wScreen * 0.3, height: wScreen * 0.06))
+        titleLabel4?.text = "Confirmado!"
+        titleLabel4?.font = UIFont(name: "Roboto-Black", size: 17.5)
+        titleLabel4?.textColor = UIColor.white
         pagos4?.addSubview(titleLabel4!)
         
-        let backPurple4 = UIView(frame: CGRect(x: wScreen * 0.06, y: calendarImg4!.frame.maxY + hScreen * 0.03, width: wScreen * 0.2, height: hScreen * 0.04))
-        backPurple4.backgroundColor = purpleBG
-        backPurple4.layer.cornerRadius = 5.0
-        backPurple4.layer.shadowColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.5).cgColor
-        backPurple4.layer.shadowOpacity = 0.8
-        backPurple4.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
-        backPurple4.layer.shadowRadius = 3.0
-        pagos4?.addSubview(backPurple4)
+        subLabel4 = UILabel(frame: CGRect(x: avatarPagos4!.frame.maxX + wScreen * 0.02, y: titleLabel4!.frame.maxY, width: wScreen * 0.3, height: wScreen * 0.05))
+        subLabel4?.text = "con éxito..."
+        subLabel4?.font = UIFont(name: "HelveticaNeue", size: 12)
+        subLabel4?.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
+        pagos4?.addSubview(subLabel4!)
         
-        hoyLabel4 = UILabel(frame: CGRect(x: wScreen * 0.06, y: calendarImg4!.frame.maxY + hScreen * 0.03, width: wScreen * 0.2, height: hScreen * 0.04))
-        hoyLabel4?.text = "Hoy"
-        hoyLabel4?.font = UIFont(name: "Roboto-Bold", size: 15)
-        hoyLabel4?.textAlignment = .center
-        hoyLabel4?.textColor = .white
-        hoyLabel4?.backgroundColor = purpleBG.withAlphaComponent(0)
-        pagos4?.addSubview(hoyLabel4!)
+        fechaBG4 = UIImageView(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.142, width: wScreen * 0.28, height: wScreen * 0.085))
+        fechaBG4?.image = #imageLiteral(resourceName: "pagos-label")
+        pagos4?.addSubview(fechaBG4!)
         
-        fecha4 = UILabel(frame: CGRect(x: hoyLabel4!.frame.maxX + wScreen * 0.05, y: calendarImg4!.frame.maxY + hScreen * 0.03, width: wScreen * 0.4, height: hScreen * 0.04))
-        fecha4?.text = "15 de mayo"
-        fecha4?.font = UIFont(name: "Roboto-Bold", size: 15)
-        fecha4?.textColor = dateGray
+        fecha4 = UILabel(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.142, width: wScreen * 0.28, height: wScreen * 0.085))
+        fecha4?.text = day + " de " + mesActual!
+        fecha4?.textAlignment = .center
+        fecha4?.font = UIFont(name: "Roboto-Medium", size: 11.5)
+        fecha4?.textColor = UIColor.white
         pagos4?.addSubview(fecha4!)
         
         /*Preloader*/
@@ -494,7 +557,13 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         gracias.textColor = .white
         gracias.textAlignment = .center
         gracias.numberOfLines = 2
-        pagos4?.addSubview(gracias)
+//        pagos4?.addSubview(gracias)
+        
+        let endPagos = UIButton(type: .custom)
+        endPagos.setImage(#imageLiteral(resourceName: "endPagosImg"), for: .normal)
+        endPagos.frame = CGRect(x: wScreen * 0.15, y: hScreen * 0.7, width: wScreen * 0.7, height: hScreen * 0.08)
+        endPagos.addTarget(self, action: #selector(closePagos), for: .touchUpInside)
+        pagos4?.addSubview(endPagos)
         // Vista de pagos4
         
         botPurple = UIView(frame: CGRect(x: wScreen - wScreen * 0.025, y: hScreen * 0.88, width: wScreen, height: hScreen * 0.12))
@@ -517,18 +586,39 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         fraseL?.font = UIFont(name: "Roboto-Bold", size: 16)
         botContainer?.addSubview(fraseL!)
         
-        nextBtn1 = UIButton(type: .custom)
-        nextBtn1?.frame = CGRect(x: wScreen - wScreen * 0.09, y: botContainer!.frame.height/2 - (wScreen * 0.05/2), width: wScreen * 0.031, height: wScreen * 0.05)
-        nextBtn1?.setImage(#imageLiteral(resourceName: "nextInPagos2"), for: .normal)
-        nextBtn1?.tintColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1)
+        verCodigo = UILabel(frame: CGRect(x: botContainer!.frame.width * 0.1, y: 0, width: botContainer!.frame.width * 0.4, height: botContainer!.frame.height))
+        verCodigo?.text = "Ver código de reserva"
+        verCodigo?.textAlignment = .center
+        verCodigo?.textColor = UIColor.white
+        verCodigo?.font = UIFont(name: "Roboto-Black", size: 16.5)
+        verCodigo?.alpha = 0
+        botContainer?.addSubview(verCodigo!)
+        
+        verPendiente = UILabel(frame: CGRect(x: verCodigo!.frame.maxX, y: 0, width: botContainer!.frame.width * 0.4, height: botContainer!.frame.height))
+        verPendiente?.text = "pendiente de activar"
+        verPendiente?.textAlignment = .center
+        verPendiente?.textColor = UIColor(red: 74/255, green: 80/255, blue: 157/255, alpha: 1)
+        verPendiente?.font = UIFont(name: "Roboto-Bold", size: 14)
+        verPendiente?.alpha = 0
+        botContainer?.addSubview(verPendiente!)
+        
+        nextImg1 = UIImageView(frame: CGRect(x: wScreen - wScreen * 0.09, y: botContainer!.frame.height/2 - (wScreen * 0.05/2), width: wScreen * 0.031, height: wScreen * 0.05))
+        nextImg1?.image = #imageLiteral(resourceName: "nextInPagos2")
+        botContainer?.addSubview(nextImg1!)
+        
+        nextBtn1 = UIButton(type: .system)
+        nextBtn1?.frame = CGRect(x: botContainer!.frame.width * 0.8, y: 0, width: botContainer!.frame.width * 0.2, height: botContainer!.frame.height)
         nextBtn1?.tag = 1
         nextBtn1?.addTarget(self, action: #selector(nextPressed(sender:)), for: .touchUpInside)
         botContainer?.addSubview(nextBtn1!)
         
-        nextBtn2 = UIButton(type: .custom)
-        nextBtn2?.frame = CGRect(x: wScreen - wScreen * 0.09, y: botContainer!.frame.height/2 - (wScreen * 0.05/2), width: wScreen * 0.031, height: wScreen * 0.05)
-        nextBtn2?.setImage(#imageLiteral(resourceName: "nextInPagos"), for: .normal)
-        nextBtn2?.tintColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1)
+        nextImg2 = UIImageView(frame: CGRect(x: wScreen - wScreen * 0.09, y: botContainer!.frame.height/2 - (wScreen * 0.05/2), width: wScreen * 0.031, height: wScreen * 0.05))
+        nextImg2?.image = #imageLiteral(resourceName: "nextInPagos")
+        nextImg2?.alpha = 0
+        botContainer?.addSubview(nextImg2!)
+        
+        nextBtn2 = UIButton(type: .system)
+        nextBtn2?.frame = CGRect(x: botContainer!.frame.width * 0.8, y: 0, width: botContainer!.frame.width * 0.2, height: botContainer!.frame.height)
         nextBtn2?.tag = 2
         nextBtn2?.addTarget(self, action: #selector(nextPressed(sender:)), for: .touchUpInside)
         nextBtn2?.alpha = 0
@@ -546,6 +636,12 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         nextBtn3?.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
         nextBtn3?.alpha = 0
         botContainer?.addSubview(nextBtn3!)
+        
+        goCodigos = UIButton(type: .system)
+        goCodigos?.frame = CGRect(x: 0, y: 0, width: botContainer!.frame.width, height: botContainer!.frame.height)
+        goCodigos?.addTarget(self, action: #selector(openCodigos), for: .touchUpInside)
+        goCodigos?.alpha = 0
+        botContainer?.addSubview(goCodigos!)
     }
     
     // Funciones propias
@@ -572,16 +668,15 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         
         switch sender.tag {
             case 1:
-                UIApplication.shared.statusBarStyle = .lightContent
-                self.navigationController?.popViewController(animated: true)
+                navigationController?.popViewController(animated: true)
             case 2:
                 UIView.animate(withDuration: 0.5, animations: {
                     self.pagos1?.frame = CGRect(x: 0, y: 0, width: wScreen, height: hScreen * 0.88)
                     self.pagos2?.frame = CGRect(x: wScreen, y: 0, width: wScreen, height: hScreen * 0.88)
                     self.botPurple?.frame = CGRect(x: wScreen - wScreen * 0.025, y: hScreen * 0.88, width: wScreen, height: hScreen * 0.12)
-                    self.seleccionaL?.text = "Selecciona"
-                    self.fraseL?.text = "el día de tu visita"
+                    self.nextImg2?.alpha = 0
                     self.nextBtn2?.alpha = 0
+                    self.nextImg1?.alpha = 1
                     self.nextBtn1?.alpha = 1
                 }, completion: { (true) in
                     
@@ -591,23 +686,28 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
                     self.pagos2?.frame = CGRect(x: 0, y: 0, width: wScreen, height: hScreen * 0.88)
                     self.pagos3?.frame = CGRect(x: wScreen, y: 0, width: wScreen, height: hScreen * 0.88)
                     self.botPurple?.frame = CGRect(x: wScreen - wScreen * 0.25, y: hScreen * 0.88, width: wScreen, height: hScreen * 0.12)
+                    self.seleccionaL?.text = "Selecciona"
                     self.fraseL?.text = "el horario de tu visita"
-                    self.nextBtn3?.alpha = 0
                     self.imgCarrito?.alpha = 0
+                    self.nextBtn3?.alpha = 0
+                    self.nextImg2?.alpha = 1
                     self.nextBtn2?.alpha = 1
-                }) { (true) in
+                }, completion: { (true) in
                     
-            }
+                })
+
         default:
             UIView.animate(withDuration: 0.5, animations: {
                 self.pagos3?.frame = CGRect(x: 0, y: 0, width: wScreen, height: hScreen * 0.88)
                 self.pagos4?.frame = CGRect(x: wScreen, y: 0, width: wScreen, height: hScreen * 0.88)
                 self.botPurple?.frame = CGRect(x: wScreen - wScreen * 0.35, y: hScreen * 0.88, width: wScreen, height: hScreen * 0.12)
-                self.seleccionaL?.text = "MXN $" + self.price!
-                self.fraseL?.text = "total IVA incluido"
-                self.nextBtn2?.alpha = 0
-                self.nextBtn3?.alpha = 1
                 self.imgCarrito?.alpha = 1
+                self.nextBtn3?.alpha = 1
+                self.verCodigo?.alpha = 0
+                self.verPendiente?.alpha = 0
+                self.goCodigos?.alpha = 0
+                self.seleccionaL?.alpha = 1
+                self.fraseL?.alpha = 1
             }, completion: { (true) in
                 
             })
@@ -619,6 +719,10 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         switch sender.tag {
         case 1:
             getJsonFromUrl()
+            self.nextBtn1?.alpha = 0
+            self.nextImg1?.alpha = 0
+            self.nextBtn2?.alpha = 1
+            self.nextImg2?.alpha = 1
 
         case 2:
             UIView.animate(withDuration: 0.5, animations: {
@@ -628,6 +732,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
                 self.seleccionaL?.text = "MXN $" + self.price!
                 self.fraseL?.text = "total IVA incluido"
                 self.nextBtn2?.alpha = 0
+                self.nextImg2?.alpha = 0
                 self.nextBtn3?.alpha = 1
                 self.imgCarrito?.alpha = 1
             }, completion: { (true) in
@@ -641,8 +746,12 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
                 self.seleccionaL?.alpha = 0
                 self.fraseL?.alpha = 0
                 self.nextBtn2?.alpha = 0
+                self.nextImg2?.alpha = 0
                 self.nextBtn3?.alpha = 0
                 self.imgCarrito?.alpha = 0
+                self.verCodigo?.alpha = 1
+                self.verPendiente?.alpha = 1
+                self.goCodigos?.alpha = 1
                 self.pagos4?.addSubview(self.metaSpin!)
                 
                 self.metaSpin?.animateSideBall()
@@ -659,6 +768,15 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
                 
             })
         }
+    }
+    
+    @objc func openCodigos() {
+        
+        navigationController?.pushViewController(CodeControllerFake(), animated: true)
+    }
+    
+    @objc func closePagos() {
+        
     }
     // Funciones propias
     
@@ -679,11 +797,11 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
             cell.layer.borderColor = UIColor(red: 240/255, green: 147/255, blue: 133/255, alpha: 1).cgColor
         } else {
             cell.backgroundColor = UIColor.white.withAlphaComponent(0)
-            cell.layer.borderColor = UIColor(red: 19/255, green: 18/255, blue: 24/255, alpha: 1).cgColor
+            cell.layer.borderColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.5).cgColor
         }
         
         cell.layer.borderWidth = 1
-        cell.layer.cornerRadius = 5.0
+        cell.layer.cornerRadius = 10.0
         
         cell.horasDelDia.frame = CGRect(x: cell.frame.width * 0.1, y: cell.frame.height * 0.3, width: cell.frame.width * 0.8, height: cell.frame.height * 0.2)
         cell.horasDelDia.font = UIFont(name: "HelveticaNeue-Medium", size: 14.5)
@@ -730,7 +848,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
             if blocked.contains(horas[indexPath.row]) {
                 print("No puedes seleccionar el horario")
                 collectionView.cellForItem(at: indexPath)?.backgroundColor = UIColor.white.withAlphaComponent(0)
-                collectionView.cellForItem(at: indexPath)?.layer.borderColor = UIColor(red: 19/255, green: 18/255, blue: 24/255, alpha: 1).cgColor
+                collectionView.cellForItem(at: indexPath)?.layer.borderColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.5).cgColor
 
                 // Alerta de horario agotado
                 let alert = UIAlertController(title: "Lo sentimos!", message: "El horario seleccionado no está disponible", preferredStyle: .alert)
@@ -754,7 +872,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
      
         collectionView.cellForItem(at: indexPath)?.backgroundColor = UIColor.white.withAlphaComponent(0)
-        collectionView.cellForItem(at: indexPath)?.layer.borderColor = UIColor(red: 19/255, green: 18/255, blue: 24/255, alpha: 1).cgColor
+        collectionView.cellForItem(at: indexPath)?.layer.borderColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.5).cgColor
 
     }
     // MARK: - Funciones de Protocolo UiCollectionView
@@ -942,16 +1060,6 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         }).resume()
     }
     //Petición a webservice
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -37,9 +37,6 @@ var tarjetaActiva = 0
 // Puntos a la izquierda de el origen en x de la pantalla
 var currentOffset = 0.0
 
-// Color de Fondo Pantallas de Pagos
-let bgPagos = UIColor(red: 40/255, green: 39/255, blue: 45/255, alpha: 1)
-
 // Color de fondo de label de Hoy
 let purpleBG = UIColor(red: 107/255, green: 110/255, blue: 233/255, alpha: 1)
 

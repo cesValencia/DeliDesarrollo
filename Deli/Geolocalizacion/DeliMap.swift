@@ -39,7 +39,8 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
     
     var layout: UICollectionViewFlowLayout?
     var categoryArray = [String]()
-    var kmArray = [UIImage]()
+    var catTagArray = [String]()
+    var precioArray = [String]()
     var referenceCarrusel: UICollectionView?
     var idRestaurante: String?
     var location: CLLocation?
@@ -62,19 +63,21 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
         UIApplication.shared.statusBarStyle = .lightContent
         
         // Do any additional setup after loading the view, typically from a nib.
-        categoryArray = ["Postres", "Bares", "Antojo", "Verde", "Mixología", "Plata", "Platino", "DIamante"]
-        kmArray = [UIImage(named: "bpost")!, UIImage(named: "bbares")!, UIImage(named: "banto")!, UIImage(named: "bverde")!, UIImage(named: "bplat")!, UIImage(named: "bmixo")!, UIImage(named: "bplatino")!, UIImage(named: "bdiaman")!]
+        categoryArray = ["Diamante", "Platino", "Plata", "Mixología", "Verde", "Antojo", "Bares", "Postres"]
+        catTagArray = ["DA", "PL", "PA", "MX", "VR", "AJ", "BR", "PS"]
+        precioArray = ["100", "200", "300", "400", "500", "600", "700", "800"]
         
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager?.requestWhenInUseAuthorization()
         
-        mapView = GMSMapView(frame: CGRect(x: 0, y: 0, width: wScreen, height: hScreen * 0.76))
+        mapView = GMSMapView(frame: CGRect(x: 0, y: 0, width: wScreen, height: hScreen))
         mapView?.settings.myLocationButton = true
         mapView?.isMyLocationEnabled = true
         mapView?.settings.zoomGestures = true
         mapView?.delegate = self
+        mapView?.padding = UIEdgeInsets(top: 0, left: 0, bottom: hScreen * 0.25, right: 0)
         
         do {
             // Set the map style by passing the URL of the local file.
@@ -92,27 +95,23 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
         let backBtn = UIButton(type: .custom)
         backBtn.frame = CGRect(x: wScreen * 0.05, y: hScreen * 0.06, width: wScreen * 0.065, height: wScreen * 0.055)
         backBtn.setImage(#imageLiteral(resourceName: "mapExit"), for: .normal)
+        backBtn.tintColor = UIColor.black
         backBtn.addTarget(self, action: #selector(backPressed), for: .touchUpInside)
         view.addSubview(backBtn)
         
-        let vista = UIView(frame: CGRect(x: 0, y: mapView!.frame.maxY, width: wScreen, height: hScreen * 0.24))
-        vista.backgroundColor = UIColor(red: 105/255, green: 113/255, blue: 231/255, alpha: 1)
+        let vista = UIView(frame: CGRect(x: 0, y: hScreen * 0.76, width: wScreen, height: hScreen * 0.24))
+        vista.backgroundColor = UIColor.white.withAlphaComponent(0)
         view.addSubview(vista)
-        
-        let backCarrusel = UIImageView(frame: CGRect(x: 0, y: mapView!.frame.maxY, width: wScreen, height: hScreen * 0.24))
-        backCarrusel.image = #imageLiteral(resourceName: "backmapas")
-        vista.addSubview(backCarrusel)
-        
+
         let adorno = UIView(frame: CGRect(x: wScreen * 0.415, y: vista.frame.height * 0.08, width: wScreen * 0.17, height: hScreen * 0.005))
         adorno.layer.cornerRadius = 5.0
         adorno.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-        vista.addSubview(adorno)
         
         layout = UICollectionViewFlowLayout()
         layout?.scrollDirection = .horizontal
-        layout?.sectionInset = UIEdgeInsetsMake(0, 15, 0, 15)
+        layout?.sectionInset = UIEdgeInsetsMake(0, 25, 0, 25)
         
-        referenceCarrusel = UICollectionView(frame: CGRect(x: 0, y: vista.frame.height * 0.2, width: wScreen, height: vista.frame.height * 0.7), collectionViewLayout: layout!)
+        referenceCarrusel = UICollectionView(frame: CGRect(x: 0, y: vista.frame.height * 0.1, width: wScreen, height: vista.frame.height * 0.7), collectionViewLayout: layout!)
         referenceCarrusel?.register(collectionContent.self, forCellWithReuseIdentifier: "cell")
         referenceCarrusel?.delegate = self
         referenceCarrusel?.dataSource = self
@@ -138,36 +137,98 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
             subview.removeFromSuperview()
         }
         
-        cell.backgroundColor = UIColor(red: 129/255, green: 142/255, blue: 218/255, alpha: 1)
+        cell.backgroundColor = UIColor.white
         cell.layer.cornerRadius = 5.0
         
-        cell.cat = UIImageView(frame: CGRect(x: cell.frame.width * 0.1, y: cell.frame.height * 0.130, width: cell.frame.width * 0.19, height: cell.frame.height * 0.13))
-        cell.cat.image = kmArray[indexPath.row]
-        cell.contentView.addSubview(cell.cat)
+        cell.backTag = UIView(frame: CGRect(x: cell.frame.width * 0.1, y: cell.frame.height * 0.13, width: cell.frame.width * 0.15, height: cell.frame.height * 0.12))
+        cell.backTag.layer.cornerRadius = 3.0
+        switch categoryArray[indexPath.row].lowercased() {
+        case "postres":
+            cell.backTag.backgroundColor = UIColor(red: 153/255, green: 159/255, blue: 228/255, alpha: 1)
+        case "bares":
+            cell.backTag.backgroundColor = UIColor(red: 148/255, green: 205/255, blue: 182/255, alpha: 1)
+        case "antojo":
+            cell.backTag.backgroundColor = UIColor(red: 195/255, green: 193/255, blue: 157/255, alpha: 1)
+        case "verde":
+            cell.backTag.backgroundColor = UIColor(red: 154/255, green: 198/255, blue: 112/255, alpha: 1)
+        case "mixología":
+            cell.backTag.backgroundColor = UIColor(red: 251/255, green: 142/255, blue: 134/255, alpha: 1)
+        case "plata":
+            cell.backTag.backgroundColor = UIColor(red: 167/255, green: 167/255, blue: 167/255, alpha: 1)
+        case "platino":
+            cell.backTag.backgroundColor = UIColor(red: 172/255, green: 164/255, blue: 147/255, alpha: 1)
+        default:
+            cell.backTag.backgroundColor = UIColor(red: 193/255, green: 191/255, blue: 185/255, alpha: 1)
+        }
+        cell.contentView.addSubview(cell.backTag)
         
-        cell.precio = UIImageView(frame: CGRect(x: cell.cat.frame.maxX + cell.frame.width * 0.3, y: cell.frame.height * 0.13, width: cell.frame.width * 0.3, height: cell.frame.height * 0.13))
-        cell.precio.image = #imageLiteral(resourceName: "precioFakeMaps")
+        cell.tagCategory = UILabel(frame: CGRect(x: 0, y: 0, width: cell.frame.width * 0.1, height: cell.frame.height * 0.07))
+        cell.tagCategory.center = cell.backTag.center
+        cell.tagCategory.text = catTagArray[indexPath.row]
+        cell.tagCategory.textAlignment = .center
+        cell.tagCategory.font = UIFont(name: "Montserrat-Bold", size: 10.5)
+        cell.tagCategory.textColor = UIColor.white
+        cell.contentView.addSubview(cell.tagCategory)
+        
+        cell.precio = UILabel(frame: CGRect(x: cell.frame.width * 0.7, y: cell.frame.height * 0.13, width: cell.frame.width * 0.26, height: cell.frame.height * 0.13))
+        let numero = NSMutableAttributedString(string: precioArray[indexPath.row], attributes: [NSAttributedStringKey.font : UIFont(name: "Roboto-Black", size: 19) ?? ""])
+        let signo = NSMutableAttributedString(string: "$", attributes: [NSAttributedStringKey.font : UIFont(name: "Roboto-Black", size: 10.5) ?? ""])
+        let precioText = NSMutableAttributedString()
+        precioText.append(numero)
+        precioText.append(signo)
+        cell.precio.attributedText = precioText
+        cell.precio.textAlignment = .right
+        switch categoryArray[indexPath.row].lowercased() {
+        case "postres":
+            cell.precio.textColor = UIColor(red: 153/255, green: 159/255, blue: 228/255, alpha: 1)
+        case "bares":
+            cell.precio.textColor = UIColor(red: 148/255, green: 205/255, blue: 182/255, alpha: 1)
+        case "antojo":
+            cell.precio.textColor = UIColor(red: 195/255, green: 193/255, blue: 157/255, alpha: 1)
+        case "verde":
+            cell.precio.textColor = UIColor(red: 154/255, green: 198/255, blue: 112/255, alpha: 1)
+        case "mixología":
+            cell.precio.textColor = UIColor(red: 251/255, green: 142/255, blue: 134/255, alpha: 1)
+        case "plata":
+            cell.precio.textColor = UIColor(red: 167/255, green: 167/255, blue: 167/255, alpha: 1)
+        case "platino":
+            cell.precio.textColor = UIColor(red: 172/255, green: 164/255, blue: 147/255, alpha: 1)
+        default:
+            cell.precio.textColor = UIColor(red: 193/255, green: 191/255, blue: 185/255, alpha: 1)
+        }
         cell.contentView.addSubview(cell.precio)
         
-        cell.categoria = UILabel(frame: CGRect(x: cell.frame.width * 0.1, y: cell.cat.frame.maxY + cell.frame.height * 0.1, width: cell.frame.width * 0.9, height: cell.frame.height * 0.14))
+        cell.categoria = UILabel(frame: CGRect(x: cell.frame.width * 0.1, y: cell.backTag.frame.maxY + cell.frame.height * 0.1, width: cell.frame.width * 0.9, height: cell.frame.height * 0.14))
         cell.categoria.text = categoryArray[indexPath.row]
         cell.categoria.font = UIFont(name: "Roboto-Bold", size: 19.5)
-        cell.categoria.textColor = .white
+        cell.categoria.textColor = .black
         cell.contentView.addSubview(cell.categoria)
         
-        cell.desc = UILabel(frame: CGRect(x: cell.frame.width * 0.07, y: cell.categoria.frame.maxY + cell.frame.height * 0.02, width: cell.frame.width * 0.6, height: cell.frame.height * 0.3))
+        cell.desc = UILabel(frame: CGRect(x: cell.frame.width * 0.1, y: cell.categoria.frame.maxY + cell.frame.height * 0.02, width: cell.frame.width * 0.4, height: cell.frame.height * 0.3))
         cell.desc.text = "restaurantes & bistrò"
-        cell.desc.textColor = UIColor.white.withAlphaComponent(0.5)
+        cell.desc.textColor = UIColor(red: 189/255, green: 189/255, blue: 189/255, alpha: 1)
         cell.desc.font = UIFont(name: "Montserrat-Regular", size: 11)
         cell.desc.numberOfLines = 2
         cell.contentView.addSubview(cell.desc)
+        
+        cell.backOfNumberRestaurants = UIView(frame: CGRect(x: cell.frame.width * 0.8, y: cell.frame.height * 0.7, width: cell.frame.width * 0.15, height: cell.frame.width * 0.1))
+        cell.backOfNumberRestaurants.layer.cornerRadius = 8.0
+        cell.backOfNumberRestaurants.backgroundColor = UIColor(red: 97/255, green: 105/255, blue: 254/255, alpha: 1)
+        cell.contentView.addSubview(cell.backOfNumberRestaurants)
+        
+        cell.numberOfRestaurants = UILabel(frame: CGRect(x: 0, y: 0, width: cell.frame.width * 0.075, height: cell.frame.width * 0.5))
+        cell.numberOfRestaurants.center = cell.backOfNumberRestaurants.center
+        cell.numberOfRestaurants.text = "45"
+        cell.numberOfRestaurants.font = UIFont(name: "HelveticaNeue-Bold", size: 10)
+        cell.numberOfRestaurants.textColor = UIColor.white
+        cell.contentView.addSubview(cell.numberOfRestaurants)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let cellWidth = wScreen/3
+        let cellWidth = wScreen/2 - wScreen * 0.05
         let cellHeight = referenceCarrusel!.frame.height
         
         return CGSize(width: cellWidth, height: cellHeight)
@@ -187,8 +248,7 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
     }
     
     func connectionFinishSuccessfull(session: URL_SessionM, response: NSDictionary) {
-        print(response)
-        
+     
         let mensaje = response["msg"] as? String ?? "Error"
         
         if mensaje == "No hay restaurantes cerca de ti" {
@@ -196,12 +256,16 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
             
             let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (_) in
                 self.navigationController?.popViewController(animated: true)
+                self.locationManager?.stopUpdatingLocation()
             })
             
             alerta.addAction(action)
             
             present(alerta, animated: true, completion: nil)
         } else {
+            
+            
+            
             let detail = FullDetails()
             
             detail.imagen_principal = response["imagen_principal"] as? String
@@ -225,19 +289,17 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
             detail.category = response["category"] as? String
             detail.zona = response["zona"] as? String
             detail.direccion = response["direccion"] as? String
+ 
             
             navigationController?.pushViewController(detail, animated: true)
         }
         
-
+        
     }
     
     func connectionFinishSuccessfullM(session: URL_SessionM, response: [NSDictionary]) {
-        print(response)
-        
         
         if session == networkManagerForGetRestaurant {
-            
             //            self.imagen_principal = json["imagen_principal"] as! String
             //                self.tipo_comida = json["tipo_comida"] as! String
             //                self.name_restaurant = json["name_restaurant"] as! String
@@ -275,6 +337,8 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
                 
                 
             }
+            
+            
         }
         
     }
@@ -284,6 +348,10 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
         let infoWindow = UIView(frame: CGRect(x: 0, y: 0, width: wScreen * 0.8, height: wScreen * 0.17))
         infoWindow.backgroundColor = UIColor.white
         infoWindow.layer.cornerRadius = wScreen * 0.085
+        
+        let backInfoWindow = UIImageView(frame: CGRect(x: 0, y: 0, width: infoWindow.frame.width, height: infoWindow.frame.height))
+        backInfoWindow.image = #imageLiteral(resourceName: "backInfoW")
+        infoWindow.addSubview(backInfoWindow)
         
         let infoImage = UIImageView(frame: CGRect(x: infoWindow.frame.width * 0.025, y: infoWindow.frame.height/2 - (wScreen * 0.13/2), width: wScreen * 0.13, height: wScreen * 0.13))
 //        infoImage.image = UIImage(named: (marker as! CustomPin).thumb!)
@@ -300,12 +368,12 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
         infoWindow.addSubview(infoImage)
         
         let line = UIView(frame: CGRect(x: infoImage.frame.maxX + infoWindow.frame.width * 0.025, y: 0, width: 1, height: hScreen * 0.17))
-        line.backgroundColor = UIColor.lightGray.withAlphaComponent(0.4)
+        line.backgroundColor = UIColor(red: 50/255, green: 51/255, blue: 68/255, alpha: 1)
         infoWindow.addSubview(line)
         
         let label1 = UILabel(frame: CGRect(x: line.frame.maxX + infoWindow.frame.width * 0.1, y: infoWindow.frame.height/2 - (wScreen * 0.13/2), width: infoWindow.frame.width * 0.6, height: wScreen * 0.13))
         label1.text = (marker as! CustomPin).nombreRestaurante
-        label1.textColor = UIColor.black
+        label1.textColor = UIColor.white
         label1.font = UIFont(name: "Roboto-Regular", size: 12)
         label1.numberOfLines = 2
         infoWindow.addSubview(label1)
@@ -423,12 +491,12 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
     
     
     override func viewWillAppear(_ animated: Bool) {
-        UIApplication.shared.statusBarStyle = .lightContent
+        UIApplication.shared.statusBarStyle = .default
         navigationController?.isNavigationBarHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        UIApplication.shared.statusBarStyle = .lightContent
+        UIApplication.shared.statusBarStyle = .default
         navigationController?.isNavigationBarHidden = true
     }
     
@@ -442,10 +510,13 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
 
 class collectionContent: UICollectionViewCell {
     
-    var cat = UIImageView()
-    var precio = UIImageView()
+    var precio = UILabel()
     var categoria = UILabel()
     var desc = UILabel()
+    var backOfNumberRestaurants = UIView()
+    var numberOfRestaurants = UILabel()
+    var backTag = UIView()
+    var tagCategory = UILabel()
 }
 
 

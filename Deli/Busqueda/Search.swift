@@ -26,7 +26,7 @@ class Search: UIViewController, UITableViewDataSource, UITableViewDelegate, UISe
         
         navigationController?.navigationBar.barTintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0)
         
-        closeSearchImg = UIImageView(frame: CGRect(x: wScreen * 0.94, y: hScreen * 0.04, width: wScreen * 0.04, height: wScreen * 0.04))
+        closeSearchImg = UIImageView(frame: CGRect(x: wScreen * 0.91, y: hScreen * 0.04, width: wScreen * 0.04, height: wScreen * 0.04))
         closeSearchImg?.image = #imageLiteral(resourceName: "closeSearch")
         view.addSubview(closeSearchImg!)
         
@@ -35,7 +35,7 @@ class Search: UIViewController, UITableViewDataSource, UITableViewDelegate, UISe
         closeSearchB?.addTarget(self, action: #selector(closeSearchP), for: .touchUpInside)
         view.addSubview(closeSearchB!)
 
-        titulo = UILabel(frame: CGRect(x: wScreen * 0.02, y: closeSearchImg!.frame.maxY + wScreen * 0.02, width: wScreen * 0.6, height: hScreen * 0.05))
+        titulo = UILabel(frame: CGRect(x: wScreen * 0.05, y: closeSearchImg!.frame.maxY + wScreen * 0.02, width: wScreen * 0.6, height: hScreen * 0.05))
         titulo?.text = "Buscar"
         titulo?.textColor = UIColor.black
         titulo?.font = UIFont(name: "Roboto-Black", size: 35)
@@ -72,7 +72,7 @@ class Search: UIViewController, UITableViewDataSource, UITableViewDelegate, UISe
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
-        UIApplication.shared.statusBarStyle = .default
+        UIApplication.shared.statusBarStyle = .lightContent
     }
 
     override func didReceiveMemoryWarning() {

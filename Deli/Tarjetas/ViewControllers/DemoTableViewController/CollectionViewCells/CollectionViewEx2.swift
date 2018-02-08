@@ -11,4 +11,6 @@ import UIKit
 class CollectionViewEx2: UICollectionViewCell {
     
     var sugeridos = UIImageView()
+    var pinMarker = UIImageView()
+    var restAddress = UILabel()
 }

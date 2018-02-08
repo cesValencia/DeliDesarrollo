@@ -54,12 +54,6 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
     var boton7: UIButton?
     var boton8: UIButton?
     var btnArray = [UIButton]()
-    var tabBarView: UIView?
-    var tabBtn1: UIButton?
-    var tabBtn2: UIButton?
-    var tabBtn3: UIButton?
-    var tabBtn4: UIButton?
-    var tabAvatar: UIImageView?
     var dataSource = [Restaurant]()
     var dataSourceForDiamond = [Restaurant]()
     var dataSourceForPlatinum = [Restaurant]()
@@ -79,8 +73,8 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
     var realA = [String]()
     var botonArray = [String]()
     
-    // Vista de medalla
-    var medalView: UIView?
+    // Vista de imagen destacados
+    var destacadosView: UIImageView?
     
     //Caruusel Ex 2 arreglo
     var sugeridosC = [UIImage]()
@@ -149,56 +143,19 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
     collectionEx?.dataSource = self
     containerView.addSubview(collectionEx!)
     
-    medalView = UIView(frame: CGRect(x: 0, y: collectionEx!.frame.maxY + 10, width: wScreen * 0.13, height: wScreen * 0.25))
-    medalView?.backgroundColor = UIColor(red: 90/255, green: 110/255, blue: 241/255, alpha: 1)
-    containerView.addSubview(medalView!)
-    
-    let medalImg = UIImageView(frame: CGRect(x: (medalView!.frame.width/2) - (wScreen * 0.04)/2, y: (medalView!.frame.height/2) - (wScreen * 0.05)/2, width: wScreen * 0.04, height: wScreen * 0.05))
-    medalImg.image = #imageLiteral(resourceName: "medall")
-    medalView?.addSubview(medalImg)
+    destacadosView = UIImageView(frame: CGRect(x: 0, y: collectionEx!.frame.maxY + 10, width: wScreen * 0.115, height: wScreen * 0.35))
+    destacadosView?.image = #imageLiteral(resourceName: "destacados")
+    containerView.addSubview(destacadosView!)
     
     //CollectionView2
-    collectionEx2 = UICollectionView(frame: CGRect(x: wScreen - (wScreen * 0.85), y: collectionEx!.frame.maxY + 10, width: wScreen * 0.85, height: wScreen * 0.25), collectionViewLayout: layout2!)
+    collectionEx2 = UICollectionView(frame: CGRect(x: wScreen - (wScreen * 0.85), y: collectionEx!.frame.maxY + 10, width: wScreen * 0.85, height: wScreen * 0.35), collectionViewLayout: layout2!)
     collectionEx2?.register(CollectionViewEx2.self, forCellWithReuseIdentifier: "cell2")
     collectionEx2?.bounces = true
     collectionEx2?.backgroundColor = UIColor.white
     collectionEx2?.delegate = self
     collectionEx2?.dataSource = self
     containerView.addSubview(collectionEx2!)
-    
-    // TabBar
-    tabBarView = UIView(frame: CGRect(x: 0, y: collectionEx2!.frame.maxY, width: wScreen, height: hScreen * 0.1))
-    tabBarView?.backgroundColor = UIColor.white
-    containerView.addSubview(tabBarView!)
-    
-    tabBtn1 = UIButton(type: .custom)
-    tabBtn1?.frame = CGRect(x: wScreen * 0.08, y: tabBarView!.frame.height * 0.2, width: wScreen * 0.1, height: wScreen * 0.1)
-    tabBtn1?.setImage(#imageLiteral(resourceName: "tabIcon1"), for: .normal)
-    tabBtn1?.addTarget(self, action: #selector(tab1Pressed), for: .touchUpInside)
-    tabBarView?.addSubview(tabBtn1!)
-    
-    tabBtn2 = UIButton(type: .custom)
-    tabBtn2?.frame = CGRect(x: tabBtn1!.frame.maxX + (wScreen * 0.08), y: tabBarView!.frame.height * 0.2, width: wScreen * 0.1, height: wScreen * 0.1)
-    tabBtn2?.setImage(#imageLiteral(resourceName: "tabIcon2"), for: .normal)
-    tabBtn2?.addTarget(self, action: #selector(tab2Pressed), for: .touchUpInside)
-    tabBarView?.addSubview(tabBtn2!)
-    
-    tabBtn3 = UIButton(type: .custom)
-    tabBtn3?.frame = CGRect(x: tabBtn2!.frame.maxX + (wScreen * 0.08), y: tabBarView!.frame.height * 0.2, width: wScreen * 0.1, height: wScreen * 0.1)
-    tabBtn3?.setImage(#imageLiteral(resourceName: "tabIcon3"), for: .normal)
-    tabBtn3?.addTarget(self, action: #selector(tab3Pressed), for: .touchUpInside)
-    tabBarView?.addSubview(tabBtn3!)
-    
-    tabBtn4 = UIButton(type: .custom)
-    tabBtn4?.frame = CGRect(x: tabBtn3!.frame.maxX + (wScreen * 0.08), y: tabBarView!.frame.height * 0.2, width: wScreen * 0.1, height: wScreen * 0.1)
-    tabBtn4?.setImage(#imageLiteral(resourceName: "tabIcon4"), for: .normal)
-    tabBtn4?.addTarget(self, action: #selector(tab4Pressed), for: .touchUpInside)
-    tabBarView?.addSubview(tabBtn4!)
-    
-    tabAvatar = UIImageView(frame: CGRect(x: tabBtn4!.frame.maxX + (wScreen * 0.08), y: tabBarView!.frame.height * 0.15, width: wScreen * 0.12, height: wScreen * 0.12))
-    tabAvatar?.layer.cornerRadius = tabAvatar!.frame.width/2
-    tabAvatar?.layer.masksToBounds = true
-    tabBarView?.addSubview(tabAvatar!)
+
     
     configureNavBar()
 //    let image1 = Asset.backgroundImage.image
@@ -217,47 +174,14 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
         navigationController?.isNavigationBarHidden = false
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
-        
-        // Implementación de userDefaults para cargar imagen de usuario
-        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
-            
-            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
-            tabAvatar?.image = UIImage(data: userAvatar as Data)
-        } else {
-            tabAvatar?.image = #imageLiteral(resourceName: "user-foto")
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
-        
-        // Implementación de userDefaults para cargar imagen de usuario
-        if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
-            
-            userAvatar = UserDefaults.standard.object(forKey: "savedImage") as! NSData
-            tabAvatar?.image = UIImage(data: userAvatar as Data)
-        } else {
-            tabAvatar?.image = #imageLiteral(resourceName: "user-foto")
-        }
     }
     
-    @objc func tab1Pressed() {
-        
-    }
-    
-    @objc func tab2Pressed() {
-        
-    }
-    
-    @objc func tab3Pressed() {
-        
-    }
-    
-    @objc func tab4Pressed() {
-        
-    }
     
     func botones() {
         
@@ -574,11 +498,21 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
 
             let cell2 = collectionView.dequeueReusableCell(withReuseIdentifier: "cell2", for: indexPath) as! CollectionViewEx2
 
-            cell2.sugeridos.frame = CGRect(x: 0, y: 0, width: cell2.frame.width * 0.98, height: cell2.frame.height)
+            cell2.sugeridos.frame = CGRect(x: 0, y: 0, width: cell2.frame.width * 0.95, height: wScreen * 0.28)
             cell2.sugeridos.image = sugeridosC[indexPath.row]
             cell2.backgroundColor = UIColor.white
             cell2.layer.cornerRadius = 3.0
             cell2.contentView.addSubview(cell2.sugeridos)
+            
+            cell2.pinMarker.frame = CGRect(x: cell2.frame.width * 0.01, y: cell2.sugeridos.frame.maxY + cell2.frame.height * 0.08, width: cell2.frame.width * 0.038, height: cell2.frame.width * 0.047)
+            cell2.pinMarker.image = #imageLiteral(resourceName: "purpleMarker")
+            cell2.contentView.addSubview(cell2.pinMarker)
+            
+            cell2.restAddress.frame = CGRect(x: cell2.pinMarker.frame.maxX + cell2.frame.width * 0.02, y: cell2.sugeridos.frame.maxY + cell2.frame.height * 0.05, width: cell2.frame.width * 0.8, height: cell2.frame.width * 0.085)
+            cell2.restAddress.text = "Amargura 35, Colonia San Ángel CDMX."
+            cell2.restAddress.font = UIFont(name: "Roboto-Regular", size: 11.5)
+            cell2.restAddress.textColor = UIColor(red: 122/255, green: 122/255, blue: 122/255, alpha: 1)
+            cell2.contentView.addSubview(cell2.restAddress)
 
             return cell2
         }
@@ -692,7 +626,7 @@ extension DemoTableViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: cellWidth, height: collectionEx!.frame.height * 0.93)
         } else {
             
-            let cellWidth = wScreen * 0.65
+            let cellWidth = wScreen * 0.7
             
             return CGSize(width: cellWidth, height: collectionEx2!.frame.height)
         }

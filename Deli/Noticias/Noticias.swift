@@ -295,7 +295,7 @@ class Noticias: UIViewController, UICollectionViewDelegate, UICollectionViewData
         cell.backgroundColor = UIColor.darkGray
         cell.layer.shadowColor = UIColor.black.cgColor
         cell.layer.shadowOffset = CGSize(width: 0.0, height: 3.5)
-        cell.layer.shadowRadius = 1.5
+        cell.layer.shadowRadius = 3.0
         cell.layer.shadowOpacity = 0.4
         
         

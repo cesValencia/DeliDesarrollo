@@ -106,31 +106,9 @@ public extension ExpandingViewController {
                                                         imgTags.image = #imageLiteral(resourceName: "hashtags")
                                                         containerTMP.addSubview(imgTags)
                                                         
-//                                                        let subTexto = UILabel(frame: CGRect(x: wScreen * 0.05, y: texto.frame.maxY + 4, width: 300, height: 20))
-//                                                        subTexto.text = "Elige tu experiencia"
-//                                                        subTexto.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/(255), alpha: 0)
-//                                                        subTexto.textColor = UIColor(red: 152/255, green: 151/255, blue: 143/255, alpha: 1)
-//                                                        subTexto.font = UIFont(name: "Montserrat-Light", size: 15)
-//                                                        containerTMP.addSubview(subTexto)
-                                                        
-//                                                        let searchView = UIView(frame: CGRect(x: wScreen * 0.05, y: subTexto.frame.maxY + 25, width: wScreen * 0.9, height: hScreen * 0.06))
-//                                                        searchView.backgroundColor = UIColor.white
-//                                                        searchView.layer.cornerRadius = 5.0
-//                                                        containerTMP.addSubview(searchView)
-//
-//                                                        let lupaImg = UIImageView(frame: CGRect(x: searchView.frame.width * 0.04, y: searchView.frame.height * 0.4, width: wScreen * 0.035, height: wScreen * 0.035))
-//                                                        lupaImg.image = #imageLiteral(resourceName: "lupaTextBox")
-//                                                        searchView.addSubview(lupaImg)
-//
-//                                                        let searchField = UITextField(frame: CGRect(x: lupaImg.frame.maxX + 7, y: searchView.frame.height * 0.05, width: searchView.frame.width * 0.8, height: searchView.frame.height * 0.9))
-//                                                        searchField.attributedPlaceholder = NSAttributedString(string: "Busca tu marca por nombre", attributes: [NSForegroundColorAttributeName: UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)])
-//                                                        searchField.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-//                                                        searchField.keyboardAppearance = .dark
-//                                                        searchField.keyboardType = UIKeyboardType.default
-//                                                        searchField.returnKeyType = UIReturnKeyType.done
-//                                                        searchField.clearButtonMode = UITextFieldViewMode.whileEditing;
-////                                                        searchField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-//                                                        searchView.addSubview(searchField)
+                                                        let dots = UIImageView(frame: CGRect(x: wScreen * 0.9, y: imgTags.frame.maxY + hScreen * 0.045, width: wScreen * 0.06, height: wScreen * 0.016))
+                                                        dots.image = #imageLiteral(resourceName: "dotsDesdoble")
+                                                        containerTMP.addSubview(dots)
                                                         
                                                     }else if tarjetaActiva == 1 {
                                                         
