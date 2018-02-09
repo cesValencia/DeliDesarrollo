@@ -89,7 +89,7 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
   
     @IBOutlet weak var containerView: UIView!
     
-    //fileprivate var scrollOffsetY: CGFloat = 0
+//fileprivate var scrollOffsetY: CGFloat = 0
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -452,7 +452,7 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
         if collectionView == self.collectionEx{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewEx
             
-            //            cell.setSubviews()
+//                        cell.setSubviews()
             
             cell.imgEx.image = imgA[indexPath.row]
             cell.imgEx.frame = CGRect(x: cell.frame.width * 0.1365, y: 0, width: cell.frame.width * 0.727, height: cell.frame.width * 0.727)
@@ -521,33 +521,6 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
 
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let id = botonArray[indexPath.row];
-//        let storyBoard = UIStoryboard(name: "Main", bundle: nil)//instanciamos nuestro story
-//
-//        let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: id)
-//        let naviController = UINavigationController(rootViewController: siguienteViewController)
-//        present(naviController, animated: true, completion: nil)
-        
-//        self.present(siguienteViewController, animated: true, completion: nil)//mostrar nuestro viewcontroller
-        
-        //let viewController = storyboard?.instantiateViewController(withIdentifier: id);
-//        self.navigationController?.pushViewController(siguienteViewController, animated: true)
-    }
-    
-    
-    /*override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.isNavigationBarHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.isNavigationBarHidden = false
-    }*/
-    
     
   @IBOutlet weak var titleImageView: UIImageView!
   @IBOutlet weak var titleImageViewXConstraint: NSLayoutConstraint!
@@ -611,8 +584,8 @@ extension DemoTableViewController {
 //      }
 //      popTransitionAnimation()
 //    }
-    
-    //scrollOffsetY = scrollView.contentOffset.y
+//
+//    scrollOffsetY = scrollView.contentOffset.y
   }
 }
 

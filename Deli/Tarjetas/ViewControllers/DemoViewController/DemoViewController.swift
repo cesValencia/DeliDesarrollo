@@ -12,14 +12,7 @@ class DemoViewController: ExpandingViewController {
   
      typealias ItemInfo = (imageName: String, title: String, texto: String, texto3: String, texto4: String)
   fileprivate var cellsIsOpen = [Bool]()
-  /*fileprivate var items: [ItemInfo] = [("Platino", "Lo mejor de CDMX", "México", "", "Compra individual por tipo de comida"),
-                                       ("Mixologia", "Lo mejor de CDMX", "México", "", "Compra individual por tipo de comida"),
-                                       ("Platino", "Lo mejor de CDMX", "México", "", "Compra individual por tipo de comida"),
-                                       ("Plata", "Lo mejor de CDMX", "México", "", "Compra individual por tipo de comida"),
-                                       ("Antojo", "Lo mejor de CDMX", "México", "", "Compra individual por tipo de comida"),
-                                       ("Licoreria", "Lo mejor de CDMX", "México", "", "Compra individual por tipo de comida"),
-                                       ("Postres", "Lo mejor de CDMX", "México", "", "Compra individual por tipo de comida"),
-                                       ("Verde", "Lo mejor de CDMX", "México", "", "Compra individual por tipo de comida")]*/
+
     
     fileprivate var items: [ItemInfo] = [("expc1", "Compra individual", "Experiencia", "", ""),
                                          ("Expc2", "Compra por paquete", "Ruta Menú", "", ""),
@@ -54,7 +47,6 @@ extension DemoViewController {
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.isTranslucent = true
-//    UIApplication.shared.statusBarStyle = .lightContent
     
     self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     
@@ -379,36 +371,6 @@ extension DemoViewController {
         let toViewController: DemoTableViewController3 = storyboard.instantiateViewController()
         return toViewController
     }
-    
-    /*fileprivate func getViewController4() -> ExpandingTableViewController {
-        let storyboard = UIStoryboard(storyboard: .Main)
-        let toViewController: DemoTableViewController4 = storyboard.instantiateViewController()
-        return toViewController
-    }
-    
-    fileprivate func getViewController5() -> ExpandingTableViewController {
-        let storyboard = UIStoryboard(storyboard: .Main)
-        let toViewController: DemoTableViewController5 = storyboard.instantiateViewController()
-        return toViewController
-    }
-    
-    fileprivate func getViewController6() -> ExpandingTableViewController {
-        let storyboard = UIStoryboard(storyboard: .Main)
-        let toViewController: DemoTableViewController6 = storyboard.instantiateViewController()
-        return toViewController
-    }
-    
-    fileprivate func getViewController7() -> ExpandingTableViewController {
-        let storyboard = UIStoryboard(storyboard: .Main)
-        let toViewController: DemoTableViewController7 = storyboard.instantiateViewController()
-        return toViewController
-    }
-    
-    fileprivate func getViewController8() -> ExpandingTableViewController {
-        let storyboard = UIStoryboard(storyboard: .Main)
-        let toViewController: DemoTableViewController8 = storyboard.instantiateViewController()
-        return toViewController
-    }*/
   
   fileprivate func configureNavBar() {
     navigationItem.leftBarButtonItem?.image = navigationItem.leftBarButtonItem?.image!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
@@ -510,123 +472,7 @@ extension DemoViewController {
         let open = sender.direction == .up ? true : false
         cell.cellIsOpen(open)
         cellsIsOpen[indexPath.row] = cell.isOpened
-    }/*else if(currentIndex == 3){
-        
-        // double swipe Up transition
-        if cell.isOpened == true && sender.direction == .up {
-            
-            
-            
-            pushToViewController(getViewController4())
-            
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-                
-                
-            }
-        }
-        
-        
-        
-        
-        let open = sender.direction == .up ? true : false
-        cell.cellIsOpen(open)
-        cellsIsOpen[indexPath.row] = cell.isOpened
-    }else if(currentIndex == 4){
-        
-        // double swipe Up transition
-        if cell.isOpened == true && sender.direction == .up {
-            
-            
-            
-            pushToViewController(getViewController5())
-            
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-                
-                
-            }
-        }
-        
-        
-        
-        
-        let open = sender.direction == .up ? true : false
-        cell.cellIsOpen(open)
-        cellsIsOpen[indexPath.row] = cell.isOpened
-    }else if(currentIndex == 5){
-        
-        
-        // double swipe Up transition
-        if cell.isOpened == true && sender.direction == .up {
-            
-            
-            
-            pushToViewController(getViewController6())
-            
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-                
-                
-            }
-        }
-        
-        
-        
-        
-        let open = sender.direction == .up ? true : false
-        cell.cellIsOpen(open)
-        cellsIsOpen[indexPath.row] = cell.isOpened
-    }else if(currentIndex == 6){
-        
-        // double swipe Up transition
-        if cell.isOpened == true && sender.direction == .up {
-            
-            
-            
-            pushToViewController(getViewController7())
-            
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-                
-                
-            }
-        }
-        
-        
-        
-        
-        let open = sender.direction == .up ? true : false
-        cell.cellIsOpen(open)
-        cellsIsOpen[indexPath.row] = cell.isOpened
-    }else if(currentIndex == 7){
-        
-        // double swipe Up transition
-        if cell.isOpened == true && sender.direction == .up {
-            
-            
-            
-            pushToViewController(getViewController8())
-            
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-                
-                
-            }
-        }
-        
-        
-        
-        
-        let open = sender.direction == .up ? true : false
-        cell.cellIsOpen(open)
-        cellsIsOpen[indexPath.row] = cell.isOpened
-    }*/
+    }
 
   }
  
@@ -678,56 +524,7 @@ extension DemoViewController {
             
         })
     }
-    /*else if(currentIndex == 3){
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.view.backgroundColor = UIColor(red: 146.00/255, green: 147.00/255, blue: 151.00/255, alpha: 1.00);
 
-            self.controlerPages.currentPage = 3
-        }, completion: { (true) in
-            
-        })
-    }
-    else if(currentIndex == 4){
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.view.backgroundColor = UIColor(red: 182.00/255, green: 177.00/255, blue: 143.00/255, alpha: 1.00);
-
-            self.controlerPages.currentPage = 4
-        }, completion: { (true) in
-            
-        })
-    }
-    else if(currentIndex == 5){
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.view.backgroundColor = UIColor(red: 148.00/255, green: 137.00/255, blue: 180.00/255, alpha: 1.00);
-
-            self.controlerPages.currentPage = 5
-        }, completion: { (true) in
-            
-        })
-    }
-    else if(currentIndex == 6){
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.view.backgroundColor = UIColor(red: 91.00/255, green: 92.00/255, blue: 118.00/255, alpha: 1.00);
-
-            self.controlerPages.currentPage = 6
-        }, completion: { (true) in
-            
-        })
-    }
-    else if(currentIndex == 7){
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.view.backgroundColor = UIColor(red: 183.00/255, green: 191.00/255, blue: 134.00/255, alpha: 1.00);
-
-            self.controlerPages.currentPage = 7
-        }, completion: { (true) in
-            
-        })
-    }*/
   }
   
 }
@@ -791,67 +588,7 @@ extension DemoViewController {
                 rightButton.animationSelected(true)
             }
         }
-    }/*else if(currentIndex == 3){
-        
-        if cell.isOpened == false {
-            cell.cellIsOpen(true)
-            
-        } else {
-            pushToViewController(getViewController4())
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-            }
-        }
-    }else if(currentIndex == 4){
-        
-        if cell.isOpened == false {
-            cell.cellIsOpen(true)
-            
-        } else {
-            pushToViewController(getViewController5())
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-            }
-        }
-    }else if(currentIndex == 5){
-        
-        if cell.isOpened == false {
-            cell.cellIsOpen(true)
-            
-        } else {
-            pushToViewController(getViewController6())
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-            }
-        }
-    }else if(currentIndex == 6){
-        
-        if cell.isOpened == false {
-            cell.cellIsOpen(true)
-            
-        } else {
-            pushToViewController(getViewController7())
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-            }
-        }
-    }else if(currentIndex == 7){
-        
-        if cell.isOpened == false {
-            cell.cellIsOpen(true)
-            
-        } else {
-            pushToViewController(getViewController8())
-            
-            if let rightButton = navigationItem.rightBarButtonItem as? AnimatingBarButton {
-                rightButton.animationSelected(true)
-            }
-        }
-    }*/
+    }
 
 
   }

@@ -1,129 +1,500 @@
 //
 //  DemoTableViewController3.swift
-//  Deli
+//  TestCollectionView
 //
-//  Created by David Valencia on 01/09/17.
-//  Copyright © 2017 Magnetink. All rights reserved.
+//  Created by Alex K. on 24/05/16.
+//  Copyright © 2016 Alex K. All rights reserved.
 //
 
 import UIKit
 
 class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    
-    
-    
+    //VARIABLES PARA EL ARRASTRAR VARIABLES AL SIGUIENTE CONTROLLADOR
+    //Urls
+    var categorias: String?
+    var categoria1: String?
+    var categoria2: String?
+    var categoria3: String?
+    var categoria4: String?
+    var categoria5: String?
+    var categoria6: String?
+    var categoria7: String?
+    var categoria8: String?
+    var c1 = Paging()
+    var c2 = Paging()
+    var c3 = Paging()
+    var c4 = Paging()
+    var c5 = Paging()
+    var c6 = Paging()
+    var c7 = Paging()
+    var c8 = Paging()
+    var cName1 = (category: "Diamante", desc: "restaurantes & bistrò")
+    var cName2 = (category: "Mixología", desc: "lounges & bares")
+    var cName3 = (category: "Platino", desc: "restaurantes & bistrò")
+    var cName4 = (category: "Plata", desc: "restaurantes & pubs")
+    var cName5 = (category: "Antojo", desc: "antojerías y snacks")
+    var cName6 = (category: "Bares", desc: "pubs, bares & cantinas")
+    var cName7 = (category: "Postres", desc: "café, pasteles & helados")
+    var cName8 = (category: "Verdes", desc: "vegana & vegetariana")
+    var cColor1: UIColor?
+    var cColor2: UIColor?
+    var cColor3: UIColor?
+    var cColor4: UIColor?
+    var cColor5: UIColor?
+    var cColor6: UIColor?
+    var cColor7: UIColor?
+    var cColor8: UIColor?
+    var boton: UIButton?
+    var boton2: UIButton?
+    var boton3: UIButton?
+    var boton4: UIButton?
+    var boton5: UIButton?
+    var boton6: UIButton?
+    var boton7: UIButton?
+    var boton8: UIButton?
+    var btnArray = [UIButton]()
+    var dataSource = [Restaurant]()
+    var dataSourceForDiamond = [Restaurant]()
+    var dataSourceForPlatinum = [Restaurant]()
+    var dataSourceForMixology = [Restaurant]()
+    var dataSourceForSilver = [Restaurant]()
+    var dataSourceForGreen = [Restaurant]()
+    var dataSourceForSnacks = [Restaurant]()
+    var dataSourceForPubs = [Restaurant]()
+    var dataSourceForCakes = [Restaurant]()
+    var statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
     
     //Arreglos que muestran contenido del carrusel de experiencias
     var imgA = [UIImage]()
-    var precioA = [String]()
-    var descA = [String]()
+    var precioA = [UIImage]()
+    var tituloA = [String]()
+    var subtituloA = [String]()
     var realA = [String]()
     var botonArray = [String]()
     
+    // Vista de imagen destacados
+    var destacadosView: UIImageView?
+    
     //Caruusel Ex 2 arreglo
-    var tiposC = [String]()
+    var sugeridosC = [UIImage]()
     
     //Nombre de los collectionViews
-    @IBOutlet weak var collectionEx5: UICollectionView!
-    @IBOutlet weak var collectionEx6: UICollectionView!
-    
+    var collectionEx: UICollectionView?
+    var collectionEx2: UICollectionView?
+    var layout: UICollectionViewFlowLayout?
+    var layout2: UICollectionViewFlowLayout?
     
     var identifiers = ["201", "202", "203", "204", "205", "206", "207", "208", "209", "210"]
+    
+    @IBOutlet weak var containerView: UIView!
     
     //fileprivate var scrollOffsetY: CGFloat = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Status bar
+        statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        //NUEVAS VARIABLES
+        categorias = "http://104.236.10.17/api/restaurantes"
+        categoria1 = "http://104.236.10.17/api/restaurantes/categoria/1"
+        categoria2 = "http://104.236.10.17/api/restaurantes/categoria/2"
+        categoria3 = "http://104.236.10.17/api/restaurantes/categoria/3"
+        categoria4 = "http://104.236.10.17/api/restaurantes/categoria/4"
+        categoria5 = "http://104.236.10.17/api/restaurantes/categoria/5"
+        categoria6 = "http://104.236.10.17/api/restaurantes/categoria/6"
+        categoria7 = "http://104.236.10.17/api/restaurantes/categoria/7"
+        categoria8 = "http://104.236.10.17/api/restaurantes/categoria/8"
+        
+        cColor1 = headColor1
+        
+        botones()
+        
+        btnArray = [boton!, boton2!, boton3!, boton4!, boton5!, boton6!, boton7!, boton8!]
+        
+        
+        
         //Contenido de los arreglos de carrusel de experiencias
-        imgA = [UIImage(named: "T1")!, UIImage(named: "T2")!, UIImage(named: "T3")!, UIImage(named: "T4")!, UIImage(named: "T5")!]
-        precioA = ["Mzo - May", "Jul - Ago", "Sep - Oct", "Nov - Dic", "Ene - Feb"]
-        descA = ["Influencia inglesa en nuestra cocina", "Orígenes del sabor mexicano actual", "Tendencias de mixología en el 2018", "Influencia francesa en nuestra cocina", "Los mejores chefs mexicanos del año"]
-        realA = ["Valor de premio ganador 2,030$", "Valor de premio ganador 1,100$", "Valor de premio ganador 850$", "Valor de premio ganador 2,030$", "Valor de premio ganador 1,100$"]
-        botonArray = ["FullTrivias", "FullTrivias", "FullTrivias", "FullTrivias", "FullTrivias"]
+        imgA = [#imageLiteral(resourceName: "tFake1"), #imageLiteral(resourceName: "tFake2"), #imageLiteral(resourceName: "tFake1"), #imageLiteral(resourceName: "tFake2"), #imageLiteral(resourceName: "tFake1"), #imageLiteral(resourceName: "tFake2"), #imageLiteral(resourceName: "tFake1"), #imageLiteral(resourceName: "tFake2")]
+        precioA = [UIImage(named: "ppostres")!, UIImage(named: "pbares")!, UIImage(named: "pantojo")!, UIImage(named: "pverde")!, UIImage(named: "pplata")!, UIImage(named: "pmixo")!, UIImage(named: "pplatino")!, UIImage(named: "pdiamante")!]
+        tituloA = ["Postres", "Bares", "Antojo", "Verde", "Plata", "Mixología", "Platino", "Diamante"]
+        subtituloA = ["café, pasteles & helados", "pubs, bares & cantinas", "antojerías y snacks", "vegana & vegetariana", "restaurantes & pubs", "lounges & bares", "restaurantes & bistrò", "restaurantes & bistrò"]
+        realA = ["Valor en sucursal      70$", "Valor en sucursal   106$", "Valor en sucursal   106$", "Valor en sucursal   116$", "Valor en sucursal   180$", "Valor en sucursal   180$", "Valor en sucursal   310$", "Valor en sucursal  1,060$"]
+        botonArray = ["Postres", "Bares", "Antojo", "Verde", "Plata", "Mixologia", "Platino", "Diamante"]
         
         //Contenido arreglo ex2
-        tiposC = ["Internacional", "Mexicana", "Europea",  "Oriental"]
+        sugeridosC = [#imageLiteral(resourceName: "caja1Fake"), #imageLiteral(resourceName: "caja2Fake"), #imageLiteral(resourceName: "caja1Fake"), #imageLiteral(resourceName: "caja2Fake")]
         
-        self.collectionEx5.dataSource = self
-        self.collectionEx5.delegate = self
-        self.collectionEx6.dataSource = self
-        self.collectionEx6.delegate = self
+        //Layout del collection view
+        layout = UICollectionViewFlowLayout()
+        layout?.scrollDirection = .horizontal
         
-        let mivista = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 335))
-        mivista.backgroundColor = UIColor.red
-        //view.addSubview(mivista)
+        layout2 = UICollectionViewFlowLayout()
+        layout2?.scrollDirection = .horizontal
+        
+        //CollectionView
+        collectionEx = UICollectionView(frame: CGRect(x: wScreen * 0.025, y: hScreen * 0.02, width: wScreen * 0.975, height: hScreen * 0.4), collectionViewLayout: layout!)
+        collectionEx?.register(CollectionViewEx5.self, forCellWithReuseIdentifier: "cell")
+        collectionEx?.bounces = true
+        collectionEx?.backgroundColor = UIColor.white
+        collectionEx?.delegate = self
+        collectionEx?.dataSource = self
+        containerView.addSubview(collectionEx!)
+        
+        destacadosView = UIImageView(frame: CGRect(x: 0, y: collectionEx!.frame.maxY + 10, width: wScreen * 0.115, height: wScreen * 0.35))
+        destacadosView?.image = #imageLiteral(resourceName: "destacados")
+        containerView.addSubview(destacadosView!)
+        
+        //CollectionView2
+        collectionEx2 = UICollectionView(frame: CGRect(x: wScreen - (wScreen * 0.85), y: collectionEx!.frame.maxY + 10, width: wScreen * 0.85, height: wScreen * 0.35), collectionViewLayout: layout2!)
+        collectionEx2?.register(CollectionViewEx6.self, forCellWithReuseIdentifier: "cell2")
+        collectionEx2?.bounces = true
+        collectionEx2?.backgroundColor = UIColor.white
+        collectionEx2?.delegate = self
+        collectionEx2?.dataSource = self
+        containerView.addSubview(collectionEx2!)
+        
         
         configureNavBar()
-        let image1 = Asset.backgroundImage.image
-        tableView.backgroundView = UIImageView(image: image1)
+        //    let image1 = Asset.backgroundImage.image
+        //    tableView.backgroundView = UIImageView(image: image1)
+        
+        getData()
+        
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+        statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+        statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    
+    func botones() {
+        
+        boton = UIButton(type: UIButtonType.system)
+        boton?.setTitle("", for: UIControlState.normal)
+        boton?.backgroundColor = UIColor.white.withAlphaComponent(0)
+        boton?.addTarget(self, action: #selector(pressed), for: UIControlEvents.touchUpInside)
+        //        view.addSubview(boton!)
+        
+        boton2 = UIButton(type: UIButtonType.system)
+        boton2?.setTitle("", for: UIControlState.normal)
+        boton2?.backgroundColor = UIColor.white.withAlphaComponent(0)
+        boton2?.addTarget(self, action: #selector(pressed2), for: UIControlEvents.touchUpInside)
+        //        view.addSubview(boton2!)
+        
+        boton3 = UIButton(type: UIButtonType.system)
+        boton3?.setTitle("", for: UIControlState.normal)
+        boton3?.backgroundColor = UIColor.white.withAlphaComponent(0)
+        boton3?.addTarget(self, action: #selector(pressed3), for: UIControlEvents.touchUpInside)
+        //        view.addSubview(boton3!)
+        
+        boton4 = UIButton(type: UIButtonType.system)
+        boton4?.setTitle("", for: UIControlState.normal)
+        boton4?.backgroundColor = UIColor.white.withAlphaComponent(0)
+        boton4?.addTarget(self, action: #selector(pressed4), for: UIControlEvents.touchUpInside)
+        //        view.addSubview(boton4!)
+        
+        boton5 = UIButton(type: UIButtonType.system)
+        boton5?.setTitle("", for: UIControlState.normal)
+        boton5?.backgroundColor = UIColor.white.withAlphaComponent(0)
+        boton5?.addTarget(self, action: #selector(pressed5), for: UIControlEvents.touchUpInside)
+        //        view.addSubview(boton5!)
+        
+        boton6 = UIButton(type: UIButtonType.system)
+        boton6?.setTitle("", for: UIControlState.normal)
+        boton6?.backgroundColor = UIColor.white.withAlphaComponent(0)
+        boton6?.addTarget(self, action: #selector(pressed6), for: UIControlEvents.touchUpInside)
+        //        view.addSubview(boton6!)
+        
+        boton7 = UIButton(type: UIButtonType.system)
+        boton7?.setTitle("", for: UIControlState.normal)
+        boton7?.backgroundColor = UIColor.white.withAlphaComponent(0)
+        boton7?.addTarget(self, action: #selector(pressed7), for: UIControlEvents.touchUpInside)
+        //        view.addSubview(boton7!)
+        
+        boton8 = UIButton(type: UIButtonType.system)
+        boton8?.setTitle("", for: UIControlState.normal)
+        boton8?.backgroundColor = UIColor.white.withAlphaComponent(0)
+        boton8?.addTarget(self, action: #selector(pressed8), for: UIControlEvents.touchUpInside)
+        //        view.addSubview(boton8!)
+    }
+    
+    @objc func pressed() {
+        c1.urlJson = categorias
+        c1.topColor = cColor1
+        c1.categoryName = cName7.category
+        c1.categoryDesc = cName7.desc
+        c1.dataSourceForDiamond2 = dataSourceForDiamond
+        c1.dataSourceForPlatinum2 = dataSourceForPlatinum
+        c1.dataSourceForMixology2 = dataSourceForMixology
+        c1.dataSourceForSilver2 = dataSourceForSilver
+        c1.dataSourceForGreen2 = dataSourceForGreen
+        c1.dataSourceForSnacks2 = dataSourceForSnacks
+        c1.dataSourceForPubs2 = dataSourceForPubs
+        c1.dataSourceForCakes2 = dataSourceForCakes
+        
+        self.navigationController?.pushViewController(c1, animated: true)
+    }
+    
+    @objc func pressed2() {
+        
+        c2.urlJson = categorias
+        c2.topColor = cColor1
+        c2.categoryName = cName6.category
+        c2.categoryDesc = cName6.desc
+        c2.dataSourceForDiamond2 = dataSourceForDiamond
+        c2.dataSourceForPlatinum2 = dataSourceForPlatinum
+        c2.dataSourceForMixology2 = dataSourceForMixology
+        c2.dataSourceForSilver2 = dataSourceForSilver
+        c2.dataSourceForGreen2 = dataSourceForGreen
+        c2.dataSourceForSnacks2 = dataSourceForSnacks
+        c2.dataSourceForPubs2 = dataSourceForPubs
+        c2.dataSourceForCakes2 = dataSourceForCakes
+        
+        self.navigationController?.pushViewController(c2, animated: true)
+    }
+    
+    @objc func pressed3() {
+        
+        c3.urlJson = categorias
+        c3.topColor = cColor1
+        c3.categoryName = cName5.category
+        c3.categoryDesc = cName5.desc
+        c3.dataSourceForDiamond2 = dataSourceForDiamond
+        c3.dataSourceForPlatinum2 = dataSourceForPlatinum
+        c3.dataSourceForMixology2 = dataSourceForMixology
+        c3.dataSourceForSilver2 = dataSourceForSilver
+        c3.dataSourceForGreen2 = dataSourceForGreen
+        c3.dataSourceForSnacks2 = dataSourceForSnacks
+        c3.dataSourceForPubs2 = dataSourceForPubs
+        c3.dataSourceForCakes2 = dataSourceForCakes
+        
+        self.navigationController?.pushViewController(c3, animated: true)
+    }
+    
+    @objc func pressed4() {
+        
+        c4.urlJson = categorias
+        c4.topColor = cColor1
+        c4.categoryName = cName8.category
+        c4.categoryDesc = cName8.desc
+        c4.dataSourceForDiamond2 = dataSourceForDiamond
+        c4.dataSourceForPlatinum2 = dataSourceForPlatinum
+        c4.dataSourceForMixology2 = dataSourceForMixology
+        c4.dataSourceForSilver2 = dataSourceForSilver
+        c4.dataSourceForGreen2 = dataSourceForGreen
+        c4.dataSourceForSnacks2 = dataSourceForSnacks
+        c4.dataSourceForPubs2 = dataSourceForPubs
+        c4.dataSourceForCakes2 = dataSourceForCakes
+        
+        self.navigationController?.pushViewController(c4, animated: true)
+    }
+    
+    @objc func pressed5() {
+        
+        c5.urlJson = categorias
+        c5.topColor = cColor1
+        c5.categoryName = cName4.category
+        c5.categoryDesc = cName4.desc
+        c5.dataSourceForDiamond2 = dataSourceForDiamond
+        c5.dataSourceForPlatinum2 = dataSourceForPlatinum
+        c5.dataSourceForMixology2 = dataSourceForMixology
+        c5.dataSourceForSilver2 = dataSourceForSilver
+        c5.dataSourceForGreen2 = dataSourceForGreen
+        c5.dataSourceForSnacks2 = dataSourceForSnacks
+        c5.dataSourceForPubs2 = dataSourceForPubs
+        c5.dataSourceForCakes2 = dataSourceForCakes
+        
+        self.navigationController?.pushViewController(c5, animated: true)
+    }
+    
+    @objc func pressed6() {
+        
+        c6.urlJson = categorias
+        c6.topColor = cColor1
+        c6.categoryName = cName2.category
+        c6.categoryDesc = cName2.desc
+        c6.dataSourceForDiamond2 = dataSourceForDiamond
+        c6.dataSourceForPlatinum2 = dataSourceForPlatinum
+        c6.dataSourceForMixology2 = dataSourceForMixology
+        c6.dataSourceForSilver2 = dataSourceForSilver
+        c6.dataSourceForGreen2 = dataSourceForGreen
+        c6.dataSourceForSnacks2 = dataSourceForSnacks
+        c6.dataSourceForPubs2 = dataSourceForPubs
+        c6.dataSourceForCakes2 = dataSourceForCakes
+        
+        self.navigationController?.pushViewController(c6, animated: true)
+    }
+    
+    @objc func pressed7() {
+        
+        c7.urlJson = categorias
+        c7.topColor = cColor1
+        c7.categoryName = cName3.category
+        c7.categoryDesc = cName3.desc
+        c7.dataSourceForDiamond2 = dataSourceForDiamond
+        c7.dataSourceForPlatinum2 = dataSourceForPlatinum
+        c7.dataSourceForMixology2 = dataSourceForMixology
+        c7.dataSourceForSilver2 = dataSourceForSilver
+        c7.dataSourceForGreen2 = dataSourceForGreen
+        c7.dataSourceForSnacks2 = dataSourceForSnacks
+        c7.dataSourceForPubs2 = dataSourceForPubs
+        c7.dataSourceForCakes2 = dataSourceForCakes
+        
+        self.navigationController?.pushViewController(c7, animated: true)
+    }
+    
+    @objc func pressed8() {
+        
+        c8.urlJson = categorias
+        c8.topColor = cColor1
+        c8.categoryName = cName1.category
+        c8.categoryDesc = cName1.desc
+        c8.dataSourceForDiamond2 = dataSourceForDiamond
+        c8.dataSourceForPlatinum2 = dataSourceForPlatinum
+        c8.dataSourceForMixology2 = dataSourceForMixology
+        c8.dataSourceForSilver2 = dataSourceForSilver
+        c8.dataSourceForGreen2 = dataSourceForGreen
+        c8.dataSourceForSnacks2 = dataSourceForSnacks
+        c8.dataSourceForPubs2 = dataSourceForPubs
+        c8.dataSourceForCakes2 = dataSourceForCakes
+        
+        self.navigationController?.pushViewController(c8, animated: true)
+    }
+    
+    //Serializando JSON
+    func getData() {
+        let url = URL(string: categorias!) // se convirete el string url a untipo de dato URL
+        
+        var request = URLRequest(url: url!) //inicializacion del Request
+        request.httpMethod = "GET" //tipo de peticion
+        
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if (error != nil){ //verifica que no exista algun error a la hora de hacer la peticion
+                print("Ocurrio un error al obtener el json")
+            }
+            do{
+                //control de errores desconocidos (TRY) en la serializacion del json
+                let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Array<Any>
+                //print(json)
+                if json.count > 0{ //numero de post en el json
+                    self.dataSource.removeAll()
+                    for obj in json{ //Recorrido de todos los post en el json
+                        let objeAux = obj as! NSDictionary
+                        let restaurante = Restaurant(dictionary: objeAux)
+                        //                                                self.dataSource.append(restaurante);
+                        
+                        switch restaurante.categoria.lowercased() {
+                        case "diamante":
+                            self.dataSourceForDiamond.append(restaurante)
+                        case "platino":
+                            self.dataSourceForPlatinum.append(restaurante)
+                        case "mixologia":
+                            self.dataSourceForMixology.append(restaurante)
+                        case "plata":
+                            self.dataSourceForSilver.append(restaurante)
+                        case "verdes":
+                            self.dataSourceForGreen.append(restaurante)
+                        case "antojo":
+                            self.dataSourceForSnacks.append(restaurante)
+                        case "bares":
+                            self.dataSourceForPubs.append(restaurante)
+                        default:
+                            self.dataSourceForCakes.append(restaurante)
+                        }
+                        
+                    }
+                    
+                }
+                else{
+                    print("Sin datos")
+                }
+            }
+            catch{
+                print("Error Serializando del Json")
+            }
+            }.resume() //ejecuta el URLSession
+        
+    }
+    
     
     /*DashboardView*/
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if collectionView == self.collectionEx5 {
+        if collectionView == self.collectionEx {
             
             return imgA.count
         }else {
             
-            return tiposC.count
+            return sugeridosC.count
         }
-        
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if collectionView == self.collectionEx {
+            let details = FullTrivias()
+            navigationController?.pushViewController(details, animated: true)
+        } else {
+            
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if collectionView == self.collectionEx5{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewEx5", for: indexPath) as! CollectionViewEx5
-            cell.imgEx.image = imgA[indexPath.row]
-            cell.precio.text = precioA[indexPath.row]
-            cell.desc.text = descA[indexPath.row]
-            cell.precioReal.text = realA[indexPath.row]
+        if collectionView == self.collectionEx{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewEx5
+            
+            cell.setCellSubviews()
+            
+            cell.imgTriv.image = imgA[indexPath.row]
+            cell.mes.text = "Mzo - May"
+            cell.trivia.text = "Influencia inglesa en México"
+            cell.valorPremio.text = "Valor de premio ganador 2,030$"
+            
+            cell.backgroundColor = UIColor.white
             
             return cell
         }else{
             
-            let cell2 = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewEx6", for: indexPath) as! CollectionViewEx6
+            let cell2 = collectionView.dequeueReusableCell(withReuseIdentifier: "cell2", for: indexPath) as! CollectionViewEx6
             
-            cell2.paises.text = tiposC[indexPath.row]
-            cell2.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
+            cell2.sugeridos.frame = CGRect(x: 0, y: 0, width: cell2.frame.width * 0.95, height: wScreen * 0.28)
+            cell2.sugeridos.image = sugeridosC[indexPath.row]
+            cell2.backgroundColor = UIColor.white
             cell2.layer.cornerRadius = 3.0
+            cell2.contentView.addSubview(cell2.sugeridos)
+            
+            cell2.pinMarker.frame = CGRect(x: cell2.frame.width * 0.01, y: cell2.sugeridos.frame.maxY + cell2.frame.height * 0.08, width: cell2.frame.width * 0.038, height: cell2.frame.width * 0.047)
+            cell2.pinMarker.image = #imageLiteral(resourceName: "purpleMarker")
+            cell2.contentView.addSubview(cell2.pinMarker)
+            
+            cell2.restAddress.frame = CGRect(x: cell2.pinMarker.frame.maxX + cell2.frame.width * 0.02, y: cell2.sugeridos.frame.maxY + cell2.frame.height * 0.05, width: cell2.frame.width * 0.8, height: cell2.frame.width * 0.085)
+            cell2.restAddress.text = "Amargura 35, Colonia San Ángel CDMX."
+            cell2.restAddress.font = UIFont(name: "Roboto-Regular", size: 11.5)
+            cell2.restAddress.textColor = UIColor(red: 122/255, green: 122/255, blue: 122/255, alpha: 1)
+            cell2.contentView.addSubview(cell2.restAddress)
             
             return cell2
         }
         
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        /*let id = botonArray[indexPath.row];
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)//instanciamos nuestro story
-        
-        let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: id)*/
-        
-        //self.present(FullTrivias(), animated: true, completion: nil)//mostrar nuestro viewcontroller
-        navigationController?.pushViewController(FullTrivias(), animated: true)
-        
-        
-        //let viewController = storyboard?.instantiateViewController(withIdentifier: id);
-        //self.navigationController?.pushViewController(viewController!, animated: true)
-        
-        
-    }
-    
-    
-    /*override func viewWillAppear(_ animated: Bool) {
-     super.viewWillAppear(animated)
-     
-     navigationController?.isNavigationBarHidden = true
-     }
-     
-     override func viewWillDisappear(_ animated: Bool) {
-     super.viewWillDisappear(animated)
-     
-     navigationController?.isNavigationBarHidden = false
-     }*/
     
     
     @IBOutlet weak var titleImageView: UIImageView!
@@ -188,28 +559,36 @@ extension DemoTableViewController3 {
         //      }
         //      popTransitionAnimation()
         //    }
-        
-        //scrollOffsetY = scrollView.contentOffset.y
+        //
+        //    scrollOffsetY = scrollView.contentOffset.y
     }
 }
 
 extension DemoTableViewController3: UICollectionViewDelegateFlowLayout {
     
-    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-     
-     let screenWidth = self.view.frame.width
-     let cellWidth = (screenWidth/2.0)
-     
-     return CGSize(width: cellWidth, height: 262)
-     }
-     
-     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-     
-     return 0.0
-     }
-     
-     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-     
-     return 0.0
-     }*/
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if collectionView == self.collectionEx {
+            let cellWidth = wScreen * 0.38
+            
+            return CGSize(width: cellWidth, height: collectionEx!.frame.height * 0.93)
+        } else {
+            
+            let cellWidth = wScreen * 0.7
+            
+            return CGSize(width: cellWidth, height: collectionEx2!.frame.height)
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        
+        return 0.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        
+        return 0.0
+    }
 }
+

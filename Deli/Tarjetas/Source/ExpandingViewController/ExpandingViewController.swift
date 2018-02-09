@@ -83,17 +83,61 @@ public extension ExpandingViewController {
                                                         
                                                         let containerTMP = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 236))
                                                         containerTMP.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.4)
+                                                        containerTMP.alpha = 0
+                                                        headerView.addSubview(containerTMP)
+                                                        
+                                                        let exprefImg = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.05, width: wScreen * 0.3, height: hScreen * 0.02))
+                                                        exprefImg.image = #imageLiteral(resourceName: "expref")
+                                                        exprefImg.alpha = 0
+                                                        containerTMP.addSubview(exprefImg)
+                                                        
+                                                        let texto = UILabel(frame: CGRect(x: wScreen * 0.05, y: containerTMP.frame.height * 0.4, width: 300, height: 43))
+                                                        texto.text = "Tu eliges"
+                                                        texto.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0)
+                                                        texto.textColor = UIColor.white
+                                                        texto.font = UIFont(name: "roboto-black", size: 37)
+                                                        texto.alpha = 0
+                                                        containerTMP.addSubview(texto)
+                                                        
+                                                        let imgTags = UIImageView(frame: CGRect(x: wScreen * 0.05, y: texto.frame.maxY + hScreen * 0.017, width: wScreen * 0.9, height: hScreen * 0.038))
+                                                        imgTags.image = #imageLiteral(resourceName: "hashtags")
+                                                        imgTags.alpha = 0
+                                                        containerTMP.addSubview(imgTags)
+                                                        
+                                                        let dots = UIImageView(frame: CGRect(x: wScreen * 0.9, y: imgTags.frame.maxY + hScreen * 0.045, width: wScreen * 0.06, height: wScreen * 0.016))
+                                                        dots.image = #imageLiteral(resourceName: "dotsDesdoble")
+                                                        dots.alpha = 0
+                                                        containerTMP.addSubview(dots)
+                                                        
+                                                        UIView.animate(withDuration: 0.5, animations: {
+                                                            containerTMP.alpha = 1
+                                                        }, completion: { (true) in
+                                                            UIView.animate(withDuration: 0.5, animations: {
+                                                                exprefImg.alpha = 1
+                                                            }, completion: { (true) in
+                                                                UIView.animate(withDuration: 0.5, animations: {
+                                                                    texto.alpha = 1
+                                                                }, completion: { (true) in
+                                                                    UIView.animate(withDuration: 0.5, animations: {
+                                                                        imgTags.alpha = 1
+                                                                    }, completion: { (true) in
+                                                                        UIView.animate(withDuration: 0.5, animations: {
+                                                                            dots.alpha = 1
+                                                                        })
+                                                                    })
+                                                                })
+                                                            })
+                                                        })
+                                                        
+                                                    }else if tarjetaActiva == 1 {
+                                                        
+                                                        let containerTMP = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 236))
+                                                        containerTMP.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.4)
                                                         headerView.addSubview(containerTMP)
                                                         
                                                         let exprefImg = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.05, width: wScreen * 0.3, height: hScreen * 0.02))
                                                         exprefImg.image = #imageLiteral(resourceName: "expref")
                                                         containerTMP.addSubview(exprefImg)
-                                                        
-                                                        let closeCards = UIButton(type: .custom)
-                                                        closeCards.setImage(#imageLiteral(resourceName: "CloseCards"), for: .normal)
-                                                        closeCards.frame = CGRect(x: self.view.frame.width - 50, y: 40, width: 45, height: 45)
-                                                        closeCards.addTarget(self, action: #selector(self.closeCardsPressed), for: .touchUpInside)
-//                                                        containerTMP.addSubview(closeCards)
                                                         
                                                         let texto = UILabel(frame: CGRect(x: wScreen * 0.05, y: containerTMP.frame.height * 0.4, width: 300, height: 43))
                                                         texto.text = "Tu eliges"
@@ -110,54 +154,55 @@ public extension ExpandingViewController {
                                                         dots.image = #imageLiteral(resourceName: "dotsDesdoble")
                                                         containerTMP.addSubview(dots)
                                                         
-                                                    }else if tarjetaActiva == 1 {
-                                                        
-                                                        let containerTMP = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 236))
-                                                        containerTMP.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.4)
-                                                        headerView.addSubview(containerTMP)
-                                                        
-                                                        let closeCards = UIButton(type: .custom)
-                                                        closeCards.setImage(#imageLiteral(resourceName: "closeCard"), for: .normal)
-                                                        closeCards.frame = CGRect(x: self.view.frame.width - 50, y: 40, width: 45, height: 45)
-                                                        //containerTMP.addSubview(closeCards)
-                                                        
-                                                        let texto = UILabel(frame: CGRect(x: 36, y: closeCards.frame.maxY + 5, width: 300, height: 43))
-                                                        texto.text = "Ruta Menú"
-                                                        texto.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0)
-                                                        texto.textColor = UIColor.white
-                                                        texto.font = UIFont(name: "Montserrat-Bold", size: 36)
-                                                        containerTMP.addSubview(texto)
-                                                        
-                                                        let subTexto = UILabel(frame: CGRect(x: 36, y: texto.frame.maxY + 4, width: 300, height: 20))
-                                                        subTexto.text = "Disfruta y comparte"
-                                                        subTexto.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/(255), alpha: 0)
-                                                        subTexto.textColor = UIColor(red: 152/255, green: 151/255, blue: 143/255, alpha: 1)
-                                                        subTexto.font = UIFont(name: "Montserrat-Light", size: 15)
-                                                        containerTMP.addSubview(subTexto)
                                                     }else if tarjetaActiva == 2 {
                                                         
                                                         let containerTMP = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 236))
                                                         containerTMP.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.4)
+                                                        containerTMP.alpha = 0
                                                         headerView.addSubview(containerTMP)
                                                         
-                                                        let closeCards = UIButton(type: .custom)
-                                                        closeCards.setImage(#imageLiteral(resourceName: "closeCard"), for: .normal)
-                                                        closeCards.frame = CGRect(x: self.view.frame.width - 50, y: 40, width: 45, height: 45)
-                                                        //containerTMP.addSubview(closeCards)
+                                                        let exprefImg = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen * 0.05, width: wScreen * 0.2, height: hScreen * 0.02))
+                                                        exprefImg.image = #imageLiteral(resourceName: "trivpref")
+                                                        exprefImg.alpha = 0
+                                                        containerTMP.addSubview(exprefImg)
                                                         
-                                                        let texto = UILabel(frame: CGRect(x: 36, y: closeCards.frame.maxY + 5, width: 300, height: 43))
-                                                        texto.text = "Trivias"
+                                                        let texto = UILabel(frame: CGRect(x: wScreen * 0.05, y: containerTMP.frame.height * 0.4, width: 300, height: 43))
+                                                        texto.text = "Participa"
                                                         texto.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0)
                                                         texto.textColor = UIColor.white
-                                                        texto.font = UIFont(name: "Montserrat-Bold", size: 36)
+                                                        texto.font = UIFont(name: "roboto-black", size: 37)
+                                                        texto.alpha = 0
                                                         containerTMP.addSubview(texto)
                                                         
-                                                        let subTexto = UILabel(frame: CGRect(x: 36, y: texto.frame.maxY + 4, width: 300, height: 20))
-                                                        subTexto.text = "Disfruta y comparte"
-                                                        subTexto.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/(255), alpha: 0)
-                                                        subTexto.textColor = UIColor(red: 152/255, green: 151/255, blue: 143/255, alpha: 1)
-                                                        subTexto.font = UIFont(name: "Montserrat-Light", size: 15)
-                                                        containerTMP.addSubview(subTexto)
+                                                        let imgTags = UIImageView(frame: CGRect(x: wScreen * 0.05, y: texto.frame.maxY + hScreen * 0.017, width: wScreen * 0.9, height: hScreen * 0.038))
+                                                        imgTags.image = #imageLiteral(resourceName: "hashtags")
+                                                        imgTags.alpha = 0
+                                                        containerTMP.addSubview(imgTags)
+                                                        
+                                                        let dots = UIImageView(frame: CGRect(x: wScreen * 0.9, y: imgTags.frame.maxY + hScreen * 0.045, width: wScreen * 0.06, height: wScreen * 0.016))
+                                                        dots.image = #imageLiteral(resourceName: "dotsDesdoble")
+                                                        dots.alpha = 0
+                                                        containerTMP.addSubview(dots)
+                                                        
+                                                        UIView.animate(withDuration: 0.5, animations: {
+                                                            containerTMP.alpha = 1
+                                                        }, completion: { (true) in
+                                                            UIView.animate(withDuration: 0.5, animations: {
+                                                                exprefImg.alpha = 1
+                                                            }, completion: { (true) in
+                                                                UIView.animate(withDuration: 0.5, animations: {
+                                                                    texto.alpha = 1
+                                                                }, completion: { (true) in
+                                                                    UIView.animate(withDuration: 0.5, animations: {
+                                                                        imgTags.alpha = 1
+                                                                    }, completion: { (true) in
+                                                                        UIView.animate(withDuration: 0.5, animations: {
+                                                                            dots.alpha = 1
+                                                                        })
+                                                                    })
+                                                                })
+                                                            })
+                                                        })
                                                     }
 
                                                     print("tarjeta activa = \(tarjetaActiva)")

@@ -10,6 +10,7 @@ import UIKit
 
 class CollectionViewEx6: UICollectionViewCell {
     
-    @IBOutlet weak var paises: UILabel!
-    
+    var sugeridos = UIImageView()
+    var pinMarker = UIImageView()
+    var restAddress = UILabel()
 }

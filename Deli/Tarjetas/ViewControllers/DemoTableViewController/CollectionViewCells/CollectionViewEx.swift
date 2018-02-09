@@ -19,7 +19,7 @@ class CollectionViewEx: UICollectionViewCell {
     var lineSpace = UIView()
     
 //    func setSubviews() {
-//        
+//
 //        imgEx = UIImageView(frame: frame)
 //        addSubview(imgEx!)
 //        self.backgroundColor = .purple

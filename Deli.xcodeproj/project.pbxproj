@@ -14,6 +14,7 @@
 		1873BA5E202A7B9200EBD171 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873BA5C202A7B9200EBD171 /* SearchCell.swift */; };
 		187E8AC120240A7A00D2B32E /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E8AC020240A7A00D2B32E /* NewsModel.swift */; };
 		187E8AC320240A8700D2B32E /* Noticias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E8AC220240A8700D2B32E /* Noticias.swift */; };
+		18AAE257202D307C009E46F3 /* Preguntas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAE256202D307C009E46F3 /* Preguntas.swift */; };
 		B80624A42007D635009CDF7B /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A12007D634009CDF7B /* FBSDKLoginKit.framework */; };
 		B80624A52007D635009CDF7B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A22007D634009CDF7B /* Bolts.framework */; };
 		B80624A62007D635009CDF7B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80624A32007D635009CDF7B /* FBSDKCoreKit.framework */; };
@@ -151,6 +152,7 @@
 		1873BA5C202A7B9200EBD171 /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		187E8AC020240A7A00D2B32E /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		187E8AC220240A8700D2B32E /* Noticias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Noticias.swift; sourceTree = "<group>"; };
+		18AAE256202D307C009E46F3 /* Preguntas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preguntas.swift; sourceTree = "<group>"; };
 		243A8319085DB3971BFB8910 /* Pods_Deli.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Deli.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71246CD7EA325DC587FE9028 /* Pods-Deli.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deli.release.xcconfig"; path = "Pods/Target Support Files/Pods-Deli/Pods-Deli.release.xcconfig"; sourceTree = "<group>"; };
 		8870835342F5EA7E00382F59 /* Pods-Deli.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deli.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Deli/Pods-Deli.debug.xcconfig"; sourceTree = "<group>"; };
@@ -817,6 +819,7 @@
 			isa = PBXGroup;
 			children = (
 				B84897AD20000EE800D04F99 /* FullTrivias.swift */,
+				18AAE256202D307C009E46F3 /* Preguntas.swift */,
 			);
 			path = Trivias;
 			sourceTree = "<group>";
@@ -1082,6 +1085,7 @@
 				B8D12B18200D7601009A63C8 /* ControllerT1.swift in Sources */,
 				B848976A20000C1300D04F99 /* Busqueda.swift in Sources */,
 				B848977A20000C4300D04F99 /* Controller4.swift in Sources */,
+				18AAE257202D307C009E46F3 /* Preguntas.swift in Sources */,
 				B8D12B1C200D761B009A63C8 /* ControllerT3.swift in Sources */,
 				B84897461FFFFA8300D04F99 /* CornerAnimatable.swift in Sources */,
 				B848977C20000C4300D04F99 /* Controller5.swift in Sources */,
