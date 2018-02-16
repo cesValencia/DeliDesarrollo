@@ -88,9 +88,13 @@ class Noticias: UIViewController, UICollectionViewDelegate, UICollectionViewData
 //        titulo?.backgroundColor = .blue
         view.addSubview(titulo!)
         
+        let closeImg = UIImageView(frame: CGRect(x: wScreen * 0.91, y: hScreen * 0.06, width: wScreen * 0.04, height: wScreen * 0.04))
+        closeImg.image = #imageLiteral(resourceName: "closeNewsB")
+        view.addSubview(closeImg)
+        
         closeBtn = UIButton(type: .custom)
-        closeBtn?.frame = CGRect(x: wScreen * 0.91, y: hScreen * 0.06, width: wScreen * 0.04, height: wScreen * 0.04)
-        closeBtn?.setImage(#imageLiteral(resourceName: "closeNewsB"), for: .normal)
+        closeBtn?.frame = CGRect(x: wScreen * 0.85, y: hScreen * 0.03, width: wScreen * 0.15, height: wScreen * 0.15)
+        closeBtn?.backgroundColor = UIColor.black.withAlphaComponent(0)
         closeBtn?.addTarget(self, action: #selector(closeNewsP), for: .touchUpInside)
         view.addSubview(closeBtn!)
         
@@ -129,11 +133,11 @@ class Noticias: UIViewController, UICollectionViewDelegate, UICollectionViewData
         // CollectionView
         layout = UICollectionViewFlowLayout()
         layout?.scrollDirection = .vertical
-        layout?.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        layout?.sectionInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
         layout?.minimumLineSpacing = 15.0
         layout?.itemSize = CGSize(width: wScreen * 0.86, height: hScreen * 0.58)
         
-        newsContainer = UICollectionView(frame: CGRect(x: wScreen * 0.07, y: hScreen * 0.2, width: wScreen * 0.86, height: hScreen * 0.8), collectionViewLayout: layout!)
+        newsContainer = UICollectionView(frame: CGRect(x: 0, y: hScreen * 0.2, width: wScreen, height: hScreen * 0.8), collectionViewLayout: layout!)
         newsContainer?.register(ContentNews.self, forCellWithReuseIdentifier: "newsCell")
         newsContainer?.isScrollEnabled = true
         newsContainer?.delegate = self
@@ -189,6 +193,7 @@ class Noticias: UIViewController, UICollectionViewDelegate, UICollectionViewData
         newsIntro = UITextView(frame: CGRect(x: wScreen * 0.05, y: newsTitle!.frame.maxY + wScreen * 0.05, width: wScreen * 0.9, height: wScreen * 0.3))
         newsIntro?.font = UIFont(name: "Roboto-Light", size: 14.5)
         newsIntro?.textColor = UIColor.black
+        newsIntro?.isScrollEnabled = false
         newsBoard?.addSubview(newsIntro!)
         
         newsImg1 = UIImageView(frame: CGRect(x: wScreen * 0.05, y: newsIntro!.frame.maxY + wScreen * 0.05, width: wScreen * 0.9, height: wScreen * 0.4))
@@ -197,11 +202,13 @@ class Noticias: UIViewController, UICollectionViewDelegate, UICollectionViewData
         newsP1 = UITextView(frame: CGRect(x: wScreen * 0.05, y: newsImg1!.frame.maxY + wScreen * 0.05, width: wScreen * 0.9, height: wScreen * 0.3))
         newsP1?.font = UIFont(name: "Roboto-Light", size: 14.5)
         newsP1?.textColor = UIColor.black
+        newsP1?.isScrollEnabled = false
         newsBoard?.addSubview(newsP1!)
         
         newsP2 = UITextView(frame: CGRect(x: wScreen * 0.05, y: newsP1!.frame.maxY + wScreen * 0.05, width: wScreen * 0.9, height: wScreen * 0.3))
         newsP2?.font = UIFont(name: "Roboto-Light", size: 14.5)
         newsP2?.textColor = UIColor.black
+        newsP2?.isScrollEnabled = false
         newsBoard?.addSubview(newsP2!)
         
         newsBoard?.contentSize = CGSize(width: wScreen, height: newsP2!.frame.maxY)
@@ -294,8 +301,8 @@ class Noticias: UIViewController, UICollectionViewDelegate, UICollectionViewData
         cell.layer.cornerRadius = 15.0
         cell.backgroundColor = UIColor.darkGray
         cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0.0, height: 3.5)
-        cell.layer.shadowRadius = 3.0
+        cell.layer.shadowOffset = CGSize(width: 0.0, height: 6)
+        cell.layer.shadowRadius = 3
         cell.layer.shadowOpacity = 0.4
         
         
@@ -391,7 +398,7 @@ class Noticias: UIViewController, UICollectionViewDelegate, UICollectionViewData
         newsCategory?.text = dataSource[indexPath.row].categoria
         newsIntro?.text = dataSource[indexPath.row].introduccion
         
-        if let url = URL(string: "http://104.236.10.17" + dataSource[indexPath.row].imagen_principal) {
+        if let url = URL(string: "http://104.236.10.17" + dataSource[indexPath.row].imagenSegundaria1!) {
             newsImg1?.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "sin-back"), options: .refreshCached)
         } else {
             

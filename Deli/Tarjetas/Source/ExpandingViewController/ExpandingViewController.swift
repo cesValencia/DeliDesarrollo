@@ -109,19 +109,19 @@ public extension ExpandingViewController {
                                                         dots.alpha = 0
                                                         containerTMP.addSubview(dots)
                                                         
-                                                        UIView.animate(withDuration: 0.5, animations: {
+                                                        UIView.animate(withDuration: 0.2, animations: {
                                                             containerTMP.alpha = 1
                                                         }, completion: { (true) in
-                                                            UIView.animate(withDuration: 0.5, animations: {
+                                                            UIView.animate(withDuration: 0.2, animations: {
                                                                 exprefImg.alpha = 1
                                                             }, completion: { (true) in
-                                                                UIView.animate(withDuration: 0.5, animations: {
+                                                                UIView.animate(withDuration: 0.2, animations: {
                                                                     texto.alpha = 1
                                                                 }, completion: { (true) in
-                                                                    UIView.animate(withDuration: 0.5, animations: {
+                                                                    UIView.animate(withDuration: 0.2, animations: {
                                                                         imgTags.alpha = 1
                                                                     }, completion: { (true) in
-                                                                        UIView.animate(withDuration: 0.5, animations: {
+                                                                        UIView.animate(withDuration: 0.2, animations: {
                                                                             dots.alpha = 1
                                                                         })
                                                                     })
@@ -184,19 +184,19 @@ public extension ExpandingViewController {
                                                         dots.alpha = 0
                                                         containerTMP.addSubview(dots)
                                                         
-                                                        UIView.animate(withDuration: 0.5, animations: {
+                                                        UIView.animate(withDuration: 0.2, animations: {
                                                             containerTMP.alpha = 1
                                                         }, completion: { (true) in
-                                                            UIView.animate(withDuration: 0.5, animations: {
+                                                            UIView.animate(withDuration: 0.2, animations: {
                                                                 exprefImg.alpha = 1
                                                             }, completion: { (true) in
-                                                                UIView.animate(withDuration: 0.5, animations: {
+                                                                UIView.animate(withDuration: 0.2, animations: {
                                                                     texto.alpha = 1
                                                                 }, completion: { (true) in
-                                                                    UIView.animate(withDuration: 0.5, animations: {
+                                                                    UIView.animate(withDuration: 0.2, animations: {
                                                                         imgTags.alpha = 1
                                                                     }, completion: { (true) in
-                                                                        UIView.animate(withDuration: 0.5, animations: {
+                                                                        UIView.animate(withDuration: 0.2, animations: {
                                                                             dots.alpha = 1
                                                                         })
                                                                     })

@@ -341,7 +341,7 @@ class PagingT: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate,
         container?.isPagingEnabled = true
         container?.bounces = false
         container?.alwaysBounceHorizontal = false
-        container?.backgroundColor = UIColor.purple
+        container?.backgroundColor = UIColor.white
         container?.delegate = self
         container?.dataSource = self
         

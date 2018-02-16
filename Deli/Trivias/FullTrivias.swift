@@ -20,9 +20,56 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
     var navBar: UIView?
     var backButton: UIButton?
     var shareB: UIButton?
+    var imgPrincipalT: String?
+    var vigenciaT: String?
+    var nombreT: String?
+    var incluyeT: String?
+    var questionArrayT111 = [String]()
+    var r1ArrayT111 = [String]()
+    var r2ArrayT111 = [String]()
+    var r3ArrayT111 = [String]()
+    var questionArrayT222 = [String]()
+    var r1ArrayT222 = [String]()
+    var r2ArrayT222 = [String]()
+    var r3ArrayT222 = [String]()
+    var questionArrayT333 = [String]()
+    var r1ArrayT333 = [String]()
+    var r2ArrayT333 = [String]()
+    var r3ArrayT333 = [String]()
+    var questionArrayT444 = [String]()
+    var r1ArrayT444 = [String]()
+    var r2ArrayT444 = [String]()
+    var r3ArrayT444 = [String]()
+    var questionArrayT555 = [String]()
+    var r1ArrayT555 = [String]()
+    var r2ArrayT555 = [String]()
+    var r3ArrayT555 = [String]()
+    var indexSelected2: Int = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(self.questionArrayT111)
+        print(self.r1ArrayT111)
+        print(self.r2ArrayT111)
+        print(self.r3ArrayT111)
+        print(self.questionArrayT222)
+        print(self.r1ArrayT222)
+        print(self.r2ArrayT222)
+        print(self.r3ArrayT222)
+        print(self.questionArrayT333)
+        print(self.r1ArrayT333)
+        print(self.r2ArrayT333)
+        print(self.r3ArrayT333)
+        print(self.questionArrayT444)
+        print(self.r1ArrayT444)
+        print(self.r2ArrayT444)
+        print(self.r3ArrayT444)
+        print(self.questionArrayT555)
+        print(self.r1ArrayT555)
+        print(self.r2ArrayT555)
+        print(self.r3ArrayT555)
         
         NSLog("Paso1")
         view.backgroundColor = UIColor.white
@@ -38,6 +85,7 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
+        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -108,27 +156,27 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
         let background = UIImageView(frame: CGRect(x: 0, y: 0, width: wScreen, height: hScreen))
         
         background.image = #imageLiteral(resourceName: "maxresdefault")
-//        if let url = URL(string: "http://104.236.10.17" + (imagen_principal)!) {
-//            //            background.image = UIImage(data: data)
-//            background.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "sin-back"), options: .refreshCached)
-//
-//
-//        } else {
-//            //Imagen por default.... sugiero poner una imagen default por si algo sale mal
-//            background.image = #imageLiteral(resourceName: "sin-back")
-//        }
+        if let url = URL(string: "http://104.236.10.17" + (imgPrincipalT)!) {
+            //            background.image = UIImage(data: data)
+            background.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "sin-back"), options: .refreshCached)
+
+
+        } else {
+            //Imagen por default.... sugiero poner una imagen default por si algo sale mal
+            background.image = #imageLiteral(resourceName: "sin-back")
+        }
 
         
         container1?.addSubview(background)
         
-        let fecha = UILabel(frame: CGRect(x: wScreen * 0.06, y: hScreen - hScreen * 0.63, width: wScreen * 0.3, height: hScreen * 0.05))
-        fecha.text = "MZO - MAY  2018."
+        let fecha = UILabel(frame: CGRect(x: wScreen * 0.06, y: hScreen * 0.37, width: wScreen * 0.4, height: hScreen * 0.05))
+        fecha.text = vigenciaT
         fecha.textColor = UIColor.white
-        fecha.font = UIFont(name: "BodoniSvtyTwoOSITCTT-Bold", size: 17)
+        fecha.font = UIFont(name: "BodoniSvtyTwoOSITCTT-Bold", size: 13)
         container1?.addSubview(fecha)
         
-        let nombreL = UITextView(frame: CGRect(x: wScreen * 0.05, y: hScreen - hScreen * 0.585, width: wScreen * 0.5, height: 0));
-        nombreL.text = "Influencia inglesa en México"
+        let nombreL = UITextView(frame: CGRect(x: wScreen * 0.05, y: fecha.frame.maxY, width: wScreen * 0.5, height: 0));
+        nombreL.text = nombreT
         nombreL.textColor = UIColor.white
         nombreL.font = UIFont(name: "Roboto-Bold", size: 34)
         nombreL.isEditable = false
@@ -137,8 +185,8 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
         nombreL.backgroundColor = UIColor.white.withAlphaComponent(0)
         container1?.addSubview(nombreL)
         
-        let contenidoL = UITextView(frame: CGRect(x: wScreen * 0.05, y: hScreen - hScreen * 0.34, width: wScreen * 0.7, height: 0));
-        contenidoL.text = "¿Qué tanto conoces de nuestra cocina? Trivia patrocinada por Johnie Walker."
+        let contenidoL = UITextView(frame: CGRect(x: wScreen * 0.05, y: nombreL.frame.maxY, width: wScreen * 0.7, height: 0));
+        contenidoL.text = incluyeT
         contenidoL.textColor = UIColor.white
         contenidoL.font = UIFont(name: "PlayfairDisplay-Regular", size: 17)
         contenidoL.isEditable = false
@@ -147,17 +195,13 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
         contenidoL.backgroundColor = UIColor.white.withAlphaComponent(0)
         container1?.addSubview(contenidoL)
         
-        let imgCompra = UIImageView(frame: CGRect(x: wScreen * 0.05, y: hScreen - hScreen * 0.25, width: wScreen * 0.42, height: hScreen * 0.27))
-        imgCompra.contentMode = .scaleAspectFit
-        imgCompra.image = #imageLiteral(resourceName: "btnParticipar")
-        container1?.addSubview(imgCompra)
+        let btnParticipa = UIButton(type: .custom)
+        btnParticipa.setImage(#imageLiteral(resourceName: "btnParticipar"), for: .normal)
+        btnParticipa.addTarget(self, action: #selector(btnParticipaPressed), for: .touchUpInside)
+        btnParticipa.frame = CGRect(x: wScreen * 0.05, y: hScreen * 0.85, width: wScreen * 0.45, height: hScreen * 0.061)
+        container1?.addSubview(btnParticipa)
         
-        let btnCompra = UIButton(type: .custom)
-        btnCompra.addTarget(self, action: #selector(btnCompraPressed), for: .touchUpInside)
-        btnCompra.frame = CGRect(x: wScreen * 0.05, y: hScreen - hScreen * 0.25, width: wScreen * 0.42, height: hScreen * 0.27)
-        container1?.addSubview(btnCompra)
-        
-        let logoR = UIImageView(frame: CGRect(x: wScreen - (wScreen * 0.4), y: hScreen - hScreen * 0.18, width: wScreen * 0.32, height: hScreen * 0.13))
+        let logoR = UIImageView(frame: CGRect(x: wScreen * 0.65, y: hScreen * 0.84, width: wScreen * 0.25, height: hScreen * 0.07))
         logoR.image = #imageLiteral(resourceName: "logoBlancoFake")
 //        //        logoR.contentMode = .scaleAspectFit
 //
@@ -170,10 +214,10 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
 //        }
         container1?.addSubview(logoR)
         
-        let leyendaL = UILabel(frame: CGRect(x: wScreen * 0.05, y: hScreen - hScreen * 0.045, width: wScreen * 0.9, height: hScreen * 0.025))
-        leyendaL.text = "DESLIZA HACIA ABAJO PARA MÁS INFORMACIÓN"
+        let leyendaL = UILabel(frame: CGRect(x: wScreen * 0.225, y: hScreen * 0.965, width: wScreen * 0.55, height: wScreen * 0.03))
+        leyendaL.text = "DESLIZA HACIA ABAJO PARA VER PREMIOS"
         leyendaL.textAlignment = .center
-        leyendaL.font = UIFont(name: "SourceSansPro-Regular", size: 15)
+        leyendaL.font = UIFont(name: "SourceSansPro-Regular", size: 11)
         leyendaL.textColor = UIColor.white.withAlphaComponent(0.4)
         container1?.addSubview(leyendaL)
         
@@ -216,7 +260,7 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
         escudo.image = #imageLiteral(resourceName: "escudo")
         secondScroll?.addSubview(escudo)
         
-        let firstPlace = UILabel(frame: CGRect(x: escudo.frame.maxX + wScreen * 0.01, y: lugares.frame.maxY + hScreen * 0.056, width: wScreen * 0.11, height: wScreen * 0.03))
+        let firstPlace = UILabel(frame: CGRect(x: escudo.frame.maxX + wScreen * 0.01, y: lugares.frame.maxY + hScreen * 0.056, width: wScreen * 0.2, height: wScreen * 0.035))
         firstPlace.text = "1º Lugar"
         firstPlace.textColor = UIColor(red: 146/255, green: 146/255, blue: 146/255, alpha: 1)
         firstPlace.font = UIFont(name: "HelveticaNeue-Medium", size: 11.5)
@@ -262,7 +306,7 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
         escudo2.image = #imageLiteral(resourceName: "escudo")
         secondScroll?.addSubview(escudo2)
         
-        let firstPlace2 = UILabel(frame: CGRect(x: escudo2.frame.maxX + wScreen * 0.01, y: lineBreak.frame.maxY + hScreen * 0.056, width: wScreen * 0.11, height: wScreen * 0.03))
+        let firstPlace2 = UILabel(frame: CGRect(x: escudo2.frame.maxX + wScreen * 0.01, y: lineBreak.frame.maxY + hScreen * 0.056, width: wScreen * 0.2, height: wScreen * 0.035))
         firstPlace2.text = "2º Lugar"
         firstPlace2.textColor = UIColor(red: 146/255, green: 146/255, blue: 146/255, alpha: 1)
         firstPlace2.font = UIFont(name: "HelveticaNeue-Medium", size: 11.5)
@@ -308,7 +352,7 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
         escudo3.image = #imageLiteral(resourceName: "escudo")
         secondScroll?.addSubview(escudo3)
         
-        let firstPlace3 = UILabel(frame: CGRect(x: escudo3.frame.maxX + wScreen * 0.01, y: lineBreak2.frame.maxY + hScreen * 0.056, width: wScreen * 0.11, height: wScreen * 0.03))
+        let firstPlace3 = UILabel(frame: CGRect(x: escudo3.frame.maxX + wScreen * 0.01, y: lineBreak2.frame.maxY + hScreen * 0.056, width: wScreen * 0.2, height: wScreen * 0.035))
         firstPlace3.text = "3º Lugar"
         firstPlace3.textColor = UIColor(red: 146/255, green: 146/255, blue: 146/255, alpha: 1)
         firstPlace3.font = UIFont(name: "HelveticaNeue-Medium", size: 11.5)
@@ -345,24 +389,35 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
         detailContainer?.contentSize = CGSize(width: wScreen, height: container2!.frame.maxY)
     }
     
-    @objc func btnCompraPressed() {
-        
+    @objc func btnParticipaPressed() {
+        let triviaScreen = Preguntas()
+        triviaScreen.nombreTrivia = nombreT
+        triviaScreen.questionArrayT1111 = questionArrayT111
+        triviaScreen.r1ArrayT1111 = r1ArrayT111
+        triviaScreen.r2ArrayT1111 = r2ArrayT111
+        triviaScreen.r3ArrayT1111 = r3ArrayT111
+        triviaScreen.questionArrayT2222 = questionArrayT222
+        triviaScreen.r1ArrayT2222 = r1ArrayT222
+        triviaScreen.r2ArrayT2222 = r2ArrayT222
+        triviaScreen.r3ArrayT2222 = r3ArrayT222
+        triviaScreen.questionArrayT3333 = questionArrayT333
+        triviaScreen.r1ArrayT3333 = r1ArrayT333
+        triviaScreen.r2ArrayT3333 = r2ArrayT333
+        triviaScreen.r3ArrayT3333 = r3ArrayT333
+        triviaScreen.questionArrayT4444 = questionArrayT444
+        triviaScreen.r1ArrayT4444 = r1ArrayT444
+        triviaScreen.r2ArrayT4444 = r2ArrayT444
+        triviaScreen.r3ArrayT4444 = r3ArrayT444
+        triviaScreen.questionArrayT5555 = questionArrayT555
+        triviaScreen.r1ArrayT5555 = r1ArrayT555
+        triviaScreen.r2ArrayT5555 = r2ArrayT555
+        triviaScreen.r3ArrayT5555 = r3ArrayT555
+        triviaScreen.indexSelected3 = indexSelected2
+
+        navigationController?.pushViewController(triviaScreen, animated: true)
+        UIApplication.shared.statusBarStyle = .default
     }
-    
-    @objc func btnVisitarPressed() {
-        
-        let Username =  "hotbook" // Your Instagram Username here
-        let appURL = NSURL(string: "instagram://user?username=\(Username)")!
-        let webURL = NSURL(string: "https://instagram.com/\(Username)")!
-        let application = UIApplication.shared
-        
-        if application.canOpenURL(appURL as URL) {
-            application.open(appURL as URL)
-        } else {
-            // if Instagram app is not installed, open URL inside Safari
-            application.open(webURL as URL)
-        }
-    }
+
     
     @objc func backPressed() {
         
@@ -373,7 +428,7 @@ class FullTrivias: UIViewController, UIScrollViewDelegate {
     
     @objc func sharePressed() {
         
-        let activityController = UIActivityViewController(activityItems: ["Comiendo en " + (showRestaurant?.nombre)! + ". " + "Descarga la app ya! \n http://somosdeli.com"], applicationActivities: nil)
+        let activityController = UIActivityViewController(activityItems: ["Trivia del Mes. Descarga la app ya! \n http://somosdeli.com"], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
     }
 }

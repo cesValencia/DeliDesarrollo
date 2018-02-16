@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Getting API Key
-        GMSServices.provideAPIKey("AIzaSyAi1VLFydTd-RyhmctQkn41ltOllPaZ3ro")
+        GMSServices.provideAPIKey("AIzaSyAQZjBk5Q53i_LGNF0Jn-2vsiXiYCJ0dH0")
         
         // Configuración del SDK de Facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

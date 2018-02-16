@@ -30,6 +30,39 @@ class DemoViewController: ExpandingViewController {
     
   var statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
     var avatarImg: UIImageView?
+    
+    var triviaIds = [String]()
+    var triviaNames = [String]()
+    var triviaStatus = [String]()
+    var triviaFecha = [String]()
+    var triviaIncluye = [String]()
+    var triviaVigencia = [String]()
+    var triviaPremio = [String]()
+    var triviaLogoB = [String]()
+    var triviaLogoN = [String]()
+    var triviaImgP = [String]()
+    var questionArrayT1 = [String]()
+    var r1ArrayT1 = [String]()
+    var r2ArrayT1 = [String]()
+    var r3ArrayT1 = [String]()
+    var questionArrayT2 = [String]()
+    var r1ArrayT2 = [String]()
+    var r2ArrayT2 = [String]()
+    var r3ArrayT2 = [String]()
+    var questionArrayT3 = [String]()
+    var r1ArrayT3 = [String]()
+    var r2ArrayT3 = [String]()
+    var r3ArrayT3 = [String]()
+    var questionArrayT4 = [String]()
+    var r1ArrayT4 = [String]()
+    var r2ArrayT4 = [String]()
+    var r3ArrayT4 = [String]()
+    var questionArrayT5 = [String]()
+    var r1ArrayT5 = [String]()
+    var r2ArrayT5 = [String]()
+    var r3ArrayT5 = [String]()
+    var prueba = [NSDictionary]()
+    var centinela = 1
 }
 
 // MARK: - Lifecycle 🌎
@@ -68,7 +101,7 @@ extension DemoViewController {
     menu.addTarget(self, action: #selector(menuPressed), for: .touchUpInside)
     view.addSubview(menu)
     
-    //Menú
+    getData()
     loadMenu()
     registerCell()
     fillCellIsOpenArray()
@@ -85,7 +118,221 @@ extension DemoViewController {
 
     }
     
-
+    //Serializando JSON
+    func getData() {
+        let url = URL(string: "http://104.236.10.17/api/trivias/") // se convirete el string url a untipo de dato URL
+        
+        var request = URLRequest(url: url!) //inicializacion del Request
+        request.httpMethod = "GET" //tipo de peticion
+        
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if (error != nil){ //verifica que no exista algun error a la hora de hacer la peticion
+                print("Ocurrio un error al obtener el json")
+            }
+            
+            do{
+                //control de errores desconocidos (TRY) en la serializacion del json
+                if let json = try JSONSerialization.jsonObject(with: data!, options: []) as? Array<Any> {
+                    for obj in json {
+                        let objAux = obj as! NSDictionary
+                        
+                        if let id = objAux["id"] as? String {
+                            self.triviaIds.append(id)
+                        }
+                        if let name = objAux["name"] as? String {
+                            self.triviaNames.append(name)
+                        }
+                        if let status = objAux["status"] as? String {
+                            self.triviaStatus.append(status)
+                        }
+                        if let fecha = objAux["fecha"] as? String {
+                            self.triviaFecha.append(fecha)
+                        }
+                        if let incluye = objAux["incluye"] as? String {
+                            self.triviaIncluye.append(incluye)
+                        }
+                        if let vigencia = objAux["vigencia"] as? String {
+                            self.triviaVigencia.append(vigencia)
+                        }
+                        if let premio = objAux["premio"] as? String {
+                            self.triviaPremio.append(premio)
+                        }
+                        if let logoB = objAux["logoB"] as? String {
+                            self.triviaLogoB.append(logoB)
+                        }
+                        if let logoN = objAux["logoN"] as? String {
+                            self.triviaLogoN.append(logoN)
+                        }
+                        if let imgP = objAux["imgP"] as? String {
+                            self.triviaImgP.append(imgP)
+                        }
+                        
+                        if let p = objAux["content"] as? NSDictionary {
+                            self.prueba.append(p)
+                        }
+                        
+                    }
+                    
+                    for triv in self.prueba {
+                        
+                        let s = triv
+                        
+                        if self.centinela == 1 {
+                            
+                            var contador = 1
+                            
+                            while contador <= 10 {
+                                
+                                if let pre = s[String(contador)] as? NSDictionary {
+                                    
+                                    if let quest = pre["question"] as? String {
+                                        self.questionArrayT1.append(quest)
+                                    }
+                                    if let re1 = pre["asw1"] as? String {
+                                        self.r1ArrayT1.append(re1)
+                                    }
+                                    if let re2 = pre["asw2"] as? String {
+                                        self.r2ArrayT1.append(re2)
+                                    }
+                                    if let re3 = pre["asw3"] as? String {
+                                        self.r3ArrayT1.append(re3)
+                                    }
+                                }
+                                
+                                contador += 1
+                            }
+                        } else if self.centinela == 2 {
+                            
+                            var contador2 = 1
+                            
+                            while contador2 <= 10 {
+                                
+                                if let pre = s[String(contador2)] as? NSDictionary {
+                                    
+                                    if let quest = pre["question"] as? String {
+                                        self.questionArrayT2.append(quest)
+                                    }
+                                    if let re1 = pre["asw1"] as? String {
+                                        self.r1ArrayT2.append(re1)
+                                    }
+                                    if let re2 = pre["asw2"] as? String {
+                                        self.r2ArrayT2.append(re2)
+                                    }
+                                    if let re3 = pre["asw3"] as? String {
+                                        self.r3ArrayT2.append(re3)
+                                    }
+                                }
+                                
+                                contador2 += 1
+                            }
+                        } else if self.centinela == 3 {
+                            
+                            var contador3 = 1
+                            
+                            while contador3 <= 10 {
+                                
+                                if let pre = s[String(contador3)] as? NSDictionary {
+                                    
+                                    if let quest = pre["question"] as? String {
+                                        self.questionArrayT3.append(quest)
+                                    }
+                                    if let re1 = pre["asw1"] as? String {
+                                        self.r1ArrayT3.append(re1)
+                                    }
+                                    if let re2 = pre["asw2"] as? String {
+                                        self.r2ArrayT3.append(re2)
+                                    }
+                                    if let re3 = pre["asw3"] as? String {
+                                        self.r3ArrayT3.append(re3)
+                                    }
+                                }
+                                
+                                contador3 += 1
+                            }
+                        } else if self.centinela == 4 {
+                            
+                            var contador4 = 1
+                            
+                            while contador4 <= 10 {
+                                
+                                if let pre = s[String(contador4)] as? NSDictionary {
+                                    
+                                    if let quest = pre["question"] as? String {
+                                        self.questionArrayT4.append(quest)
+                                    }
+                                    if let re1 = pre["asw1"] as? String {
+                                        self.r1ArrayT4.append(re1)
+                                    }
+                                    if let re2 = pre["asw2"] as? String {
+                                        self.r2ArrayT4.append(re2)
+                                    }
+                                    if let re3 = pre["asw3"] as? String {
+                                        self.r3ArrayT4.append(re3)
+                                    }
+                                }
+                                
+                                contador4 += 1
+                            }
+                        } else if self.centinela == 5 {
+                            
+                            var contador5 = 1
+                            
+                            while contador5 <= 10 {
+                                
+                                if let pre = s[String(contador5)] as? NSDictionary {
+                                    
+                                    if let quest = pre["question"] as? String {
+                                        self.questionArrayT5.append(quest)
+                                    }
+                                    if let re1 = pre["asw1"] as? String {
+                                        self.r1ArrayT5.append(re1)
+                                    }
+                                    if let re2 = pre["asw2"] as? String {
+                                        self.r2ArrayT5.append(re2)
+                                    }
+                                    if let re3 = pre["asw3"] as? String {
+                                        self.r3ArrayT5.append(re3)
+                                    }
+                                }
+                                
+                                contador5 += 1
+                            }
+                        }
+                        
+                        self.centinela += 1
+                        
+                    }
+                    
+                }
+               
+                print(self.questionArrayT1)
+                print(self.r1ArrayT1)
+                print(self.r2ArrayT1)
+                print(self.r3ArrayT1)
+                print(self.questionArrayT2)
+                print(self.r1ArrayT2)
+                print(self.r2ArrayT2)
+                print(self.r3ArrayT2)
+                print(self.questionArrayT3)
+                print(self.r1ArrayT3)
+                print(self.r2ArrayT3)
+                print(self.r3ArrayT3)
+                print(self.questionArrayT4)
+                print(self.r1ArrayT4)
+                print(self.r2ArrayT4)
+                print(self.r3ArrayT4)
+                print(self.questionArrayT5)
+                print(self.r1ArrayT5)
+                print(self.r2ArrayT5)
+                print(self.r3ArrayT5)
+            }
+            catch{
+                print("Error Serializando del Json")
+            }
+            }.resume() //ejecuta el URLSession
+        
+    }
     
     
     func loadMenu() {
@@ -128,7 +375,7 @@ extension DemoViewController {
         username?.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         menuContent.addSubview(username!)
         
-        usermail = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: username!.frame.maxY, width: wScreen * 0.35, height: wScreen * 0.05))
+        usermail = UILabel(frame: CGRect(x: avatarImg!.frame.maxX + wScreen * 0.03, y: username!.frame.maxY, width: wScreen * 0.4, height: wScreen * 0.05))
         usermail?.textColor = UIColor(red: 172/255, green: 172/255, blue: 172/255, alpha: 1)
         usermail?.font = UIFont(name: "HelveticaNeue", size: 11)
         menuContent.addSubview(usermail!)
@@ -367,8 +614,40 @@ extension DemoViewController {
     }
     
     fileprivate func getViewController3() -> ExpandingTableViewController {
+        
         let storyboard = UIStoryboard(storyboard: .Main)
         let toViewController: DemoTableViewController3 = storyboard.instantiateViewController()
+        toViewController.triviaIds1 = triviaIds
+        toViewController.triviaNames1 = triviaNames
+        toViewController.triviaStatus1 = triviaStatus
+        toViewController.triviaFecha1 = triviaFecha
+        toViewController.triviaIncluye1 = triviaIncluye
+        toViewController.triviaVigencia1 = triviaVigencia
+        toViewController.triviaPremio1 = triviaPremio
+        toViewController.triviaLogoB1 = triviaLogoB
+        toViewController.triviaLogoN1 = triviaLogoN
+        toViewController.triviaImgP1 = triviaImgP
+        toViewController.questionArrayT11 = questionArrayT1
+        toViewController.r1ArrayT11 = r1ArrayT1
+        toViewController.r2ArrayT11 = r2ArrayT1
+        toViewController.r3ArrayT11 = r3ArrayT1
+        toViewController.questionArrayT22 = questionArrayT2
+        toViewController.r1ArrayT22 = r1ArrayT2
+        toViewController.r2ArrayT22 = r2ArrayT2
+        toViewController.r3ArrayT22 = r3ArrayT2
+        toViewController.questionArrayT33 = questionArrayT3
+        toViewController.r1ArrayT33 = r1ArrayT3
+        toViewController.r2ArrayT33 = r2ArrayT3
+        toViewController.r3ArrayT33 = r3ArrayT3
+        toViewController.questionArrayT44 = questionArrayT4
+        toViewController.r1ArrayT44 = r1ArrayT4
+        toViewController.r2ArrayT44 = r2ArrayT4
+        toViewController.r3ArrayT44 = r3ArrayT4
+        toViewController.questionArrayT55 = questionArrayT5
+        toViewController.r1ArrayT55 = r1ArrayT5
+        toViewController.r2ArrayT55 = r2ArrayT5
+        toViewController.r3ArrayT55 = r3ArrayT5
+        
         return toViewController
     }
   

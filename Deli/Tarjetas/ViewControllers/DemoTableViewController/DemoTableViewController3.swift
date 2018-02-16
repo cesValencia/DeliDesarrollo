@@ -12,15 +12,6 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
     
     //VARIABLES PARA EL ARRASTRAR VARIABLES AL SIGUIENTE CONTROLLADOR
     //Urls
-    var categorias: String?
-    var categoria1: String?
-    var categoria2: String?
-    var categoria3: String?
-    var categoria4: String?
-    var categoria5: String?
-    var categoria6: String?
-    var categoria7: String?
-    var categoria8: String?
     var c1 = Paging()
     var c2 = Paging()
     var c3 = Paging()
@@ -29,14 +20,6 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
     var c6 = Paging()
     var c7 = Paging()
     var c8 = Paging()
-    var cName1 = (category: "Diamante", desc: "restaurantes & bistrò")
-    var cName2 = (category: "Mixología", desc: "lounges & bares")
-    var cName3 = (category: "Platino", desc: "restaurantes & bistrò")
-    var cName4 = (category: "Plata", desc: "restaurantes & pubs")
-    var cName5 = (category: "Antojo", desc: "antojerías y snacks")
-    var cName6 = (category: "Bares", desc: "pubs, bares & cantinas")
-    var cName7 = (category: "Postres", desc: "café, pasteles & helados")
-    var cName8 = (category: "Verdes", desc: "vegana & vegetariana")
     var cColor1: UIColor?
     var cColor2: UIColor?
     var cColor3: UIColor?
@@ -54,16 +37,38 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
     var boton7: UIButton?
     var boton8: UIButton?
     var btnArray = [UIButton]()
-    var dataSource = [Restaurant]()
-    var dataSourceForDiamond = [Restaurant]()
-    var dataSourceForPlatinum = [Restaurant]()
-    var dataSourceForMixology = [Restaurant]()
-    var dataSourceForSilver = [Restaurant]()
-    var dataSourceForGreen = [Restaurant]()
-    var dataSourceForSnacks = [Restaurant]()
-    var dataSourceForPubs = [Restaurant]()
-    var dataSourceForCakes = [Restaurant]()
     var statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+    
+    var triviaIds1 = [String]()
+    var triviaNames1 = [String]()
+    var triviaStatus1 = [String]()
+    var triviaFecha1 = [String]()
+    var triviaIncluye1 = [String]()
+    var triviaVigencia1 = [String]()
+    var triviaPremio1 = [String]()
+    var triviaLogoB1 = [String]()
+    var triviaLogoN1 = [String]()
+    var triviaImgP1 = [String]()
+    var questionArrayT11 = [String]()
+    var r1ArrayT11 = [String]()
+    var r2ArrayT11 = [String]()
+    var r3ArrayT11 = [String]()
+    var questionArrayT22 = [String]()
+    var r1ArrayT22 = [String]()
+    var r2ArrayT22 = [String]()
+    var r3ArrayT22 = [String]()
+    var questionArrayT33 = [String]()
+    var r1ArrayT33 = [String]()
+    var r2ArrayT33 = [String]()
+    var r3ArrayT33 = [String]()
+    var questionArrayT44 = [String]()
+    var r1ArrayT44 = [String]()
+    var r2ArrayT44 = [String]()
+    var r3ArrayT44 = [String]()
+    var questionArrayT55 = [String]()
+    var r1ArrayT55 = [String]()
+    var r2ArrayT55 = [String]()
+    var r3ArrayT55 = [String]()
     
     //Arreglos que muestran contenido del carrusel de experiencias
     var imgA = [UIImage]()
@@ -87,26 +92,39 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
     
     var identifiers = ["201", "202", "203", "204", "205", "206", "207", "208", "209", "210"]
     
+    var indexSelected: Int = 0
+    
     @IBOutlet weak var containerView: UIView!
     
     //fileprivate var scrollOffsetY: CGFloat = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(self.questionArrayT11)
+        print(self.r1ArrayT11)
+        print(self.r2ArrayT11)
+        print(self.r3ArrayT11)
+        print(self.questionArrayT22)
+        print(self.r1ArrayT22)
+        print(self.r2ArrayT22)
+        print(self.r3ArrayT22)
+        print(self.questionArrayT33)
+        print(self.r1ArrayT33)
+        print(self.r2ArrayT33)
+        print(self.r3ArrayT33)
+        print(self.questionArrayT44)
+        print(self.r1ArrayT44)
+        print(self.r2ArrayT44)
+        print(self.r3ArrayT44)
+        print(self.questionArrayT55)
+        print(self.r1ArrayT55)
+        print(self.r2ArrayT55)
+        print(self.r3ArrayT55)
         // Status bar
         statusBar.backgroundColor = UIColor.white.withAlphaComponent(0)
         UIApplication.shared.statusBarStyle = .lightContent
         
         //NUEVAS VARIABLES
-        categorias = "http://104.236.10.17/api/restaurantes"
-        categoria1 = "http://104.236.10.17/api/restaurantes/categoria/1"
-        categoria2 = "http://104.236.10.17/api/restaurantes/categoria/2"
-        categoria3 = "http://104.236.10.17/api/restaurantes/categoria/3"
-        categoria4 = "http://104.236.10.17/api/restaurantes/categoria/4"
-        categoria5 = "http://104.236.10.17/api/restaurantes/categoria/5"
-        categoria6 = "http://104.236.10.17/api/restaurantes/categoria/6"
-        categoria7 = "http://104.236.10.17/api/restaurantes/categoria/7"
-        categoria8 = "http://104.236.10.17/api/restaurantes/categoria/8"
         
         cColor1 = headColor1
         
@@ -161,7 +179,7 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
         //    let image1 = Asset.backgroundImage.image
         //    tableView.backgroundView = UIImageView(image: image1)
         
-        getData()
+        
         
     }
     
@@ -235,202 +253,43 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
     }
     
     @objc func pressed() {
-        c1.urlJson = categorias
-        c1.topColor = cColor1
-        c1.categoryName = cName7.category
-        c1.categoryDesc = cName7.desc
-        c1.dataSourceForDiamond2 = dataSourceForDiamond
-        c1.dataSourceForPlatinum2 = dataSourceForPlatinum
-        c1.dataSourceForMixology2 = dataSourceForMixology
-        c1.dataSourceForSilver2 = dataSourceForSilver
-        c1.dataSourceForGreen2 = dataSourceForGreen
-        c1.dataSourceForSnacks2 = dataSourceForSnacks
-        c1.dataSourceForPubs2 = dataSourceForPubs
-        c1.dataSourceForCakes2 = dataSourceForCakes
         
         self.navigationController?.pushViewController(c1, animated: true)
     }
     
     @objc func pressed2() {
         
-        c2.urlJson = categorias
-        c2.topColor = cColor1
-        c2.categoryName = cName6.category
-        c2.categoryDesc = cName6.desc
-        c2.dataSourceForDiamond2 = dataSourceForDiamond
-        c2.dataSourceForPlatinum2 = dataSourceForPlatinum
-        c2.dataSourceForMixology2 = dataSourceForMixology
-        c2.dataSourceForSilver2 = dataSourceForSilver
-        c2.dataSourceForGreen2 = dataSourceForGreen
-        c2.dataSourceForSnacks2 = dataSourceForSnacks
-        c2.dataSourceForPubs2 = dataSourceForPubs
-        c2.dataSourceForCakes2 = dataSourceForCakes
-        
         self.navigationController?.pushViewController(c2, animated: true)
     }
     
     @objc func pressed3() {
-        
-        c3.urlJson = categorias
-        c3.topColor = cColor1
-        c3.categoryName = cName5.category
-        c3.categoryDesc = cName5.desc
-        c3.dataSourceForDiamond2 = dataSourceForDiamond
-        c3.dataSourceForPlatinum2 = dataSourceForPlatinum
-        c3.dataSourceForMixology2 = dataSourceForMixology
-        c3.dataSourceForSilver2 = dataSourceForSilver
-        c3.dataSourceForGreen2 = dataSourceForGreen
-        c3.dataSourceForSnacks2 = dataSourceForSnacks
-        c3.dataSourceForPubs2 = dataSourceForPubs
-        c3.dataSourceForCakes2 = dataSourceForCakes
         
         self.navigationController?.pushViewController(c3, animated: true)
     }
     
     @objc func pressed4() {
         
-        c4.urlJson = categorias
-        c4.topColor = cColor1
-        c4.categoryName = cName8.category
-        c4.categoryDesc = cName8.desc
-        c4.dataSourceForDiamond2 = dataSourceForDiamond
-        c4.dataSourceForPlatinum2 = dataSourceForPlatinum
-        c4.dataSourceForMixology2 = dataSourceForMixology
-        c4.dataSourceForSilver2 = dataSourceForSilver
-        c4.dataSourceForGreen2 = dataSourceForGreen
-        c4.dataSourceForSnacks2 = dataSourceForSnacks
-        c4.dataSourceForPubs2 = dataSourceForPubs
-        c4.dataSourceForCakes2 = dataSourceForCakes
-        
         self.navigationController?.pushViewController(c4, animated: true)
     }
     
     @objc func pressed5() {
-        
-        c5.urlJson = categorias
-        c5.topColor = cColor1
-        c5.categoryName = cName4.category
-        c5.categoryDesc = cName4.desc
-        c5.dataSourceForDiamond2 = dataSourceForDiamond
-        c5.dataSourceForPlatinum2 = dataSourceForPlatinum
-        c5.dataSourceForMixology2 = dataSourceForMixology
-        c5.dataSourceForSilver2 = dataSourceForSilver
-        c5.dataSourceForGreen2 = dataSourceForGreen
-        c5.dataSourceForSnacks2 = dataSourceForSnacks
-        c5.dataSourceForPubs2 = dataSourceForPubs
-        c5.dataSourceForCakes2 = dataSourceForCakes
         
         self.navigationController?.pushViewController(c5, animated: true)
     }
     
     @objc func pressed6() {
         
-        c6.urlJson = categorias
-        c6.topColor = cColor1
-        c6.categoryName = cName2.category
-        c6.categoryDesc = cName2.desc
-        c6.dataSourceForDiamond2 = dataSourceForDiamond
-        c6.dataSourceForPlatinum2 = dataSourceForPlatinum
-        c6.dataSourceForMixology2 = dataSourceForMixology
-        c6.dataSourceForSilver2 = dataSourceForSilver
-        c6.dataSourceForGreen2 = dataSourceForGreen
-        c6.dataSourceForSnacks2 = dataSourceForSnacks
-        c6.dataSourceForPubs2 = dataSourceForPubs
-        c6.dataSourceForCakes2 = dataSourceForCakes
-        
         self.navigationController?.pushViewController(c6, animated: true)
     }
     
     @objc func pressed7() {
-        
-        c7.urlJson = categorias
-        c7.topColor = cColor1
-        c7.categoryName = cName3.category
-        c7.categoryDesc = cName3.desc
-        c7.dataSourceForDiamond2 = dataSourceForDiamond
-        c7.dataSourceForPlatinum2 = dataSourceForPlatinum
-        c7.dataSourceForMixology2 = dataSourceForMixology
-        c7.dataSourceForSilver2 = dataSourceForSilver
-        c7.dataSourceForGreen2 = dataSourceForGreen
-        c7.dataSourceForSnacks2 = dataSourceForSnacks
-        c7.dataSourceForPubs2 = dataSourceForPubs
-        c7.dataSourceForCakes2 = dataSourceForCakes
         
         self.navigationController?.pushViewController(c7, animated: true)
     }
     
     @objc func pressed8() {
         
-        c8.urlJson = categorias
-        c8.topColor = cColor1
-        c8.categoryName = cName1.category
-        c8.categoryDesc = cName1.desc
-        c8.dataSourceForDiamond2 = dataSourceForDiamond
-        c8.dataSourceForPlatinum2 = dataSourceForPlatinum
-        c8.dataSourceForMixology2 = dataSourceForMixology
-        c8.dataSourceForSilver2 = dataSourceForSilver
-        c8.dataSourceForGreen2 = dataSourceForGreen
-        c8.dataSourceForSnacks2 = dataSourceForSnacks
-        c8.dataSourceForPubs2 = dataSourceForPubs
-        c8.dataSourceForCakes2 = dataSourceForCakes
-        
         self.navigationController?.pushViewController(c8, animated: true)
-    }
-    
-    //Serializando JSON
-    func getData() {
-        let url = URL(string: categorias!) // se convirete el string url a untipo de dato URL
-        
-        var request = URLRequest(url: url!) //inicializacion del Request
-        request.httpMethod = "GET" //tipo de peticion
-        
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if (error != nil){ //verifica que no exista algun error a la hora de hacer la peticion
-                print("Ocurrio un error al obtener el json")
-            }
-            do{
-                //control de errores desconocidos (TRY) en la serializacion del json
-                let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Array<Any>
-                //print(json)
-                if json.count > 0{ //numero de post en el json
-                    self.dataSource.removeAll()
-                    for obj in json{ //Recorrido de todos los post en el json
-                        let objeAux = obj as! NSDictionary
-                        let restaurante = Restaurant(dictionary: objeAux)
-                        //                                                self.dataSource.append(restaurante);
-                        
-                        switch restaurante.categoria.lowercased() {
-                        case "diamante":
-                            self.dataSourceForDiamond.append(restaurante)
-                        case "platino":
-                            self.dataSourceForPlatinum.append(restaurante)
-                        case "mixologia":
-                            self.dataSourceForMixology.append(restaurante)
-                        case "plata":
-                            self.dataSourceForSilver.append(restaurante)
-                        case "verdes":
-                            self.dataSourceForGreen.append(restaurante)
-                        case "antojo":
-                            self.dataSourceForSnacks.append(restaurante)
-                        case "bares":
-                            self.dataSourceForPubs.append(restaurante)
-                        default:
-                            self.dataSourceForCakes.append(restaurante)
-                        }
-                        
-                    }
-                    
-                }
-                else{
-                    print("Sin datos")
-                }
-            }
-            catch{
-                print("Error Serializando del Json")
-            }
-            }.resume() //ejecuta el URLSession
-        
     }
     
     
@@ -439,7 +298,7 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
         
         if collectionView == self.collectionEx {
             
-            return imgA.count
+            return self.triviaIds1.count
         }else {
             
             return sugeridosC.count
@@ -450,6 +309,34 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
         
         if collectionView == self.collectionEx {
             let details = FullTrivias()
+            details.imgPrincipalT = triviaImgP1[indexPath.row]
+            details.vigenciaT = triviaVigencia1[indexPath.row]
+            details.nombreT = triviaNames1[indexPath.row]
+            details.incluyeT = triviaIncluye1[indexPath.row]
+            details.questionArrayT111 = questionArrayT11
+            details.r1ArrayT111 = r1ArrayT11
+            details.r2ArrayT111 = r2ArrayT11
+            details.r3ArrayT111 = r3ArrayT11
+            details.questionArrayT222 = questionArrayT22
+            details.r1ArrayT222 = r1ArrayT22
+            details.r2ArrayT222 = r2ArrayT22
+            details.r3ArrayT222 = r3ArrayT22
+            details.questionArrayT333 = questionArrayT33
+            details.r1ArrayT333 = r1ArrayT33
+            details.r2ArrayT333 = r2ArrayT33
+            details.r3ArrayT333 = r3ArrayT33
+            details.questionArrayT444 = questionArrayT44
+            details.r1ArrayT444 = r1ArrayT44
+            details.r2ArrayT444 = r2ArrayT44
+            details.r3ArrayT444 = r3ArrayT44
+            details.questionArrayT555 = questionArrayT55
+            details.r1ArrayT555 = r1ArrayT55
+            details.r2ArrayT555 = r2ArrayT55
+            details.r3ArrayT555 = r3ArrayT55
+            
+            indexSelected = indexPath.row
+            details.indexSelected2 = indexSelected
+            
             navigationController?.pushViewController(details, animated: true)
         } else {
             
@@ -463,9 +350,17 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
             
             cell.setCellSubviews()
             
-            cell.imgTriv.image = imgA[indexPath.row]
-            cell.mes.text = "Mzo - May"
-            cell.trivia.text = "Influencia inglesa en México"
+            if let url = URL(string: "http://104.236.10.17" + (triviaImgP1[indexPath.row])) {
+                //            background.image = UIImage(data: data)
+                cell.imgTriv.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "sin-back"), options: .refreshCached)
+                NSLog("BAJAR IMAGEN 2")
+                
+            } else {
+                //Imagen por default.... sugiero poner una imagen default por si algo sale mal
+                cell.imgTriv.image = #imageLiteral(resourceName: "sin-back")
+            }
+            cell.mes.text = self.triviaVigencia1[indexPath.row]
+            cell.trivia.text = self.triviaNames1[indexPath.row]
             cell.valorPremio.text = "Valor de premio ganador 2,030$"
             
             cell.backgroundColor = UIColor.white

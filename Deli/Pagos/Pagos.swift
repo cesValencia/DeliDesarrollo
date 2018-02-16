@@ -574,7 +574,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         botContainer?.backgroundColor = UIColor.white.withAlphaComponent(0)
         view.addSubview(botContainer!)
         
-        seleccionaL = UILabel(frame: CGRect(x: wScreen * 0.06, y: botContainer!.frame.height/2 - (hScreen * 0.05/2), width: wScreen * 0.2, height: hScreen * 0.05))
+        seleccionaL = UILabel(frame: CGRect(x: wScreen * 0.06, y: botContainer!.frame.height/2 - (hScreen * 0.05/2), width: wScreen * 0.25, height: hScreen * 0.05))
         seleccionaL?.text = "Selecciona"
         seleccionaL?.textColor = .black
         seleccionaL?.font = UIFont(name: "Roboto-Bold", size: 16)
@@ -607,7 +607,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         botContainer?.addSubview(nextImg1!)
         
         nextBtn1 = UIButton(type: .system)
-        nextBtn1?.frame = CGRect(x: botContainer!.frame.width * 0.8, y: 0, width: botContainer!.frame.width * 0.2, height: botContainer!.frame.height)
+        nextBtn1?.frame = CGRect(x: 0, y: 0, width: botContainer!.frame.width, height: botContainer!.frame.height)
         nextBtn1?.tag = 1
         nextBtn1?.addTarget(self, action: #selector(nextPressed(sender:)), for: .touchUpInside)
         botContainer?.addSubview(nextBtn1!)
@@ -618,7 +618,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         botContainer?.addSubview(nextImg2!)
         
         nextBtn2 = UIButton(type: .system)
-        nextBtn2?.frame = CGRect(x: botContainer!.frame.width * 0.8, y: 0, width: botContainer!.frame.width * 0.2, height: botContainer!.frame.height)
+        nextBtn2?.frame = CGRect(x: 0, y: 0, width: botContainer!.frame.width, height: botContainer!.frame.height)
         nextBtn2?.tag = 2
         nextBtn2?.addTarget(self, action: #selector(nextPressed(sender:)), for: .touchUpInside)
         nextBtn2?.alpha = 0
@@ -630,7 +630,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         botContainer?.addSubview(imgCarrito!)
         
         nextBtn3 = UIButton(type: .custom)
-        nextBtn3?.frame = CGRect(x: wScreen - wScreen * 0.3, y: botContainer!.frame.height * 0.1, width: wScreen * 0.25, height: botContainer!.frame.height * 0.8)
+        nextBtn3?.frame = CGRect(x: 0, y: 0, width: botContainer!.frame.width, height: botContainer!.frame.height)
         nextBtn3?.tintColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1)
         nextBtn3?.tag = 3
         nextBtn3?.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
@@ -1030,7 +1030,15 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
                         
                         let okAction = UIAlertAction(title: "OK", style: .default) { (alert: UIAlertAction!) -> Void in
                             
-                            
+                            UIView.animate(withDuration: 0.5, animations: {
+                                self.pagos1?.frame = CGRect(x: 0, y: 0, width: wScreen, height: hScreen * 0.88)
+                                self.pagos2?.frame = CGRect(x: wScreen, y: 0, width: wScreen, height: hScreen * 0.88)
+                                self.botPurple?.frame = CGRect(x: wScreen - wScreen * 0.025, y: hScreen * 0.88, width: wScreen, height: hScreen * 0.12)
+                                self.nextImg2?.alpha = 0
+                                self.nextBtn2?.alpha = 0
+                                self.nextImg1?.alpha = 1
+                                self.nextBtn1?.alpha = 1
+                            })
                         }
                         
                         alert.addAction(okAction)

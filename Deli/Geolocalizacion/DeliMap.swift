@@ -390,6 +390,7 @@ class DeliMap: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, 
         networkManagerForGetRestaurant = URL_SessionM()
         networkManagerForGetRestaurant?.delegate = self
         networkManagerForGetRestaurant?.getRestaurant(id: (marker as! CustomPin).idRestaurante!)
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

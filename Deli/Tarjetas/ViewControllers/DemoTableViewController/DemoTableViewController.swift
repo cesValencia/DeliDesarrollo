@@ -472,6 +472,7 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
             cell.subtitulo.frame = CGRect(x: cell.frame.width * 0.1365, y: cell.titulo.frame.maxY + 0.5, width: cell.frame.width * 0.85, height: cell.frame.height * 0.13)
             cell.subtitulo.font = UIFont(name: "Montserrat-Light", size: 14)
             cell.subtitulo.numberOfLines = 2
+            cell.subtitulo.sizeToFit()
             cell.subtitulo.textColor = UIColor.black.withAlphaComponent(0.5)
             cell.contentView.addSubview(cell.subtitulo)
             

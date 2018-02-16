@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05F68D35024D13E3B46E4C78 /* Pods_Deli.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243A8319085DB3971BFB8910 /* Pods_Deli.framework */; };
+		181F11FD20301D9A00B92379 /* Trivia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F11FC20301D9A00B92379 /* Trivia.swift */; };
 		1823AFFB202BCFA4008027D9 /* CodeControllerFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1823AFFA202BCFA4008027D9 /* CodeControllerFake.swift */; };
 		183174C620223D790038D61F /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183174C520223D790038D61F /* LoadingScreen.swift */; };
 		1873BA5D202A7B9200EBD171 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873BA5B202A7B9100EBD171 /* Search.swift */; };
@@ -146,6 +147,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		181F11FC20301D9A00B92379 /* Trivia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivia.swift; sourceTree = "<group>"; };
 		1823AFFA202BCFA4008027D9 /* CodeControllerFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeControllerFake.swift; sourceTree = "<group>"; };
 		183174C520223D790038D61F /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		1873BA5B202A7B9100EBD171 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
@@ -811,6 +813,7 @@
 				B848976F20000C4000D04F99 /* Restaurant.swift */,
 				B84897A820000ECC00D04F99 /* Combo.swift */,
 				B84897A920000ECC00D04F99 /* Horarios.swift */,
+				181F11FC20301D9A00B92379 /* Trivia.swift */,
 			);
 			path = Modelos;
 			sourceTree = "<group>";
@@ -996,7 +999,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1075,6 +1078,7 @@
 				B848977F20000C4300D04F99 /* Controller1.swift in Sources */,
 				B848978220000C4300D04F99 /* Controller7.swift in Sources */,
 				B848978120000C4300D04F99 /* Controller8.swift in Sources */,
+				181F11FD20301D9A00B92379 /* Trivia.swift in Sources */,
 				B848979E20000E2600D04F99 /* Pagos.swift in Sources */,
 				B82F2F742003CFCC00620BAC /* Perfil3.swift in Sources */,
 				B848979520000D9200D04F99 /* DemoTableViewController3.swift in Sources */,

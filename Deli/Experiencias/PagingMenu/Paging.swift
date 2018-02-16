@@ -570,14 +570,14 @@ class Paging: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, 
         regImg?.image = #imageLiteral(resourceName: "regIcon")
         regView?.addSubview(regImg!)
         
-        shareLabel = UILabel(frame: CGRect(x: regImg!.frame.maxX + regView!.frame.width * 0.04, y: regView!.frame.height * 0.045, width: wScreen * 0.25, height: wScreen * 0.065))
+        shareLabel = UILabel(frame: CGRect(x: regImg!.frame.maxX + regView!.frame.width * 0.04, y: regView!.frame.height * 0.045, width: wScreen * 0.3, height: wScreen * 0.065))
         shareLabel?.text = "compartir"
         shareLabel?.textColor = .black
         shareLabel?.font = UIFont(name: "Roboto-Bold", size: 22)
         shareLabel?.textAlignment = .left
         regView?.addSubview(shareLabel!)
         
-        legendLabel = UILabel(frame: CGRect(x: shareLabel!.frame.maxX + regView!.frame.width * 0.1, y: regView!.frame.height * 0.05, width: wScreen * 0.4, height: wScreen * 0.065))
+        legendLabel = UILabel(frame: CGRect(x: shareLabel!.frame.maxX + regView!.frame.width * 0.05, y: regView!.frame.height * 0.05, width: wScreen * 0.45, height: wScreen * 0.065))
         legendLabel?.text = "regala esta experiencia"
         legendLabel?.textColor = UIColor(red: 202/255, green: 202/255, blue: 202/255, alpha: 1)
         legendLabel?.font = UIFont(name: "Roboto-Bold", size: 15)
