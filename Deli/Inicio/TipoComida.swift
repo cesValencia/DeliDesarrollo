@@ -96,6 +96,7 @@ class TipoComida: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
     
     @objc func nextPressed() {
         
+        // Almacenando tipo de comida en la BD
         let networkTypeFood = URL_Session()
         networkTypeFood.delegate = self
         networkTypeFood.sendTypeFood(token: token!, tipo: selectedFood!)
