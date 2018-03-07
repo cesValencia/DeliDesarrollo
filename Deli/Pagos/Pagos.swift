@@ -302,7 +302,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         avatarPagos2?.layer.cornerRadius = avatarPagos2!.frame.width/2
         pagos2?.addSubview(avatarPagos2!)
         
-        titleLabel2 = UILabel(frame: CGRect(x: avatarPagos2!.frame.maxX + wScreen * 0.02, y: hScreen * 0.135, width: wScreen * 0.3, height: wScreen * 0.06))
+        titleLabel2 = UILabel(frame: CGRect(x: avatarPagos2!.frame.maxX + wScreen * 0.02, y: hScreen * 0.135, width: wScreen * 0.4, height: wScreen * 0.06))
         titleLabel2?.text = "Elige el horario"
         titleLabel2?.font = UIFont(name: "Roboto-Black", size: 17.5)
         titleLabel2?.textColor = UIColor.white
@@ -580,13 +580,13 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         seleccionaL?.font = UIFont(name: "Roboto-Bold", size: 16)
         botContainer?.addSubview(seleccionaL!)
         
-        fraseL = UILabel(frame: CGRect(x: seleccionaL!.frame.maxX + wScreen * 0.05, y: botContainer!.frame.height/2 - (hScreen * 0.05/2), width: wScreen * 0.5, height: hScreen * 0.05))
+        fraseL = UILabel(frame: CGRect(x: seleccionaL!.frame.maxX, y: botContainer!.frame.height/2 - (hScreen * 0.05/2), width: wScreen * 0.5, height: hScreen * 0.05))
         fraseL?.text = "el día de tu visita"
         fraseL?.textColor = grayFrase
         fraseL?.font = UIFont(name: "Roboto-Bold", size: 16)
         botContainer?.addSubview(fraseL!)
         
-        verCodigo = UILabel(frame: CGRect(x: botContainer!.frame.width * 0.1, y: 0, width: botContainer!.frame.width * 0.4, height: botContainer!.frame.height))
+        verCodigo = UILabel(frame: CGRect(x: botContainer!.frame.width * 0.05, y: 0, width: botContainer!.frame.width * 0.45, height: botContainer!.frame.height))
         verCodigo?.text = "Ver código de reserva"
         verCodigo?.textAlignment = .center
         verCodigo?.textColor = UIColor.white
@@ -594,7 +594,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         verCodigo?.alpha = 0
         botContainer?.addSubview(verCodigo!)
         
-        verPendiente = UILabel(frame: CGRect(x: verCodigo!.frame.maxX, y: 0, width: botContainer!.frame.width * 0.4, height: botContainer!.frame.height))
+        verPendiente = UILabel(frame: CGRect(x: verCodigo!.frame.maxX, y: 0, width: botContainer!.frame.width * 0.45, height: botContainer!.frame.height))
         verPendiente?.text = "pendiente de activar"
         verPendiente?.textAlignment = .center
         verPendiente?.textColor = UIColor(red: 74/255, green: 80/255, blue: 157/255, alpha: 1)
@@ -838,7 +838,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let cellWidth = 110
+        let cellWidth = (wScreen * 0.8)/3
         
         return CGSize(width: cellWidth, height: 85)
     }

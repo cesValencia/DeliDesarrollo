@@ -8,8 +8,8 @@
 
 import UIKit
 
-class TipoComida: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    
+class TipoComida: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, URL_SessionDelegate {
+
     var pickFood: UIPickerView?
     var nacionalidades = [String]()
     var closeBtn: UIButton?
@@ -18,11 +18,20 @@ class TipoComida: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
     var subtitle2: UILabel?
     var nextBtn: UIButton?
     var lastLegend: UILabel?
+    var token: String?
+    var selectedFood: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         loadInterface()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let tok = UserDefaults.standard.object(forKey: "token") {
+            token = tok as? String
+        }
     }
     
     func loadInterface() {
@@ -87,6 +96,10 @@ class TipoComida: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
     
     @objc func nextPressed() {
         
+        let networkTypeFood = URL_Session()
+        networkTypeFood.delegate = self
+        networkTypeFood.sendTypeFood(token: token!, tipo: selectedFood!)
+        
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let cards = storyBoard.instantiateViewController(withIdentifier: "MainCards")
         self.present(cards, animated: true, completion: nil)
@@ -120,6 +133,23 @@ class TipoComida: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
         let myPickerLabel = NSAttributedString(string: pickerLabel, attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         
         return myPickerLabel
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        selectedFood = nacionalidades[row]
+        print(selectedFood!)
+    }
+    
+    func connectionFinishSuccessfull(session: URL_Session, response: NSDictionary) {
+        print(response)
+        
+        
+        
+    }
+    
+    func connectionFinishWithError(session: URL_Session, error: Error) {
+        print(error.localizedDescription)
     }
 
     override func didReceiveMemoryWarning() {

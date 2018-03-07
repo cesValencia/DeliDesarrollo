@@ -72,6 +72,28 @@ class URL_Session: NSObject, URLSessionDelegate, URLSessionDataDelegate {
         dataTask?.resume()
     }
     
+    func sendTypeFood(token: String, tipo: String) {
+        
+        if dataTask != nil {
+            dataTask?.cancel()
+        }
+        
+        let urlString = "http://104.236.10.17/api/usuarios/tipo_comida"
+        let sessionConfig = URLSessionConfiguration.default
+        let defaultSession = URLSession(configuration: sessionConfig, delegate: self, delegateQueue: OperationQueue.main)
+        let url = URL(string: urlString)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.timeoutInterval = 60
+        
+        responseData = Data()
+        let body = "token=\(token)&tipo_comida=\(tipo)"
+        request.httpBody = body.data(using: .utf8)
+        
+        dataTask = defaultSession.dataTask(with: request)
+        dataTask?.resume()
+    }
+    
     //    URLSession Delegate
     
     //Task finalizado con...error o éxito

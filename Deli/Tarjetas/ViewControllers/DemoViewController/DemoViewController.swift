@@ -27,6 +27,7 @@ class DemoViewController: ExpandingViewController {
     var swipeGesture: UISwipeGestureRecognizer?
     var username: UILabel?
     var usermail: UILabel?
+    var tapGesture: UITapGestureRecognizer?
     
   var statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
     var avatarImg: UIImageView?
@@ -94,6 +95,14 @@ extension DemoViewController {
     markerBtn.setImage(#imageLiteral(resourceName: "buscl"), for: .normal)
     markerBtn.addTarget(self, action: #selector(markerPressed), for: .touchUpInside)
     view.addSubview(markerBtn)
+    
+    let tituloMenu = UILabel(frame: CGRect(x: wScreen * 0.35, y: hScreen * 0.93, width: wScreen * 0.3, height: wScreen * 0.05))
+    tituloMenu.text = "M E N Ú"
+    tituloMenu.textAlignment = .center
+    tituloMenu.textColor = UIColor.white
+    tituloMenu.font = UIFont(name: "Roboto-Bold", size: 12)
+//    tituloMenu.backgroundColor = .black
+    view.addSubview(tituloMenu)
     
     let menu = UIButton(type: .custom)
     menu.frame = CGRect(x: wScreen * 0.3, y: hScreen * 0.78, width: wScreen * 0.4, height: hScreen * 0.3)
@@ -676,6 +685,7 @@ extension DemoViewController {
     @objc func swipeHandler(_ sender: UISwipeGestureRecognizer) {
     let indexPath = IndexPath(row: currentIndex, section: 0)
     guard let cell  = collectionView?.cellForItem(at: indexPath) as? DemoCollectionViewCell else { return }
+
     
     if(currentIndex == 0){
         
@@ -828,7 +838,7 @@ extension DemoViewController {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: IndexPath) {
     guard let cell = collectionView.cellForItem(at: indexPath) as? DemoCollectionViewCell, currentIndex == indexPath.row else { return }
     
-    if(currentIndex == 0){
+    if(indexPath.row == 0){
     
         if cell.isOpened == false {
             cell.cellIsOpen(true)
@@ -841,7 +851,7 @@ extension DemoViewController {
                 rightButton.animationSelected(true)
             }
         }
-    }else if(currentIndex == 1){
+    }else if(indexPath.row == 1){
         
         if cell.isOpened == false {
             cell.cellIsOpen(true)
@@ -854,7 +864,7 @@ extension DemoViewController {
                 rightButton.animationSelected(true)
             }
         }
-    }else if(currentIndex == 2){
+    }else if(indexPath.row == 2){
         
         if cell.isOpened == false {
             cell.cellIsOpen(true)

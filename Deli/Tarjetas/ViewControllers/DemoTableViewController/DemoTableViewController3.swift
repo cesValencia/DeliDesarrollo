@@ -350,7 +350,7 @@ class DemoTableViewController3: ExpandingTableViewController, UICollectionViewDe
             
             cell.setCellSubviews()
             
-            if let url = URL(string: "http://104.236.10.17" + (triviaImgP1[indexPath.row])) {
+            if let url = URL(string: "http://104.236.10.17" + (triviaLogoN1[indexPath.row])) {
                 //            background.image = UIImage(data: data)
                 cell.imgTriv.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "sin-back"), options: .refreshCached)
                 NSLog("BAJAR IMAGEN 2")
