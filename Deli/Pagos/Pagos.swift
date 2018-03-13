@@ -115,11 +115,15 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     var hReservaDesc: UILabel?
     var myDay: String = ""
     // Info de compra
+    
+    //First Row selected
+    var dateFirst: DateFormatter?
+    var firstString: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        horas = ["0", "1", "2", "3", "4", "5","6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]
+        horas = ["9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]
 
         loadInterface()
     }
@@ -128,6 +132,8 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         // Ocultando navigationBar del sistema
         navigationController?.isNavigationBarHidden = true
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        picker?.selectRow(30, inComponent: 0, animated: true)
         
         // Implementación de userDefaults para cargar imagen de usuario
         if UserDefaults.standard.object(forKey: "savedImage") as? NSData != nil {
@@ -160,6 +166,11 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
             avatarPagos?.image = #imageLiteral(resourceName: "user-foto")
             avatarPagos2?.image = #imageLiteral(resourceName: "user-foto")
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        picker?.selectRow(0, inComponent: 0, animated: true)
+
     }
     
     func loadInterface() {
@@ -274,6 +285,62 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         picker?.tintColor = UIColor.white
         picker?.dataSource = self
         picker?.delegate = self
+        
+        dateFirst = DateFormatter()
+        dateFirst?.dateFormat = "EEEE"
+        firstString = dateFirst?.string(from: dates[0])
+        
+        if(firstString == "Monday") {
+            
+            dia0 = Lunes
+            diaReserva = "Lunes"
+            hReservaDesc?.text = diaReserva +  " " + myDay + ", "
+            print(Lunes)
+            print(diaReserva)
+        }else if(firstString == "Tuesday") {
+            
+            dia0 = Martes
+            diaReserva = "Martes"
+            hReservaDesc?.text = diaReserva +  " " + myDay + ", "
+            print(Martes)
+            print(diaReserva)
+        }else if(firstString == "Wednesday") {
+            
+            dia0 = Miercoles
+            diaReserva = "Miércoles"
+            hReservaDesc?.text = diaReserva +  " " + myDay + ", "
+            print(Miercoles)
+            print(diaReserva)
+        }else if(firstString == "Thursday") {
+            
+            dia0 = Jueves
+            diaReserva = "Jueves"
+            hReservaDesc?.text = diaReserva +  " " + myDay + ", "
+            print(Jueves)
+            print(diaReserva)
+        }else if(firstString == "Friday") {
+            
+            dia0 = Viernes
+            diaReserva = "Viernes"
+            hReservaDesc?.text = diaReserva +  " " + myDay + ", "
+            print(Viernes)
+            print(diaReserva)
+        }else if(firstString == "Saturday") {
+            
+            dia0 = Sabado
+            diaReserva = "Sábado"
+            hReservaDesc?.text = diaReserva +  " " + myDay + ", "
+            print(Sabado)
+            print(diaReserva)
+        }else if(firstString == "Sunday") {
+            
+            dia0 = Domingo
+            diaReserva = "Domingo"
+            hReservaDesc?.text = diaReserva +  " " + myDay + ", "
+            print(Domingo)
+            print(diaReserva)
+        }
+        
         pagos1?.addSubview(picker!)
         
         lastText = UILabel(frame: CGRect(x: wScreen * 0.125, y: picker!.frame.maxY + hScreen * 0.13, width: wScreen * 0.75, height: hScreen * 0.08))
