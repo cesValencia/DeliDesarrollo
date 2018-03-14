@@ -64,6 +64,7 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
     var dataSourceForPubs = [Restaurant]()
     var dataSourceForCakes = [Restaurant]()
     var statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+    var destacados = [Restaurant]()
     
     //Arreglos que muestran contenido del carrusel de experiencias
     var imgA = [UIImage]()
@@ -162,7 +163,7 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
 //    tableView.backgroundView = UIImageView(image: image1)
     
     getData()
-    
+    getDestacado()
   }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -433,6 +434,50 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
         
     }
     
+    //Serializando JSON
+    func getDestacado() {
+        let url = URL(string: "http://104.236.10.17/api/restaurantes/destacados") // se convirete el string url a untipo de dato URL
+        
+        var request = URLRequest(url: url!) //inicializacion del Request
+        request.httpMethod = "GET" //tipo de peticion
+        
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if (error != nil){ //verifica que no exista algun error a la hora de hacer la peticion
+                print("Ocurrio un error al obtener el json")
+            }
+            
+            do{
+                //control de errores desconocidos (TRY) en la serializacion del json
+                let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Array<Any>
+                //print(json)
+                if json.count > 0{ //numero de post en el json
+                    self.destacados.removeAll()
+                    for obj in json{ //Recorrido de todos los post en el json
+                        let objeAux = obj as! NSDictionary
+                        let destacado = Restaurant(dictionary: objeAux)
+                        self.destacados.append(destacado)
+                    }
+                    
+                    
+                    DispatchQueue.main.async(execute: { () -> Void in //se accede al hilo de la interface
+                        
+                        self.collectionEx2?.reloadData()
+                        
+                    })
+                    
+                }
+                else{
+                    print("Sin datos")
+                }
+            }
+            catch{
+                print("Error Serializando del Json")
+            }
+            }.resume() //ejecuta el URLSession
+        
+    }
+    
     
     /*DashboardView*/
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -442,7 +487,7 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
             return imgA.count
         }else {
 
-            return sugeridosC.count
+            return destacados.count
         }
     }
     
@@ -454,6 +499,7 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
             
 //                        cell.setSubviews()
             
+
             cell.imgEx.image = imgA[indexPath.row]
             cell.imgEx.frame = CGRect(x: cell.frame.width * 0.1365, y: 0, width: cell.frame.width * 0.727, height: cell.frame.width * 0.727)
             cell.contentView.addSubview(cell.imgEx)
@@ -498,19 +544,44 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
         }else{
 
             let cell2 = collectionView.dequeueReusableCell(withReuseIdentifier: "cell2", for: indexPath) as! CollectionViewEx2
-
-            cell2.sugeridos.frame = CGRect(x: 0, y: 0, width: cell2.frame.width * 0.95, height: wScreen * 0.28)
-            cell2.sugeridos.image = sugeridosC[indexPath.row]
-            cell2.backgroundColor = UIColor.white
-            cell2.layer.cornerRadius = 3.0
-            cell2.contentView.addSubview(cell2.sugeridos)
+            
+            cell2.layer.cornerRadius = 5.0
+            
+            if let url = URL(string: "http://104.236.10.17" + destacados[indexPath.row].thumbnail) {
+                cell2.sugeridos.frame = CGRect(x: 0, y: 0, width: cell2.frame.width * 0.95, height: wScreen * 0.28)
+                cell2.sugeridos.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "sin-back"), options: .refreshCached)
+                cell2.sugeridos.layer.cornerRadius = 5.0
+                cell2.sugeridos.layer.masksToBounds = true
+                cell2.contentView.addSubview(cell2.sugeridos)
+            } else {
+                cell2.sugeridos.frame = CGRect(x: 0, y: 0, width: cell2.frame.width * 0.95, height: wScreen * 0.28)
+                cell2.sugeridos.backgroundColor = .black
+                cell2.sugeridos.layer.cornerRadius = 5.0
+                cell2.sugeridos.layer.masksToBounds = true
+                cell2.contentView.addSubview(cell2.sugeridos)
+            }
+            
+            cell2.restName.frame = CGRect(x: cell2.frame.width * 0.1, y: cell2.frame.height * 0.1, width: cell2.frame.width * 0.5, height: cell2.frame.height * 0.4)
+            cell2.restName.text = destacados[indexPath.row].nickname
+            cell2.restName.font = UIFont(name: "Roboto-Black", size: 15)
+            cell2.restName.textColor = UIColor.white
+            cell2.restName.isEditable = false
+            cell2.restName.isScrollEnabled = false
+            cell2.restName.backgroundColor = UIColor.clear
+            cell2.contentView.addSubview(cell2.restName)
+            
+            cell2.destacadoDesc.frame = CGRect(x: cell2.frame.width * 0.12, y: cell2.restName.frame.maxY, width: cell2.frame.width * 0.7, height: cell2.frame.height * 0.1)
+            cell2.destacadoDesc.text = "en DESTACADOS"
+            cell2.destacadoDesc.font = UIFont(name: "Montserrat-Bold", size: 11.5)
+            cell2.destacadoDesc.textColor = UIColor.white.withAlphaComponent(0.7)
+            cell2.contentView.addSubview(cell2.destacadoDesc)
             
             cell2.pinMarker.frame = CGRect(x: cell2.frame.width * 0.01, y: cell2.sugeridos.frame.maxY + cell2.frame.height * 0.08, width: cell2.frame.width * 0.038, height: cell2.frame.width * 0.047)
             cell2.pinMarker.image = #imageLiteral(resourceName: "purpleMarker")
             cell2.contentView.addSubview(cell2.pinMarker)
             
             cell2.restAddress.frame = CGRect(x: cell2.pinMarker.frame.maxX + cell2.frame.width * 0.02, y: cell2.sugeridos.frame.maxY + cell2.frame.height * 0.05, width: cell2.frame.width * 0.8, height: cell2.frame.width * 0.085)
-            cell2.restAddress.text = "Amargura 35, Colonia San Ángel CDMX."
+            cell2.restAddress.text = destacados[indexPath.row].direccion
             cell2.restAddress.font = UIFont(name: "Roboto-Regular", size: 11.5)
             cell2.restAddress.textColor = UIColor(red: 122/255, green: 122/255, blue: 122/255, alpha: 1)
             cell2.contentView.addSubview(cell2.restAddress)
@@ -520,6 +591,39 @@ class DemoTableViewController: ExpandingTableViewController, UICollectionViewDel
         
 
 
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if collectionView == collectionEx2 {
+            
+            let nexVC = FullDetails()
+            
+            nexVC.imagen_principal = destacados[indexPath.row].imagen_principal
+            nexVC.tipo_comida = destacados[indexPath.row].tipo_comida
+            nexVC.name_restaurant = destacados[indexPath.row].nombre
+            nexVC.incluye = destacados[indexPath.row].incluye
+            nexVC.img_price = destacados[indexPath.row].img_price
+            nexVC.precio = destacados[indexPath.row].precio
+            nexVC.logo = destacados[indexPath.row].logo
+            nexVC.introduccion = destacados[indexPath.row].introduccion
+            nexVC.p1 = destacados[indexPath.row].p1
+            nexVC.link_video = destacados[indexPath.row].link_video
+            nexVC.p2 = destacados[indexPath.row].p2
+            nexVC.imagen_2 = destacados[indexPath.row].imagen2
+            nexVC.frase = destacados[indexPath.row].frase
+            nexVC.p3 = destacados[indexPath.row].p3
+            nexVC.imagen_3 = destacados[indexPath.row].imagen3
+            nexVC.logo_editorial = destacados[indexPath.row].logo_editorial
+            nexVC.editorial = destacados[indexPath.row].editorial
+            nexVC.id_restaurant = destacados[indexPath.row].id_restaurante
+            nexVC.category = destacados[indexPath.row].categoria
+            nexVC.zona = destacados[indexPath.row].zona
+            nexVC.direccion = destacados[indexPath.row].direccion
+            nexVC.tolerancia = destacados[indexPath.row].tolerancia
+            
+            navigationController?.pushViewController(nexVC, animated: true)
+        }
     }
     
     

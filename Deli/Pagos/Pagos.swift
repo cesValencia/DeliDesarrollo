@@ -119,11 +119,15 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
     //First Row selected
     var dateFirst: DateFormatter?
     var firstString: String?
+    
+    // Bandera
+    var bandera = false
+    var ban = ContentPagos()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        horas = ["9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]
+        horas = ["9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
 
         loadInterface()
     }
@@ -392,7 +396,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         fecha2?.textColor = UIColor.white
         pagos2?.addSubview(fecha2!)
         
-        tablaHorarios = UICollectionView(frame: CGRect(x: wScreen * 0.05, y: avatarPagos2!.frame.maxY + hScreen * 0.07, width: wScreen * 0.9, height: hScreen * 0.5), collectionViewLayout: UICollectionViewFlowLayout())
+        tablaHorarios = UICollectionView(frame: CGRect(x: wScreen * 0.05, y: avatarPagos2!.frame.maxY + hScreen * 0.07, width: wScreen * 0.9, height: hScreen * 0.55), collectionViewLayout: UICollectionViewFlowLayout())
         tablaHorarios?.backgroundColor = UIColor.white.withAlphaComponent(0)
         tablaHorarios?.register(ContentPagos.self, forCellWithReuseIdentifier: "hourCell")
         tablaHorarios?.dataSource = self
@@ -877,8 +881,6 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
         cell.horasDelDia.textColor = .white
         cell.contentView.addSubview(cell.horasDelDia)
         
-        
-        
         for _ in horas {
             
             if blocked.contains(horas[indexPath.row]) {
@@ -897,7 +899,7 @@ class Pagos: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIC
                 cell.contentView.addSubview(cell.disponible)
             }
             
-            
+
         }
         
         return cell
